@@ -24,24 +24,6 @@ def 'git nixos' [message] {
     git push
 }
 
-def 'server carjin' [] {
-    ^ssh "carjin@49.13.173.174"
-}
-
-def 'server root' [] {
-    ^ssh $"root@49.13.173.174"
-}
-
-def 'server luka' [] {
-    let ipandport = ngrok ip | parse "{ip}:{port}"
-    ^ssh -o "ServerAliveInterval=30" $"carjin@($ipandport.0.ip)" -p $ipandport.0.port
-}
-
-def 'server simek' [] {
-    let ipandport = ngrok ip | parse "{ip}:{port}"
-    ^ssh $"lsimek@($ipandport.0.ip)" -p $ipandport.0.port
-}
-
 def pluto [] {
     ^julia -E "begin import Pluto; Pluto.run() end"
 }
@@ -62,4 +44,41 @@ def logout [] {
 
 def ll [] {
   ls -l | reject target num_links inode readonly created accessed
+}
+
+def unsymlink [path] {
+
+  if not ($path | path exists) {
+    echo "Error: '$dir' does not exist."
+    return
+  }
+
+  let is_symlink = ($path | path type) == "symlink"
+
+  if not $is_symlink {
+    echo "Warning: '$dir' is not a symbolic link."
+    return
+  }
+
+  let full = $path | path expand
+
+  match ($full | path type) {
+    "file" => {
+      rm $path
+
+      cp $full $path
+
+      chown $env.USER $path
+    }
+    "dir" => {
+      rm $path
+
+      cp -r $full $path
+
+      chown -R $env.USER $path
+    }
+    _ => { echo "Error: $path is not file or directory"; return; }
+  }
+
+  echo $"Successfully unlinked ($path)."
 }

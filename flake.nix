@@ -70,6 +70,11 @@
           ./hosts/victus
           ./hosts # defaults
           ./network
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
           modules.stylix

@@ -10,7 +10,6 @@
 
   imports = [
     modules.nushell
-    # modules.nixvim
     modules.stylix-hm
     modules.ls-colors
     ./dotfiles.nix
@@ -20,7 +19,6 @@
   home.homeDirectory = "/home/carjin";
 
   home.stateVersion = "23.11";
-  home.enableNixpkgsReleaseCheck = false;
 
   home.packages =
     (with pkgs-unstable; [
@@ -196,16 +194,9 @@
     enable = true;
     systemd.enable = false;
     settings = {
-      source = "~/nixos/dotfiles/hypr/carjin.conf";
+      source = "carjin.conf";
     };
   };
-
-  # home.pointerCursor = {
-  #   package = pkgs.breeze-qt5;
-  #   name = "Breeze_Snow";
-  #   # size = 24;
-  #   gtk.enable = true; # For GTK apps
-  # };
 
   programs.hyprlock = {
     enable = true;
@@ -267,9 +258,7 @@
     };
   };
 
-  stylix.targets.foot.enable = true;
   stylix.targets.hyprpaper.enable = true;
-  stylix.targets.nushell.enable = true;
   stylix.ls-colors.enable = true;
 
   gtk.iconTheme = {

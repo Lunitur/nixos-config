@@ -116,7 +116,7 @@
     enable = true;
     systemd.enable = false;
     settings = {
-      source = "~/nixos/dotfiles/hypr/lsimek.conf";
+      source = "lsimek.conf";
     };
   };
 
