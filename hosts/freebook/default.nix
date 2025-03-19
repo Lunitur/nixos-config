@@ -42,7 +42,7 @@ in
       inherit modules pkgs-unstable;
     };
     users = {
-      carjin = import ../../users/lsimek/home.nix;
+      lsimek = import ../../users/lsimek/home.nix;
     };
 
     backupFileExtension = "backup";

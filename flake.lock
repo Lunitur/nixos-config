@@ -334,14 +334,18 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1742219581,
-        "narHash": "sha256-pGyIDVYnw9D5HPm+6VjgskZ7jJ2JE1PbnN1AJxpLTZY=",
-        "path": "/home/carjin/nixos-hardware",
-        "type": "path"
+        "lastModified": 1742376361,
+        "narHash": "sha256-VFMgJkp/COvkt5dnkZB4D2szVdmF6DGm5ZdVvTUy61c=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "daaae13dff0ecc692509a1332ff9003d9952d7a9",
+        "type": "github"
       },
       "original": {
-        "path": "/home/carjin/nixos-hardware",
-        "type": "path"
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixpkgs": {
