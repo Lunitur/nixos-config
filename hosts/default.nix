@@ -35,12 +35,14 @@ in
       trusted-users = [
         "root"
         "carjin"
-        "lsimek"
+        # "lsimek"
       ];
     };
   };
 
   # zramSwap.enable = true;
+
+  services.netbird.enable = true;
 
   nixpkgs.overlays = [ ];
 

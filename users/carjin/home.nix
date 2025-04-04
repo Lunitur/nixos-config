@@ -5,7 +5,25 @@
   lib,
   ...
 }:
+let
 
+  tex = (
+    pkgs.texlive.combine {
+      inherit (pkgs.texlive)
+        scheme-full
+        dvisvgm
+        dvipng # for preview and export as html
+        wrapfig
+        amsmath
+        ulem
+        hyperref
+        capt-of
+        ;
+      #(setq org-latex-compiler "lualatex")
+      #(setq org-preview-latex-default-process 'dvisvgm)
+    }
+  );
+in
 {
 
   imports = [
@@ -28,6 +46,11 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      mupdf
+      bibtex-tidy
+      texlab
+      tex
+      texmaker
       calibre
       firefox
       inkscape
@@ -59,7 +82,10 @@
       })
     ]);
 
-  home.file = { };
+  programs.zathura = {
+    enable = true;
+    package = pkgs.zathura.override { useMupdf = true; };
+  };
 
   systemd.user.services.hyprpaper = {
     Unit = {
@@ -71,6 +97,11 @@
     Unit = {
       After = [ "wayland-session-waitenv.service" ];
     };
+  };
+
+  services.conky = {
+    enable = true;
+
   };
 
   services.hyprpaper = {
@@ -141,7 +172,29 @@
       language-server.metals.config.metals = {
         autoImportBuild = "all";
       };
+
+      language-server.texlab.config.texlab = {
+        build = {
+          onSave = true;
+        };
+        forwardSearch = {
+          executable = "zathura";
+
+          args = [
+            "--synctex-forward"
+            "%l:1:%f"
+            "%p"
+          ];
+        };
+        chktex.onEdit = true;
+      };
       language = [
+        {
+          name = "latex";
+          auto-format = true;
+          # config.texlab.build.onSave = true;
+
+        }
         {
           name = "nix";
           auto-format = true;
