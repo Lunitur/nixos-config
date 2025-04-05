@@ -1,16 +1,5 @@
+{ pkgs, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  pkgs-unstable,
-  ...
-}:
-let
-  user-pkgs = import ../packages { inherit pkgs; };
-in
-{
-
-  imports = [ ];
 
   nix = {
     settings = {
@@ -35,21 +24,14 @@ in
       trusted-users = [
         "root"
         "carjin"
-        # "lsimek"
+        "lsimek"
       ];
     };
   };
 
   # zramSwap.enable = true;
 
-  # services.netbird.enable = true;
-
   nixpkgs.overlays = [ ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11"
-    "archiver-3.5.1"
-  ];
 
   boot.tmp.cleanOnBoot = true;
 
@@ -64,43 +46,19 @@ in
     longitude = 16.0;
   };
 
-  environment.systemPackages =
-    (with pkgs; [
-      git
-      tree
-      wget
-      nano
-      nushell
-      gvfs
-      pueue
-      fastfetch
-      unar
-      nixfmt-rfc-style
-      nh
-      bash
-      xarchiver
-      nil # Nix language server
-      cabal-install
-      sbt
-      mill
-      metals
-      julia
-      cargo
-      fzf
-      zoxide
-      eza
-      carapace
-      ripgrep-all
-      mc
-      btop
-      bat
-      ihp-new
-    ])
-    ++ (with user-pkgs; [ ammonite.ammonite_3_5 ]);
-
-  programs.fish.enable = true;
-
-  programs.direnv.enable = true;
+  environment.systemPackages = with pkgs; [
+    git
+    tree
+    wget
+    nano
+    nushell
+    unar
+    nh
+    bash
+    nil # Nix language server
+    btop
+    bat
+  ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -108,12 +66,9 @@ in
   };
 
   services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false;
 
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [ 22 ];
-
-  services.mullvad-vpn.enable = true;
 
   nix.gc = {
     automatic = true;

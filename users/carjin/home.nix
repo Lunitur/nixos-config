@@ -72,6 +72,7 @@ in
       halloy
       kdePackages.kdenlive
       yt-dlp
+
       (rstudioWrapper.override {
         packages = with rPackages; [
           ggplot2

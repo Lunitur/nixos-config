@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./common.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -23,32 +24,15 @@
       "anarhizam.org" = {
         addSSL = true;
         enableACME = true;
-        # All serverAliases will be added as extra domain names on the certificate.
-        # serverAliases = [ "nextcloud.anarhizam.org" ];
         locations."/" = {
           root = "/var/www";
         };
         locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
 
-      # We can also add a different vhost and reuse the same certificate
-      # but we have to append extraDomainNames manually beforehand:
       "nextcloud.anarhizam.org" = {
         forceSSL = true;
         enableACME = true;
-        # locations."/" = {
-        #   root = "/var/mail";
-        # };
-        locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
-      };
-
-      "ai.anarhizam.org" = {
-        enableACME = true;
-        addSSL = true;
-        locations."/" = {
-          proxyPass = "http://centaur.akita-bleak.ts.net:8080";
-          recommendedProxySettings = true;
-        };
         locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
     };
@@ -159,12 +143,12 @@
       };
   };
 
-  virtualisation.docker = {
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
-  };
+  # virtualisation.docker = {
+  #   rootless = {
+  #     enable = true;
+  #     setSocketVariable = true;
+  #   };
+  # };
 
   virtualisation.oci-containers.containers.collabora = {
     image = "docker.io/collabora/code:latest";
@@ -251,6 +235,8 @@
       9980
     ];
   };
+
+  networking.interfaces.enp1s0.useDHCP = true;
 
   system.stateVersion = "24.05";
 
