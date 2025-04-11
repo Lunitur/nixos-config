@@ -44,6 +44,12 @@ in
     vanilla-dmz
   ];
 
+  services.printing.enable = true;
+  services.printing.drivers = with pkgs; [
+    mfcl3730cdnlpr
+    mfcl3730cdncupswrapper
+  ];
+
   environment.variables = {
     XCURSOR_THEME = "DMZ-Black"; # Match your theme's exact name
     XCURSOR_SIZE = "10";
