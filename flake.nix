@@ -6,11 +6,13 @@
 
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:Lunitur/nixpkgs/nixos-24.11";
+    # nixpkgs-stable.url = "path:/home/carjin/nixpkgs";
 
     # nixpkgs-stable.follows = "nixos-cosmic/nixpkgs-stable"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
 
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    # nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # nixos-hardware.url = "path:/home/carjin/nixos-hardware";
@@ -37,7 +39,7 @@
       home-manager-stable,
       simple-nixos-mailserver,
       stylix,
-      nixos-cosmic,
+      # nixos-cosmic,
       ...
     }@inputs:
     let

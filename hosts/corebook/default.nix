@@ -9,6 +9,7 @@
 }:
 let
   monitor = import ./monitor.nix { inherit pkgs; };
+  user-pkgs = import ../../packages { inherit pkgs; };
 in
 {
   imports = [
@@ -58,6 +59,12 @@ in
   # boot.kernelParams = [
   #   "module_blacklist=i915"
   # ];
+
+  services.printing.enable = true;
+  services.printing.drivers = with pkgs; [
+    mfcl3730cdnlpr
+    mfcl3730cdncupswrapper
+  ];
 
   services = {
     # upower.enable = true;

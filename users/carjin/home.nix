@@ -10,14 +10,52 @@ let
   tex = (
     pkgs.texlive.combine {
       inherit (pkgs.texlive)
-        scheme-full
-        dvisvgm
-        dvipng # for preview and export as html
-        wrapfig
-        amsmath
-        ulem
+        scheme-medium
+
+        textpos
+        etextools
+        environ
+        fmtcount
+        koma-script
+        # inputenc
+        babel
+        babel-croatian
+        datetime
+        geometry
+        amsfonts
+        # amsmath
+        # amssymb
+        # amsthm
+        csquotes
+        tcolorbox
+        pgf
+        pgfplots
+        arydshln
+        float
+        xcolor
+        # fontenc
+        breqn
+        thmtools
+        multirow
         hyperref
-        capt-of
+        booktabs
+        listings
+        letltxmacro
+        adjustbox
+        enumitem
+        biblatex
+        # mathrsfs
+        placeins
+        mathtools
+        autonum
+        # bm
+        url # dvisvgm
+        # dvipng # for preview and export as html
+        # wrapfig
+        # amsmath
+        # ulem
+        # hyperref
+        # capt-of
         ;
       #(setq org-latex-compiler "lualatex")
       #(setq org-preview-latex-default-process 'dvisvgm)
@@ -161,6 +199,7 @@ in
     userName = "Lunitur";
     extraConfig = {
       receive.denyCurrentBranch = "warn";
+      pull.rebase = true;
     };
   };
 
