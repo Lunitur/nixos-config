@@ -69,6 +69,7 @@ def unsymlink [path] {
       cp $full $path
 
       chown $env.USER $path
+      chmod 777 $path
     }
     "dir" => {
       rm $path
@@ -76,6 +77,7 @@ def unsymlink [path] {
       cp -r $full $path
 
       chown -R $env.USER $path
+      chmod -R 777 $path
     }
     _ => { echo "Error: $path is not file or directory"; return; }
   }

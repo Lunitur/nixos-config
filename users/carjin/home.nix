@@ -200,6 +200,7 @@ in
     extraConfig = {
       receive.denyCurrentBranch = "warn";
       pull.rebase = true;
+      core.editor = "hx";
     };
   };
 
