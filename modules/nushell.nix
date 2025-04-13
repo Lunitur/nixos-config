@@ -68,7 +68,7 @@
             const init_path = $"($nu.home-path)/.init.nu"
             source $init_path
 
-            fastfetch
+            fastfetch --packages-disabled nix
       '';
       shellAliases = {
         vi = "hx";
