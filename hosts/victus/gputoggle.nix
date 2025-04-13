@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = [
-    (pkgs.writeShellScriptBin "unbind" ''
+    (pkgs.writeShellScriptBin "gpu-win" ''
       set -x
 
       # Unload NVIDIA kernel modules
@@ -22,7 +22,7 @@
       sudo virsh start win10
     '')
 
-    (pkgs.writeShellScriptBin "bind" ''
+    (pkgs.writeShellScriptBin "gpu-linux" ''
       #!/usr/bin/env bash
       set -x
 

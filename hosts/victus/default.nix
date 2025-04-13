@@ -10,7 +10,7 @@
 let
   multimonitor = import ./multimonitor.nix { inherit pkgs; };
   inherit (pkgs.stdenv.hostPlatform) system;
-  umu = inputs.umu.packages.${system}.umu;
+  umu = inputs.umu.packages.${system}.umu-launcher;
 in
 {
   imports = [
