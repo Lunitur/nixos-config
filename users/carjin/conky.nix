@@ -1,0 +1,5 @@
+{
+  services.conky = {
+    enable = true;
+  };
+}

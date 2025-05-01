@@ -59,7 +59,7 @@
           pkgs-unstable
           pkgs-unstable-arm
           modules
-          stylix
+          # stylix
           inputs
           ;
       };
@@ -138,7 +138,7 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          modules.stylix
+          # modules.stylix
           {
             nix.settings = {
               substituters = [ "https://cosmic.cachix.org/" ];
