@@ -14,14 +14,6 @@
     polarity = "dark";
     base16Scheme = import ./scheme.nix;
 
-    targets = {
-      # waybar.enable = false;
-      #   hyprland.enable = false;
-      #   hyprlock.enable = false;
-      #   vscode.enable = false;
-      # wofi.enable = false;
-    };
-
     cursor = {
       name = "DMZ-Black";
       size = 10;
@@ -51,13 +43,6 @@
         applications = 11;
       };
     };
-
-    # iconTheme = {
-    #   enable = true;
-    #   package = pkgs.papirus-icon-theme;
-    #   dark = "Papirus-Dark";
-    #   light = "Papirus-Light";
-    # };
 
     image = builtins.fetchurl {
       url = "https://images5.alphacoders.com/135/thumb-1920-1353829.png";

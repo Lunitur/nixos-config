@@ -53,12 +53,10 @@
         config.allowUnfree = true;
         overlays = [ ];
       };
-      modules = import ./modules;
       specialArgs = {
         inherit
           pkgs-unstable
           pkgs-unstable-arm
-          modules
           # stylix
           inputs
           ;
@@ -79,7 +77,6 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          modules.stylix
           #          modules.cosmic
         ];
       };
@@ -92,7 +89,6 @@
           ./network
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          modules.stylix
           #          modules.cosmic
         ];
       };
@@ -106,7 +102,6 @@
           nixos-hardware.nixosModules.chuwi-minibook-x
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          modules.stylix
         ];
       };
       nixosConfigurations.freebook = nixpkgs-stable.lib.nixosSystem {
@@ -122,7 +117,6 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          modules.stylix
         ];
       };
       nixosConfigurations.corebook = nixpkgs-stable.lib.nixosSystem {
@@ -132,6 +126,7 @@
           ./hosts/corebook
           ./hosts # defaults
           ./network
+          ./modules/desktop-common.nix
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-laptop-ssd

@@ -4,7 +4,6 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  modules,
   ...
 }:
 let
@@ -14,7 +13,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.hyprland
     ../../users/carjin/user.nix
   ];
 
@@ -29,7 +27,7 @@ in
     ++ (with pkgs; [
       virtiofsd # libvirt folder sharing
       moonlight-qt
-      wireshark
+      # wireshark
       tshark
       nikto
       logseq
@@ -103,7 +101,7 @@ in
   home-manager = {
     # also pass inputs to home-manager modules
     extraSpecialArgs = {
-      inherit modules pkgs-unstable;
+      inherit pkgs-unstable;
     };
     users = {
       carjin = import ../../users/carjin/home.nix;
@@ -157,7 +155,7 @@ in
   # services.displayManager.cosmic-greeter.enable = true;
   # services.desktopManager.cosmic.enable = true;
 
-  programs.wireshark.enable = true;
+  # programs.wireshark.enable = true;
 
   programs.steam = {
     enable = true;

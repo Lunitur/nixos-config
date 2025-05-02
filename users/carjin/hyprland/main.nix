@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 let
   theme = import ../theme;
 in
@@ -142,4 +143,25 @@ in
       ];
     };
   };
+
+  home.packages = with pkgs; [
+    networkmanagerapplet
+    wlr-randr
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    pamixer
+    wofi
+    pavucontrol
+    alsa-utils
+    brightnessctl
+    wlsunset
+    yad
+    loupe
+    cliphist
+    swappy
+    grimblast
+    jq
+    hyprsunset
+    conky
+  ];
 }
