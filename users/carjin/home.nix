@@ -12,7 +12,7 @@
     ./pueue.nix
     ./foot.nix
     ./zathura.nix
-    ./conky.nix
+    # ./conky.nix
     ./helix.nix
     ./git.nix
     ./zsh.nix
