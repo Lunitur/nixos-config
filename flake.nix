@@ -2,7 +2,8 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
+    nixpkgs-unstable.url = "github:Lunitur/nixpkgs/master";
 
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 

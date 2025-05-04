@@ -13,7 +13,7 @@
       "$mainMod,       V, exec, uwsm app -- cliphist list | $menu --dmenu | cliphist decode | wl-copy"
       # "$mainMod,       B, exec, pkill -SIGUSR2 waybar"
       # "$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
-      "$mainMod        F1, exec, loginctl lock-session"
+      "$mainMod,       F1, exec, loginctl lock-session"
       "$mainMod,       F2, exec, hyprpicker -an"
       "$mainMod,       B, exec, uwsm app -- swaync-client -t"
       "$mainMod,       O, exec, uwsm app -- firefox"

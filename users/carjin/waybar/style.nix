@@ -41,7 +41,7 @@ in
     color: #${colors.mantle};
   }
 
-  #clock, #battery, #pulseaudio, #tray, #custom-power {
+  #clock, #battery, #pulseaudio, #tray, #custom-power, #memory, #cpu {
     background: #${colors.mantle};
     border-radius: 10px;
     padding: 0px 10px;
@@ -57,7 +57,9 @@ in
   #battery:hover,
   #pulseaudio:hover,
   #tray:hover,
-  #custom-power:hover {
+  #custom-power:hover,
+  #memory:hover,
+  #cpu:hover {
     background: #${colors.primary};
     color: #${colors.mantle};
   }

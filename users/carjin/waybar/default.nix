@@ -10,40 +10,62 @@
         margin-bottom = 0;
         margin-left = 0;
         margin-right = 0;
-        modules-left = ["hyprland/workspaces"];
-        modules-center = [];
-        modules-right = [ "pulseaudio" "battery" "clock" "custom/power" "tray"];
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ ];
+        modules-right = [
+          "memory"
+          "pulseaudio"
+          "battery"
+          "clock"
+          "custom/power"
+          "tray"
+        ];
 
         "hyprland/workspaces" = {
           disable-scroll = true;
           show-special = true;
           special-visible-only = true;
           all-outputs = false;
-          format = "{id}"; 
+          format = "{id}";
           persistent-workspaces = {
             "*" = 3;
           };
         };
 
-        clock= {
+        cpu = {
+          format = " {usage: >3}%";
+          on-click = "foot -e htop";
+        };
+
+        memory = {
+          interval = 15;
+          format = "   {used:0.1f}G/{total:0.1f}G";
+          tooltip = false;
+          on-click = "xfce4-taskmanager";
+        };
+
+        clock = {
           format = " {:%a, %d %b, %I:%M %p}";
-          tooltip= "true";
-          tooltip-format= "{calendar}";
-          format-alt= "{:%I:%M %p}";
+          tooltip = "true";
+          tooltip-format = "{calendar}";
+          format-alt = "{:%I:%M %p}";
         };
 
         "pulseaudio" = {
           format = "{icon} {volume}%";
-          format-bluetooth = "{icon} {volume}% 󰂯"; 
-          format-muted = "󰝟"; 
+          format-bluetooth = "{icon} {volume}% 󰂯";
+          format-muted = "󰝟";
           format-icons = {
-            "headphones" = "󰋋"; 
-            "handsfree" = "󰋎"; 
+            "headphones" = "󰋋";
+            "handsfree" = "󰋎";
             "headset" = "󰋎";
-            "phone" = "󰣏"; 
-            "portable" = "󰣏"; 
-            "car" = "󰄜"; 
-            "default" = ["󰕿" "󰖀"];
+            "phone" = "󰣏";
+            "portable" = "󰣏";
+            "car" = "󰄜";
+            "default" = [
+              "󰕿"
+              "󰖀"
+            ];
           };
           on-click = "pavucontrol";
         };
@@ -56,7 +78,13 @@
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
           format-alt = "{time} {icon}";
-          format-icons = ["" "" "" "" ""];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         "custom/power" = {
