@@ -1,5 +1,5 @@
- {
-   services.mako = {
+{
+  services.mako = {
     enable = true;
     anchor = "bottom-right";
     # font = "monospace 10";

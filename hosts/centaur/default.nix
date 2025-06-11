@@ -162,9 +162,9 @@
   nixpkgs.config.allowUnfree = true;
 
   users.defaultUserShell = pkgs.nushell;
-  fonts.packages = with pkgs; [
-    nerdfonts # bilo bi bolje da su samo iskljcuvo oni koji se koriste
-  ];
+  # fonts.packages = with pkgs; [
+  #   nerdfonts # bilo bi bolje da su samo iskljcuvo oni koji se koriste
+  # ];
 
   networking.hostName = "centaur"; # Define your hostname.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.

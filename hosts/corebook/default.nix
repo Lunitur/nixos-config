@@ -20,6 +20,9 @@ in
   #   "http://victus.akita-bleak.ts.net?priority=50"
   # ];
 
+  services.mysql.enable = true;
+  services.mysql.package = pkgs.mariadb;
+
   environment.systemPackages =
     (with pkgs-unstable; [
       jetbrains.idea-community-bin
@@ -32,7 +35,7 @@ in
       nikto
       logseq
       youtube-music
-      ghostwriter
+      kdePackages.ghostwriter
       vanilla-dmz
     ]);
 

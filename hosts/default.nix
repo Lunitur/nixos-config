@@ -40,11 +40,7 @@ in
     };
   };
 
-  # zramSwap.enable = true;
-
-  # services.netbird.enable = true;
-
-  nixpkgs.overlays = [ ];
+  nixpkgs.overlays = [ (import ../overlays/brother.nix) ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-27.3.11"

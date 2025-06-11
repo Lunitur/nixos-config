@@ -14,13 +14,17 @@
   #   nerd-fonts.jetbrains-mono
   # ];
 
-  home.packages = with pkgs; [
-    jetbrains-mono
-    # noto-fonts
-    # noto-fonts-emoji
-    fira-code
-    nerdfonts
-  ];
+  home.packages =
+    with pkgs;
+    [
+      # nerd-fonts.hasklug
+      # nerd-fonts.jetbrains-mono
+      jetbrains-mono
+      noto-fonts
+      noto-fonts-emoji
+      fira-code
+    ]
+    ++ (lib.filter lib.isDerivation (builtins.attrValues nerd-fonts));
 
   fonts.fontconfig.enable = true;
 }

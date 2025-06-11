@@ -9,6 +9,7 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      heroic
       xfce.xfce4-taskmanager
       telegram-desktop
       vesktop

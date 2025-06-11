@@ -23,19 +23,19 @@
     fonts = {
       emoji = {
         name = "Noto Color Emoji";
-        package = pkgs-unstable.noto-fonts-color-emoji;
+        package = pkgs.noto-fonts-color-emoji;
       };
       monospace = {
         name = "JetBrains Mono";
-        package = pkgs-unstable.jetbrains-mono;
+        package = pkgs.nerd-fonts.jetbrains-mono;
       };
       sansSerif = {
         name = "Noto Sans";
-        package = pkgs-unstable.noto-fonts;
+        package = pkgs.noto-fonts;
       };
       serif = {
         name = "Noto Serif";
-        package = pkgs-unstable.noto-fonts;
+        package = pkgs.noto-fonts;
       };
 
       sizes = {
