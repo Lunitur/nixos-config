@@ -86,6 +86,7 @@
         rg = "rga";
         pkgs = "hx ~/nixos/users/carjin/packages.nix";
         nixos-switch = "nh os switch ~/nixos";
+        nixos = "hx ~/nixos";
         lls = "ls -l | reject target num_links inode readonly created accessed";
       };
     };

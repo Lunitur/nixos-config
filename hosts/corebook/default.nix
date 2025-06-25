@@ -23,6 +23,8 @@ in
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
 
+  programs.niri.enable = true;
+
   environment.systemPackages =
     (with pkgs-unstable; [
       jetbrains.idea-community-bin

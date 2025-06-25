@@ -27,6 +27,7 @@
     ./hyprland
     ./waybar
     ./nushell
+    ./fuzzel.nix
     # ./stylix
     # ./theme
   ];

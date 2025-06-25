@@ -4,7 +4,7 @@
       "$mainMod,       Return, exec, uwsm app -- $terminal"
       "$mainMod,       Q, killactive,"
       "$mainMod SHIFT, Q, exit,"
-      "$mainMod,       N, exec, uwsm app -- $fileManager"
+      "$mainMod,       N, exec, uwsm app -- thunar"
       "$mainMod,       F, fullscreen"
       "$mainMod,       D, exec, uwsm app -- $menu --show drun"
       "$mainMod,       P, pin,"
@@ -22,10 +22,12 @@
       "$mainMod, W, exec, uwsm app -- looking-glass-client -f /dev/kvmfr0 -m KEY_INSERT -F -T"
       "$mainMod, V, exec, uwsm app -- pavucontrol"
       "SUPER, M, movetoworkspace, special"
+      "SUPER SHIFT, M, exec, brightnessctl s 1"
       "SUPER SHIFT, 36, togglespecialworkspace"
-      # "$mainMod SHIFT, S, exec, uwsm app -- grimblast --notify --freeze copysave area"
 
-      "$mainMod SHIFT, S, exec, uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
+      "$mainMod SHIFT, S, exec, uwsm app -- grimblast --notify --freeze copysave area"
+
+      # "$mainMod SHIFT, S, exec, uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
       # Moving focus
       "$mainMod, h, movefocus, l"
       "$mainMod, l, movefocus, r"
