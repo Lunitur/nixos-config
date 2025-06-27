@@ -16,8 +16,8 @@ in
   imports = [
     ./gputoggle.nix
     ./hardware-configuration.nix
-    modules.nix-ld
-    modules.hyprland
+    # modules.nix-ld
+    # modules.hyprland
     ./vfio.nix
     ./kvmfr.nix
     ../../users/carjin/user.nix
