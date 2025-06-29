@@ -31,7 +31,11 @@
       "idleinhibit fullscreen, class:firefox"
       "idleinhibit fullscreen, class:mpv"
 
-      "fullscreen, title:.*[Cc]heatsheets.*"
+      # "fullscreen, title:.*[Cc]heatsheets.*"
+      "float, title:.*[Cc]heatsheets.*"
+      "size 90% 90%, title:.*[Cc]heatsheets.*"
+      "center, title:.*[Cc]heatsheets.*"
+      "opacity 0.9 0.9, title:.*[Cc]heatsheets.*"
     ];
   };
 }
