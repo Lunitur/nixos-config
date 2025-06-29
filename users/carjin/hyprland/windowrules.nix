@@ -30,6 +30,8 @@
       # Inhibit idle for specific apps
       "idleinhibit fullscreen, class:firefox"
       "idleinhibit fullscreen, class:mpv"
+
+      "fullscreen, title:.*[Cc]heatsheets.*"
     ];
   };
 }

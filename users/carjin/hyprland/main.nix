@@ -5,16 +5,17 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = true;
+    systemd.enable = false;
+
     settings = {
-      env = [
-        "NIXOS_OZONE_WL,1"
-        "XDG_CURRENT_DESKTOP,Hyprland"
-        "XDG_SESSION_TYPE,wayland"
-        "XDG_SESSION_DESKTOP,Hyprland"
-        "QT_QPA_PLATFORM,wayland"
-        "XDG_SCREENSHOTS_DIR,$HOME/screens"
-      ];
+      # env = [
+      #   "NIXOS_OZONE_WL,1"
+      #   "XDG_CURRENT_DESKTOP,Hyprland"
+      #   "XDG_SESSION_TYPE,wayland"
+      #   "XDG_SESSION_DESKTOP,Hyprland"
+      #   "QT_QPA_PLATFORM,wayland"
+      #   "XDG_SCREENSHOTS_DIR,$HOME/screens"
+      # ];
 
       monitor = [
         "eDP-1, 1920x1080@144.005005, 1920x0, 1.00"
@@ -26,11 +27,6 @@ in
         #  "HDMI-1, 1920x1080@143.854996, 0x0, 1.00",
         # "preferred,auto,1"
       ];
-
-      "$mainMod" = "SUPER";
-      "$terminal" = "footclient";
-      "$fileManager" = "rofi -show filebrowser";
-      "$menu" = "rofi -show drun";
 
       exec-once = [
         "uwsm app -- waybar"
@@ -124,7 +120,7 @@ in
         disable_hyprland_logo = true;
       };
 
-      windowrulev2 = [
+      windowrule = [
         "bordersize 0, floating:0, onworkspace:w[t1]"
 
         "float,class:(mpv)|(imv)|(showmethekey-gtk)"

@@ -4,7 +4,7 @@
     ./polkit.nix
     ./thunar.nix
     ./kmonad.nix
-    ./wlr.nix
+    # ./wlr.nix
     ./hyprland.nix
   ];
 }
