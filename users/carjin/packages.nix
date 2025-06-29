@@ -9,6 +9,12 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      clojure
+      cljfmt
+      cljstyle
+      clj-kondo
+      babashka
+      leiningen
       heroic
       xfce.xfce4-taskmanager
       telegram-desktop
@@ -19,7 +25,6 @@
       calibre
       firefox
       inkscape
-      librewolf
       chromium
       nextcloud-client
       oterm
