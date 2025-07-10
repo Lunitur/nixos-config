@@ -16,30 +16,22 @@ in
     ../../users/carjin/user.nix
   ];
 
-  # nix.settings.extra-substituters = [
-  #   "http://victus.akita-bleak.ts.net?priority=50"
-  # ];
-
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
 
   programs.niri.enable = true;
 
-  environment.systemPackages =
-    (with pkgs-unstable; [
-      jetbrains.idea-community-bin
-    ])
-    ++ (with pkgs; [
-      virtiofsd # libvirt folder sharing
-      moonlight-qt
-      # wireshark
-      tshark
-      nikto
-      logseq
-      youtube-music
-      kdePackages.ghostwriter
-      vanilla-dmz
-    ]);
+  environment.systemPackages = with pkgs; [
+    virtiofsd # libvirt folder sharing
+    moonlight-qt
+    # wireshark
+    tshark
+    nikto
+    logseq
+    youtube-music
+    kdePackages.ghostwriter
+    vanilla-dmz
+  ];
 
   services.postgresql = {
     enable = true;
@@ -54,14 +46,6 @@ in
     XCURSOR_THEME = "DMZ-Black"; # Match your theme's exact name
     XCURSOR_SIZE = "10";
   };
-  # boot.blacklistedKernelModules = [
-  #   "i915"
-  #   # "snd_pcsp"
-  # ];
-
-  # boot.kernelParams = [
-  #   "module_blacklist=i915"
-  # ];
 
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
@@ -101,19 +85,6 @@ in
         # USB_DENYLIST = "3434:0820 046d:c548"; # Keychron Q2 Max + Logitech Bolt Receiver
       };
     };
-  };
-
-  home-manager = {
-    # also pass inputs to home-manager modules
-    extraSpecialArgs = {
-      inherit pkgs-unstable;
-    };
-    users = {
-      carjin = import ../../users/carjin/home.nix;
-    };
-
-    backupFileExtension = "backup";
-    useGlobalPkgs = true;
   };
 
   # services.upower.enable = true;
@@ -187,36 +158,13 @@ in
     powertop.enable = true;
   };
 
-  # nixpkgs.config.packageOverrides = pkgs: {
-  # intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
-  # };
-  # options.hardware.intelgpu.driver = "xe";
-
   hardware = {
     enableAllFirmware = true;
     acpilight.enable = true;
     keyboard.qmk.enable = true;
     keyboard.zsa.enable = true;
 
-    # Intel Hardware Acceleration
-    # graphics = {
-    #   enable = true;
-    #   enable32Bit = true;
-    #   package = unstablePkgs.mesa.drivers;
-    #   package32 = unstablePkgs.pkgsi686Linux.mesa.drivers;
-    #   extraPackages = with unstablePkgs; [
-    #     intel-media-driver
-    #     intel-compute-runtime
-    #
-    #     vaapiVdpau
-    #     libvdpau-va-gl
-    #   ];
-    # };
     graphics = {
-      # package =
-      #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
-      # package32 =
-      #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa.drivers;
       extraPackages = with pkgs; [
         intel-media-driver
         intel-compute-runtime
@@ -230,18 +178,6 @@ in
     cpu.intel.updateMicrocode = true;
   };
 
-  # hardware.graphics = {
-  #   enable = true;
-  #   extraPackages = with pkgs; [
-  #     vaapiIntel
-  #     intel-media-driver
-  #   ];
-  #   # extraPackages = with pkgs; [
-  #   # intel-media-driver # LIBVA_DRIVER_NAME=iHD
-  #   # intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-  #   # libvdpau-va-gl
-  #   # ];
-  # };
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "iHD";
   }; # Force intel-media-driver

@@ -9,6 +9,8 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      vscode-langservers-extracted
+      gemini-cli
       clojure
       cljfmt
       cljstyle
@@ -23,7 +25,6 @@
       element-desktop
       mupdf
       calibre
-      firefox
       inkscape
       chromium
       nextcloud-client

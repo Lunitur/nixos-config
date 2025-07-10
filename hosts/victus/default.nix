@@ -16,8 +16,6 @@ in
   imports = [
     ./gputoggle.nix
     ./hardware-configuration.nix
-    # modules.nix-ld
-    # modules.hyprland
     ./vfio.nix
     ./kvmfr.nix
     ../../users/carjin/user.nix
@@ -70,19 +68,6 @@ in
       enable = true;
       setSocketVariable = true;
     };
-  };
-
-  home-manager = {
-    # also pass inputs to home-manager modules
-    extraSpecialArgs = {
-      inherit modules pkgs-unstable;
-    };
-    users = {
-      carjin = import ../../users/carjin/home.nix;
-    };
-    backupFileExtension = "backup";
-    useGlobalPkgs = true;
-    useUserPackages = true;
   };
 
   services.nix-serve = {

@@ -9,6 +9,7 @@
 
   imports = [
     ./dotfiles.nix
+    ./distrobox.nix
     ./pueue.nix
     ./foot.nix
     ./zathura.nix
@@ -28,6 +29,7 @@
     ./waybar
     ./nushell
     ./fuzzel.nix
+    ./firefox.nix
     # ./stylix
     # ./theme
   ];

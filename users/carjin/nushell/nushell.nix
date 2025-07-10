@@ -74,7 +74,7 @@
             touch $init_path
             source $init_path
 
-            fastfetch --packages-disabled nix
+            # fastfetch --packages-disabled nix
       '';
       shellAliases = {
         vi = "hx";

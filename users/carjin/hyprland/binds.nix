@@ -8,7 +8,7 @@
       "SUPER,       F, fullscreen"
       "SUPER,       D, exec, fuzzel"
       "SUPER,       P, pin,"
-      "SUPER,       S, togglesplit,"
+      # "SUPER,       S, togglesplit,"
       "SUPER,       E, exec, bemoji -cn"
       "SUPER,       V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       # "SUPER,       B, exec, pkill -SIGUSR2 waybar"
@@ -26,7 +26,7 @@
       "SUPER SHIFT, M, exec, brightnessctl s 1"
       "SUPER SHIFT, 36, togglespecialworkspace"
 
-      "SUPER SHIFT, S, exec, uwsm app -- grimblast --notify --freeze copysave area"
+      "SUPER, S, exec, uwsm app -- grimblast --notify --freeze copysave area"
 
       # "SUPER SHIFT, S, exec, uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
       # Moving focus

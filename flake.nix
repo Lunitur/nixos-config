@@ -2,6 +2,11 @@
   description = "Nixos config flake";
 
   inputs = {
+    firefox-gnome-theme = {
+      url = "github:rafaelmardojai/firefox-gnome-theme";
+      flake = false;
+    };
+
     nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
     # nixpkgs-unstable.url = "github:Lunitur/nixpkgs/master";
 
@@ -78,7 +83,20 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          #          modules.cosmic
+          {
+            home-manager = {
+              # also pass inputs to home-manager modules
+              extraSpecialArgs = {
+                inherit pkgs-unstable inputs;
+              };
+              users = {
+                carjin = ./users/carjin/home.nix;
+              };
+
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+            };
+          } # modules.cosmic
         ];
       };
       nixosConfigurations.centaur = nixpkgs-stable.lib.nixosSystem {
@@ -136,10 +154,24 @@
           stylix.nixosModules.stylix
           # modules.stylix
           {
+            home-manager = {
+              # also pass inputs to home-manager modules
+              extraSpecialArgs = {
+                inherit pkgs-unstable inputs;
+              };
+              users = {
+                carjin = ./users/carjin/home.nix;
+              };
+
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+            };
+
             nix.settings = {
               substituters = [ "https://cosmic.cachix.org/" ];
               trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
             };
+
           }
           # nixos-cosmic.nixosModules.default
         ];
