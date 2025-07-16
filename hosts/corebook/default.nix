@@ -90,6 +90,11 @@ in
   # services.upower.enable = true;
   # services.upower.percentageAction = 5;
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
