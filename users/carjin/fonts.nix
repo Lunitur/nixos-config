@@ -19,6 +19,7 @@
     [
       # nerd-fonts.hasklug
       # nerd-fonts.jetbrains-mono
+      dejavu_fonts
       jetbrains-mono
       noto-fonts
       noto-fonts-emoji

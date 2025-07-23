@@ -9,6 +9,8 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      zulu
+      gimp3
       vscode-langservers-extracted
       gemini-cli
       clojure
