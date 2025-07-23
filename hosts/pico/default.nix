@@ -14,7 +14,34 @@
 
   environment.systemPackages = with pkgs; [
     helix
+    zulu
   ];
+
+  systemd.services.anarhizam-org = {
+    description = "Anarhizam.org Server";
+
+    # The service should start after the network is available.
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    # Service configuration details.
+    serviceConfig = {
+      # The user and group the service will run as.
+      # It's good practice to run services as a non-root user.
+      User = "carjin";
+      # Group = "carjin";
+
+      # The command to start the Java server.
+      # It uses the JRE from Nix packages and points to the JAR file
+      # from our 'my-java-app' derivation.
+      ExecStart = "${pkgs.zulu}/bin/java -jar /home/carjin/anarhizam-org/anarhizam-org-0.1.0-SNAPSHOT-standalone.jar";
+
+      # Automatically restart the service if it fails.
+      Restart = "on-failure";
+      # Wait 10 seconds before attempting to restart.
+      RestartSec = "10s";
+    };
+  };
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "karlo.puselj@gmail.com";
@@ -25,7 +52,9 @@
         addSSL = true;
         enableACME = true;
         locations."/" = {
-          root = "/var/www";
+          proxyPass = "http://localhost:3000";
+          recommendedProxySettings = true;
+          proxyWebsockets = true;
         };
         locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
