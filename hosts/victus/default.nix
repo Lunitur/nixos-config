@@ -19,6 +19,7 @@ in
     ./vfio.nix
     ./kvmfr.nix
     ../../users/carjin/user.nix
+    ../../modules/usb-tethering.nix
   ];
 
   nixpkgs.overlays = [ (import ../../overlays/lutris.nix pkgs-unstable) ];
@@ -40,6 +41,7 @@ in
     vial
     umu
     vanilla-dmz
+    usbutils
   ];
 
   services.printing.enable = true;
