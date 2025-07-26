@@ -1,5 +1,5 @@
 {
-  config,
+  osConfig,
   pkgs,
   ...
 }:
@@ -88,7 +88,7 @@
         nixos-switch = "nh os switch ~/nixos";
         nixos = "hx ~/nixos";
         lls = "ls -l | reject target num_links inode readonly created accessed";
-        nix-repl = "nix repl ~/nixos#nixosConfigurations.${config.networking.hostname}";
+        nix-repl = "nix repl ~/nixos#nixosConfigurations.${osConfig.networking.hostName}";
       };
     };
     carapace.enable = true;
