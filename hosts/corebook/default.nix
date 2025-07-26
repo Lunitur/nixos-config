@@ -96,7 +96,7 @@ in
   };
 
   virtualisation.libvirtd = {
-    enable = true;
+    enable = false;
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
@@ -113,13 +113,13 @@ in
     };
   };
 
-  programs.virt-manager.enable = true;
+  programs.virt-manager.enable = false;
 
   virtualisation.spiceUSBRedirection.enable = true;
 
   virtualisation.waydroid.enable = true;
 
-  users.extraGroups.vboxusers.members = [ "carjin" ];
+  # users.extraGroups.vboxusers.members = [ "carjin" ];
 
   services.xserver.enable = true;
   services.displayManager.sddm = {
