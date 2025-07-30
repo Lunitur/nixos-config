@@ -9,6 +9,7 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      emacs
       zulu
       gimp3
       vscode-langservers-extracted
