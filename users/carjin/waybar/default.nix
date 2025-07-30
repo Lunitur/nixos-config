@@ -1,3 +1,26 @@
+{ pkgs, osConfig, ... }:
+let
+  gpu-check = pkgs.writeShellScript "gpu-checker" ''
+    #!/usr/bin/env bash
+    # Set -e to exit immediately if a command exits with a non-zero status.
+    set -e
+
+    # Check if the 'nvidia' kernel module is loaded.
+    # lsmod lists loaded kernel modules.
+    # grep -q "^nvidia " searches for a line starting with "nvidia ".
+    # The -q flag makes grep quiet, so it doesn't output anything,
+    # it just sets its exit code based on whether a match was found.
+    if lsmod | grep -q "^nvidia "; then
+      # If the nvidia module is found, output a JSON string for nvidia.
+      echo '{"text": "NVIDIA", "class": "nvidia"}'
+    else
+      # Otherwise, output a JSON string for amd (or any non-nvidia setup).
+      echo '{"text": "AMD", "class": "amd"}'
+    fi
+  '';
+
+  is-victus = osConfig.networking.hostName == "victus";
+in
 {
   programs.waybar = {
     enable = true;
@@ -13,6 +36,7 @@
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ ];
         modules-right = [
+          (if is-victus then "custom/gpu" else null)
           "memory"
           "pulseaudio"
           "battery"
@@ -87,12 +111,19 @@
           ];
         };
 
+        "custom/gpu" = {
+          format = "{}";
+          exec = gpu-check;
+          return-type = "json";
+          interval = 10;
+        };
+
         "custom/power" = {
           format = "⏻";
           tooltip = true;
           tooltip-format = "Power Menu";
-          on-click = "rofi -show power-menu -modi power-menu:rofi-power-menu";
-          on-click-right = "systemctl poweroff";
+          # on-click = "rofi -show power-menu -modi power-menu:rofi-power-menu";
+          on-click = "systemctl poweroff";
         };
 
         "tray" = {

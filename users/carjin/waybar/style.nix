@@ -41,7 +41,7 @@ in
     color: #${colors.mantle};
   }
 
-  #clock, #battery, #pulseaudio, #tray, #custom-power, #memory, #cpu {
+  #clock, #battery, #pulseaudio, #tray, #custom-power, #custom-gpu, #memory, #cpu {
     background: #${colors.mantle};
     border-radius: 10px;
     padding: 0px 10px;
