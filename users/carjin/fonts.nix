@@ -6,13 +6,6 @@
 }:
 
 {
-  # home.packages = with pkgs-unstable; [
-  #   jetbrains-mono
-  #   noto-fonts
-  #   noto-fonts-emoji
-  #   fira-code
-  #   nerd-fonts.jetbrains-mono
-  # ];
 
   home.packages =
     with pkgs;
@@ -24,6 +17,8 @@
       noto-fonts
       noto-fonts-emoji
       fira-code
+      source-code-pro
+      nanum-gothic-coding
     ]
     ++ (lib.filter lib.isDerivation (builtins.attrValues nerd-fonts));
 
