@@ -1,4 +1,9 @@
-{ pkgs, osConfig, ... }:
+{
+  pkgs,
+  lib,
+  osConfig,
+  ...
+}:
 let
   gpu-check = pkgs.writeShellScript "gpu-checker" ''
     #!/usr/bin/env bash
@@ -35,8 +40,7 @@ in
         margin-right = 0;
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ ];
-        modules-right = [
-          (if is-victus then "custom/gpu" else null)
+        modules-right = lib.optional is-victus "custom-gpu" ++ [
           "memory"
           "pulseaudio"
           "battery"
