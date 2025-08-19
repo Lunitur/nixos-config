@@ -9,7 +9,7 @@
 
   imports = [
     ./dotfiles.nix
-    ./distrobox.nix
+    # ./distrobox.nix
     ./pueue.nix
     ./foot.nix
     ./zathura.nix
@@ -30,6 +30,7 @@
     ./nushell
     ./fuzzel.nix
     ./firefox.nix
+    ./jupyter.nix
     # ./stylix
     # ./theme
   ];

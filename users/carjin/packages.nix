@@ -15,6 +15,7 @@
       vscode-langservers-extracted
       gemini-cli
       clojure
+      clojure-lsp
       cljfmt
       cljstyle
       clj-kondo
