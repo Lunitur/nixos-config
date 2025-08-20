@@ -118,9 +118,32 @@
           ./hosts/minibook
           ./hosts # defaults
           ./network
+          ./modules/desktop-common.nix
           nixos-hardware.nixosModules.chuwi-minibook-x
+          nixos-hardware.nixosModules.common-cpu-intel
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
+          {
+            home-manager = {
+              extraSpecialArgs = {
+                inherit pkgs-unstable inputs;
+              };
+              users = {
+                carjin = ./users/carjin/home.nix;
+              };
+
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+            };
+
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
         ];
       };
       nixosConfigurations.freebook = nixpkgs-stable.lib.nixosSystem {

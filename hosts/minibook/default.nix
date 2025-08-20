@@ -13,7 +13,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.hyprland
     ../../users/carjin/user.nix
   ];
 
@@ -23,60 +22,45 @@ in
 
   environment.systemPackages =
     (with pkgs-unstable; [
-      jetbrains.idea-community-bin
+      # jetbrains.idea-community-bin
     ])
     ++ (with pkgs; [
-      virtiofsd # libvirt folder sharing
-      moonlight-qt
-      wireshark
-      tshark
-      nikto
-      logseq
-      youtube-music
-      ghostwriter
+      # moonlight-qt
+      # wireshark
+      # tshark
+      # nikto
+      # logseq
+      # youtube-music
     ]);
-
-  home-manager = {
-    # also pass inputs to home-manager modules
-    extraSpecialArgs = {
-      inherit modules pkgs-unstable;
-    };
-    users = {
-      carjin = import ../../users/carjin/home.nix;
-    };
-
-    backupFileExtension = "backup";
-    useGlobalPkgs = true;
-  };
 
   services.upower.enable = true;
   services.upower.percentageAction = 5;
 
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      package = pkgs.qemu_kvm;
-      runAsRoot = true;
-      swtpm.enable = true;
-      ovmf = {
-        enable = true;
-        packages = [
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd
-        ];
-      };
-    };
-  };
+  # virtualisation.libvirtd = {
+  #   enable = true;
+  #   qemu = {
+  #     package = pkgs.qemu_kvm;
+  #     runAsRoot = true;
+  #     swtpm.enable = true;
+  #     ovmf = {
+  #       enable = true;
+  #       packages = [
+  #         (pkgs.OVMF.override {
+  #           secureBoot = true;
+  #           tpmSupport = true;
+  #         }).fd
+  #       ];
+  #     };
+  #   };
+  # };
 
-  programs.virt-manager.enable = true;
+  # programs.virt-manager.enable = true;
 
-  virtualisation.spiceUSBRedirection.enable = true;
+  # virtualisation.spiceUSBRedirection.enable = true;
 
   virtualisation.waydroid.enable = true;
 
-  users.extraGroups.vboxusers.members = [ "carjin" ];
+  # users.extraGroups.vboxusers.members = [ "carjin" ];
 
   services.xserver.enable = true;
   services.displayManager.sddm = {
@@ -99,7 +83,7 @@ in
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
-  swapDevices = [ { device = "/var/swapfile"; } ];
+  # swapDevices = [ { device = "/var/swapfile"; } ];
   services.logind.lidSwitch = "hybrid-sleep";
 
   boot.loader.systemd-boot.enable = true;
@@ -138,6 +122,6 @@ in
   # LIBVA_DRIVER_NAME = "iHD";
   # }; # Force intel-media-driver
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 
 }
