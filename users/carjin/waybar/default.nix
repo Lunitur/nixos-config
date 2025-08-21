@@ -25,12 +25,14 @@ let
   '';
 
   is-victus = osConfig.networking.hostName == "victus";
+  is-minibook = osConfig.networking.hostName == "minibook";
 in
 {
   programs.waybar = {
     enable = true;
     settings = {
       mainBar = {
+        start_hidden = lib.mkIf is-minibook true;
         layer = "top";
         position = "top";
         height = 30;

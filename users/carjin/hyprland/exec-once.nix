@@ -3,7 +3,7 @@
     exec-once = [
 
       "uwsm app -- footserver"
-      "uwsm app -- vesktop"
+      # "uwsm app -- vesktop"
       "uwsm app -- signal-desktop --start-in-tray"
       # "uwsm app -- thunderbird --headless"
       # "[workspace special] uwsm app -- footclient"

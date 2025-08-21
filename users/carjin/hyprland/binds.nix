@@ -70,6 +70,12 @@
       "SUPER SHIFT, 8, movetoworkspacesilent, 8"
       "SUPER SHIFT, 9, movetoworkspacesilent, 9"
       "SUPER SHIFT, 0, movetoworkspacesilent, 10"
+
+      ", SUPER_L, exec, pkill -SIGUSR1 waybar"
+    ];
+
+    bindr = [
+      "SUPER, SUPER_L, exec, pkill -SIGUSR1 waybar"
     ];
 
     # Move/resize windows with mainMod + LMB/RMB and dragging
