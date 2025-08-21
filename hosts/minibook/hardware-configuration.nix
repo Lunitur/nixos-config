@@ -40,7 +40,10 @@
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/c08242df-fced-418c-8bc6-b59890ad046e";
     fsType = "btrfs";
-    options = [ "subvol=nix" ];
+    options = [
+      "noatime"
+      "subvol=nix"
+    ];
   };
 
   fileSystems."/boot" = {
