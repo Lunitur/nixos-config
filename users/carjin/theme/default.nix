@@ -1,1 +1,1 @@
-import ./pink.nix
+import ./tokyo-night.nix

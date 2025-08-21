@@ -44,9 +44,6 @@
       };
     };
 
-    image = builtins.fetchurl {
-      url = "https://images5.alphacoders.com/135/thumb-1920-1353829.png";
-      sha256 = "0jyr6i17hsvdjx59m81h43301dcb6gsr62gnzsxs076i3yj7rd25";
-    };
+    image = ../wallpapers/desktop6.png;
   };
 }
