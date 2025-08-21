@@ -17,7 +17,7 @@
       "float, title:Bluetooth devices"
       "size 40% 30%, title:Bluetooth devices"
       "float, title:Volume Control"
-      "size 40% 30%, title:Volume Control"
+      "size 50% 70%, title:Volume Control"
       "float, class:xfce4-taskmanager"
       # "size 40% 30%, xfce4-taskmanager"
       "float, class:Bluetooth-sendto"

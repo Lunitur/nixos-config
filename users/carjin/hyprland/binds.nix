@@ -23,7 +23,7 @@
         "SUPER,       C, exec, nu -c 'cd ~/Nextcloud/cheatsheets; zathura (^ls | fuzzel -d)'"
         "SUPER, C, exec, uwsm app -- nwg-clipman"
         "SUPER, W, exec, uwsm app -- looking-glass-client -f /dev/kvmfr0 -m KEY_INSERT -F -T"
-        "SUPER, V, exec, uwsm app -- pavucontrol"
+        "SUPER SHIFT, V, exec, uwsm app -- pavucontrol"
         "SUPER, M, movetoworkspace, special"
         "SUPER SHIFT, M, exec, brightnessctl s 1"
         "SUPER SHIFT, 36, togglespecialworkspace"
