@@ -33,8 +33,8 @@ in
     settings = {
       mainBar = {
         start_hidden = lib.mkIf is-minibook true;
-        mode = "hide";
-        modifier-reset = "release";
+        mode = lib.mkIf is-minibook "hide";
+        modifier-reset = lib.mkIf is-minibook "release";
         layer = "top";
         position = "top";
         height = 30;
