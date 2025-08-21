@@ -41,7 +41,7 @@ in
     color: #${colors.mantle};
   }
 
-  #clock, #battery, #pulseaudio, #tray, #custom-power, #custom-gpu, #memory, #cpu {
+  #clock, #temperature, #battery, #pulseaudio, #tray, #custom-power, #custom-gpu, #memory, #cpu {
     background: #${colors.mantle};
     border-radius: 10px;
     padding: 0px 10px;
@@ -59,6 +59,7 @@ in
   #tray:hover,
   #custom-power:hover,
   #memory:hover,
+  #temperature:hover,
   #cpu:hover {
     background: #${colors.primary};
     color: #${colors.mantle};

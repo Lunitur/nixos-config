@@ -33,6 +33,8 @@ in
     settings = {
       mainBar = {
         start_hidden = lib.mkIf is-minibook true;
+        mode = "hide";
+        modifier-reset = "release";
         layer = "top";
         position = "top";
         height = 30;
@@ -44,6 +46,7 @@ in
         modules-center = [ ];
         modules-right = lib.optional is-victus "custom-gpu" ++ [
           "memory"
+          "temperature"
           "pulseaudio"
           "battery"
           "clock"
@@ -60,6 +63,21 @@ in
           persistent-workspaces = {
             "*" = 3;
           };
+        };
+
+        temperature = {
+          hwmon-path = "/sys/class/hwmon/hwmon5/temp1_input";
+          critical-threshold = 75;
+          interval = 5;
+          format = "{icon} {temperatureC}°";
+          tooltip = false;
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         cpu = {
