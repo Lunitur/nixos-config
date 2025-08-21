@@ -9,6 +9,7 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      ytmdl
       emacs
       zulu
       gimp3

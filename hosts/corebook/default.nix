@@ -34,6 +34,9 @@ in
     vanilla-dmz
   ];
 
+  programs.adb.enable = true;
+  users.users.carjin.extraGroups = [ "adbusers" ];
+
   services.postgresql = {
     enable = true;
     # ensureDatabases = [ "mydb" ];

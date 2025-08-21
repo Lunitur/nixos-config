@@ -44,6 +44,9 @@ in
     usbutils
   ];
 
+  programs.adb.enable = true;
+  users.users.carjin.extraGroups = [ "adbusers" ];
+
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
     mfcl3730cdnlpr

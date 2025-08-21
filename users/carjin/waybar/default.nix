@@ -44,7 +44,7 @@ in
         margin-right = 0;
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ ];
-        modules-right = lib.optional is-victus "custom-gpu" ++ [
+        modules-right = lib.optional is-victus "custom/gpu" ++ [
           "memory"
           "temperature"
           "pulseaudio"
