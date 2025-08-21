@@ -32,7 +32,6 @@
     fsType = "btrfs";
     options = [
       "noatime"
-      "compress=zstd"
       "subvol=@nixos/root"
     ];
   };
@@ -51,7 +50,6 @@
     device = "/dev/disk/by-uuid/ef200b06-21a4-4383-b8fb-6bb845714809";
     fsType = "btrfs";
     options = [
-      "compress=zstd"
       "noatime"
       "subvol=@nixos/nix"
     ];

@@ -31,7 +31,6 @@
     fsType = "btrfs";
     options = [
       "subvol=@nixos/root"
-      "compress=zstd"
     ];
   };
 
@@ -49,7 +48,6 @@
     fsType = "btrfs";
     options = [
       "subvol=@nixos/nix"
-      "compress=zstd"
       "noatime"
     ];
   };
