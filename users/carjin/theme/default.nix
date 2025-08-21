@@ -1,1 +1,1 @@
-import ./tokyo-night.nix
+import ./green.nix
