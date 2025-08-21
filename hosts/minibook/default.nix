@@ -14,6 +14,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../users/carjin/user.nix
+    ../../modules/jupyter.nix
   ];
 
   # nix.settings.extra-substituters = [

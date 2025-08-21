@@ -30,7 +30,6 @@
     ./nushell
     ./fuzzel.nix
     ./firefox.nix
-    ./jupyter.nix
     # ./stylix
     # ./theme
   ];
