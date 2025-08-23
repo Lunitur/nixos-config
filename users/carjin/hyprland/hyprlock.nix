@@ -30,7 +30,7 @@ in
           font_size = 16;
           font_family = "JetBrains Mono";
           color = hexToRgb colors.primary-pale;
-          position = "0, -50";
+          position = "0, 50";
           halign = "center";
           valign = "center";
           shadow_passes = 1;
