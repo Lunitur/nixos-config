@@ -149,6 +149,8 @@ in
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
+  boot.initrd.systemd.enable = true;
+
   swapDevices = [ { device = "/var/swapfile"; } ];
   services.logind.lidSwitch = "hybrid-sleep";
 

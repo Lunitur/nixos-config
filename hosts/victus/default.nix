@@ -44,6 +44,8 @@ in
     usbutils
   ];
 
+  boot.initrd.systemd.enable = true;
+
   programs.adb.enable = true;
   users.users.carjin.extraGroups = [ "adbusers" ];
 
