@@ -1,4 +1,7 @@
+{ pkgs, ... }:
 {
+  environment.systemPackages = [ pkgs.kmonad ];
+
   boot.kernelModules = [ "uinput" ];
 
   services.udev.extraRules = ''
