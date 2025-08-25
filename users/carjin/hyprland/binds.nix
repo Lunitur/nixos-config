@@ -19,6 +19,8 @@
         "SUPER,       F2, exec, hyprpicker -an"
         "SUPER SHIFT, N, exec, uwsm app -- swaync-client -t"
         "SUPER,       O, exec, uwsm app -- firefox"
+        "SUPER ALT, O, exec, uwsm app -- firefox https://search.nixos.org/options"
+        "SUPER ALT, P, exec, uwsm app -- firefox https://search.nixos.org/packages"
 
         "SUPER,       B, exec, nu -c 'cd ~/Nextcloud; ls skripte | append (ls books) | $in.name | str join \"\\n\" | fuzzel -d | zathura $in'"
         "SUPER SHIFT, C, exec, nu -c 'cd ~/Nextcloud/cheatsheets; zathura (^ls | fuzzel -d)'"
