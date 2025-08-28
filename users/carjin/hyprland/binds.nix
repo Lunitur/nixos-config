@@ -34,6 +34,11 @@
         "SUPER, S, exec, uwsm app -- grimblast --notify --freeze copysave area"
 
         # "SUPER SHIFT, S, exec, uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
+        "ALT SHIFT, j, scroll, 10"
+        "ALT SHIFT, k, scroll, -10"
+
+        "ALT CTRL, j, scroll, 100"
+        "ALT CTRL, k, scroll, -100"
         # Moving focus
         "SUPER, h, movefocus, l"
         "SUPER, l, movefocus, r"
