@@ -152,7 +152,10 @@ in
   boot.initrd.systemd.enable = true;
 
   swapDevices = [ { device = "/var/swapfile"; } ];
-  services.logind.lidSwitch = "hybrid-sleep";
+  boot.resumeDevice = "/dev/disk/by-uuid/ef200b06-21a4-4383-b8fb-6bb845714809";
+  boot.kernelParams = [ "resume_offset=1933233" ];
+
+  services.logind.lidSwitch = "hibernate";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
