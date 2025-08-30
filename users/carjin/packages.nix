@@ -9,6 +9,7 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      pcsx2
       ytmdl
       emacs
       zulu

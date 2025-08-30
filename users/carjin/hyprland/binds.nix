@@ -34,11 +34,6 @@
         "SUPER, S, exec, uwsm app -- grimblast --notify --freeze copysave area"
 
         # "SUPER SHIFT, S, exec, uwsm app -- grim -g \"$(slurp)\" - | swappy -f -"
-        "ALT SHIFT, j, scroll, 10"
-        "ALT SHIFT, k, scroll, -10"
-
-        "ALT CTRL, j, scroll, 100"
-        "ALT CTRL, k, scroll, -100"
         # Moving focus
         "SUPER, h, movefocus, l"
         "SUPER, l, movefocus, r"
@@ -52,10 +47,18 @@
         "SUPER SHIFT, j,  swapwindow, d"
 
         # Resizeing windows                   X  Y
+        "SUPER     , r,  submap, resize"
+
         "SUPER CTRL, h,  resizeactive, -60 0"
         "SUPER CTRL, l,  resizeactive,  60 0"
         "SUPER CTRL, k,  resizeactive,  0 -60"
         "SUPER CTRL, j,  resizeactive,  0  60"
+        #
+        # Scroll windows
+        # "SUPER, h,  exec, wlrctl pointer scroll 0 -120"
+        # "SUPER, l,  exec, wlrctl pointer scroll 0 120"
+        # "SUPER, period,  exec, wlrctl pointer scroll -120 0"
+        # "SUPER, comma,  exec, wlrctl pointer scroll 120 0"
 
         # Switching workspaces
         "SUPER, 1, workspace, 1"
@@ -111,21 +114,21 @@
     ];
   };
 
-  # wayland.windowManager.hyprland.extraConfig = ''
-  #   # will start a submap called "resize"
-  #   submap=resize
+  wayland.windowManager.hyprland.extraConfig = ''
+    # will start a submap called "resize"
+    submap=resize
 
-  #   # sets repeatable binds for resizing the active window
-  #   binde=,right,resizeactive,50 0
-  #   binde=,L,resizeactive,50 0
-  #   binde=,left,resizeactive,-50 0
-  #   binde=,H,resizeactive,-50 0
-  #   binde=,up,resizeactive,0 -50
-  #   binde=,K,resizeactive,0 -50
-  #   binde=,down,resizeactive,0 50
-  #   binde=,J,resizeactive,0 50
+    # sets repeatable binds for resizing the active window
+    binde=,right,resizeactive,50 0
+    binde=,L,resizeactive,50 0
+    binde=,left,resizeactive,-50 0
+    binde=,H,resizeactive,-50 0
+    binde=,up,resizeactive,0 -50
+    binde=,K,resizeactive,0 -50
+    binde=,down,resizeactive,0 50
+    binde=,J,resizeactive,0 50
 
-  #   # use reset to go back to the global submap
-  #   bind=,escape,submap,reset
-  # '';
+    # use reset to go back to the global submap
+    bind=,escape,submap,reset
+  '';
 }
