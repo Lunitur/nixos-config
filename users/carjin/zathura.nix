@@ -6,9 +6,13 @@
       D = "toggle_page_mode";
       d = "scroll half_down";
       u = "scroll half_up";
+
     };
     options = {
       font = "JetBrains Mono Bold 13";
+      # copy selection to system clipboard
+      selection-clipboard = "clipboard";
+      incremental-search = true;
     };
     package = pkgs.zathura.override { useMupdf = true; };
   };
