@@ -21,6 +21,7 @@ in
     ./kvmfr.nix
     ../../users/carjin/user.nix
     ../../modules/usb-tethering.nix
+    ../../modules/anarhizam-org.nix
   ];
 
   nixpkgs.overlays = [ (import ../../overlays/lutris.nix pkgs-unstable) ];
