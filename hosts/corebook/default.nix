@@ -28,7 +28,6 @@ in
     # wireshark
     tshark
     nikto
-    logseq
     youtube-music
     kdePackages.ghostwriter
     vanilla-dmz
