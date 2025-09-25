@@ -59,6 +59,8 @@
       # "SUPER, period,  exec, wlrctl pointer scroll -120 0"
       # "SUPER, comma,  exec, wlrctl pointer scroll 120 0"
 
+      # Switch between current and previous workplace
+      "SUPER, TAB, workspace, previous"
       # Switching workspaces
       "SUPER, 1, workspace, 1"
       "SUPER, 2, workspace, 2"

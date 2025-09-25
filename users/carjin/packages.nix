@@ -11,7 +11,6 @@
     ++ (with pkgs; [
       pcsx2
       ytmdl
-      emacs
       zulu
       gimp3
       vscode-langservers-extracted
