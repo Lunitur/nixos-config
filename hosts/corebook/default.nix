@@ -29,7 +29,6 @@ in
     tshark
     nikto
     youtube-music
-    kdePackages.ghostwriter
     vanilla-dmz
   ];
 

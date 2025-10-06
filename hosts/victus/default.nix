@@ -39,7 +39,6 @@ in
     protonplus
     heroic
     rpcs3
-    kdePackages.ghostwriter
     vial
     umu
     vanilla-dmz

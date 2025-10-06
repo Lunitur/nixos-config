@@ -9,6 +9,7 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      kdePackages.ghostwriter
       pcsx2
       ytmdl
       zulu
