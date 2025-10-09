@@ -10,6 +10,7 @@
     ])
     ++ (with pkgs; [
       kdePackages.ghostwriter
+      pgcli
       pcsx2
       ytmdl
       zulu
