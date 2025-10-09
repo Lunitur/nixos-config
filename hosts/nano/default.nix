@@ -153,8 +153,8 @@
         overwrite.cli.url = "${prot}://${host}${dir}/";
         htaccess.RewriteBase = dir;
         trusted_domains = [
-          "pico"
-          "pico.akita-bleak.ts.net"
+          "nano"
+          "nano.akita-bleak.ts.net"
           "localhost"
           "nextcloud.anarhizam.org"
         ];
@@ -241,7 +241,7 @@
 
   # boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  networking.hostName = "pico";
+  networking.hostName = "nano";
   networking.firewall = {
     allowedUDPPorts = [
       80

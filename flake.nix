@@ -199,11 +199,11 @@
           # nixos-cosmic.nixosModules.default
         ];
       };
-      nixosConfigurations.pico = nixpkgs-stable.lib.nixosSystem {
+      nixosConfigurations.nano = nixpkgs-stable.lib.nixosSystem {
         inherit specialArgs;
         system = "aarch64-linux";
         modules = [
-          ./hosts/pico
+          ./hosts/nano
           ./users/carjin/user.nix
           ./network
           simple-nixos-mailserver.nixosModule
