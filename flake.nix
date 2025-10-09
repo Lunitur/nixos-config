@@ -33,7 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
   };
 
   outputs =
@@ -207,6 +207,7 @@
           ./users/carjin/user.nix
           ./network
           simple-nixos-mailserver.nixosModule
+          stylix.nixosModules.stylix
         ];
       };
     };
