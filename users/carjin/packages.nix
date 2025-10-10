@@ -9,6 +9,7 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      teamspeak6-client
       kdePackages.ghostwriter
       pgcli
       pcsx2
