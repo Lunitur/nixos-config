@@ -11,7 +11,7 @@
       "SUPER,       P, pin,"
       # "SUPER,       S, togglesplit,"
       "SUPER,       E, exec, bemoji -cn"
-      "SUPER,       C, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
+      "SUPER,       Z, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       # "SUPER,       B, exec, pkill -SIGUSR2 waybar"
       # "SUPER SHIFT, B, exec, pkill -SIGUSR1 waybar"
       "SUPER,       F1, exec, loginctl lock-session"
@@ -22,7 +22,7 @@
       "SUPER ALT, P, exec, uwsm app -- firefox https://search.nixos.org/packages"
 
       "SUPER,       B, exec, nu -c 'cd ~/Nextcloud; ls skripte | append (ls books) | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
-      "SUPER SHIFT, C, exec, nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
+      "SUPER,       C, exec, nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
       # "SUPER, C, exec, uwsm app -- nwg-clipman"
       "SUPER, W, exec, uwsm app -- looking-glass-client -f /dev/kvmfr0 -m KEY_INSERT -F -T"
       "SUPER, V, exec, uwsm app -- pavucontrol"
