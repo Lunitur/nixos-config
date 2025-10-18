@@ -1,10 +1,5 @@
 { config, pkgs, ... }:
-
 {
-  # Enable the OCI container runtime (Podman).
-  virtualisation.oci-containers.enable = true;
-
-  # Define the TeamSpeak server container.
   virtualisation.oci-containers.containers.teamspeak-server = {
     # The actual systemd service will be named `container-teamspeak-server.service`.
 
@@ -24,7 +19,7 @@
     # Equivalent to `volumes`. This maps a directory on your NixOS host
     # to a directory inside the container for persistent data.
     volumes = [
-      "/var/lib/teamspeak-server:/var/tsserver"
+      "teamspeak-data:/var/tsserver"
     ];
   };
 
