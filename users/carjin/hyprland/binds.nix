@@ -21,7 +21,7 @@
       "SUPER ALT, O, exec, uwsm app -- firefox https://search.nixos.org/options"
       "SUPER ALT, P, exec, uwsm app -- firefox https://search.nixos.org/packages"
 
-      "SUPER,       B, exec, nu -c 'cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | where type == file | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
+      "SUPER,       B, exec, nu -c 'cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | where type == file | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
       "SUPER,       C, exec, nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
       # "SUPER, C, exec, uwsm app -- nwg-clipman"
       "SUPER, W, exec, uwsm app -- looking-glass-client -f /dev/kvmfr0 -m KEY_INSERT -F -T"
