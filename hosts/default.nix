@@ -81,7 +81,6 @@ in
       mill
       metals
       julia
-      cargo
       fzf
       zoxide
       eza
