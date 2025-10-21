@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   theme = import ../theme;
 in
@@ -6,6 +6,10 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
+
+    plugins = [
+      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    ];
 
     settings = {
       # env = [
