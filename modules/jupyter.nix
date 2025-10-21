@@ -12,7 +12,7 @@ in
   services.jupyter.enable = true;
   environment.systemPackages = [ pkgs.jupyter-all ];
 
-  services.jupyter.password = "argon2:$argon2id$v=19$m=10240,t=10,p=8$FkU3S77MRxrAIcTepYvK0Q$s93Kyu/+TdjOnlb+zApKFiz6wemdrsAneNwl7VR8O6U";
+  services.jupyter.password = "argon2:$argon2id$v=19$m=10240,t=10,p=8$Dm5ldc9Rm8wEb+QJuu8zJw$eqsaxSaVaVQw79sN4wlzdPPNTtrQvu57uES1M4GtEaw";
 
   services.jupyter = {
     user = "carjin";

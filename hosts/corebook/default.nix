@@ -15,6 +15,7 @@ in
     ./hardware-configuration.nix
     ../../users/carjin/user.nix
     ../../modules/usb-tethering.nix
+    ../../modules/jupyter.nix
   ];
 
   services.mysql.enable = true;
