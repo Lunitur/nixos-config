@@ -31,6 +31,7 @@
     ./fuzzel.nix
     ./firefox.nix
     ./emacs.nix
+    ./niri
     # ./stylix
     # ./theme
   ];

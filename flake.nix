@@ -40,6 +40,11 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
   };
 
   outputs =
@@ -51,13 +56,14 @@
       home-manager-stable,
       simple-nixos-mailserver,
       stylix,
+      niri,
       ...
     }@inputs:
     let
       pkgs-unstable = import nixpkgs-unstable {
         system = "x86_64-linux";
         config.allowUnfree = true;
-        overlays = [ ];
+        overlays = [ niri.overlays.niri ];
       };
       pkgs-unstable-arm = import nixpkgs-unstable {
         system = "aarch64-linux";
@@ -88,6 +94,7 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
+          niri.nixosModules.niri
           {
             home-manager = {
               # also pass inputs to home-manager modules
@@ -180,10 +187,9 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
-          # modules.stylix
+          niri.nixosModules.niri
           {
             home-manager = {
-              # also pass inputs to home-manager modules
               extraSpecialArgs = {
                 inherit pkgs-unstable inputs;
               };
