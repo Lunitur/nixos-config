@@ -31,7 +31,6 @@
       signal-desktop
       element-desktop
       mupdf
-      calibre
       inkscape
       chromium
       nextcloud-client
