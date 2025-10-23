@@ -22,6 +22,26 @@
         };
         chktex.onEdit = true;
       };
+      language-server.basedpyright = {
+        command = "basedpyright-langserver";
+        args = [ "--stdio" ];
+        except-features = [
+          "format"
+          "code-action"
+        ];
+        config.basedpyright.analysis = {
+          autoSearchPaths = true;
+          typeCheckingMode = "basic";
+          diagnosticMode = "openFilesOnly";
+        };
+      };
+      language-server.ruff = {
+        command = "ruff";
+        args = [
+          "server"
+          "--preview"
+        ];
+      };
       language = [
         {
           name = "latex";
@@ -48,6 +68,13 @@
           name = "scala";
           auto-format = true;
           # formatter.command = "${pkgs.scalafmt}/bin/scalafmt";
+        }
+        {
+          name = "python";
+          language-servers = [
+            "basedpyright"
+            "ruff"
+          ];
         }
       ];
     };
