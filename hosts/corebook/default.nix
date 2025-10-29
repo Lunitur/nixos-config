@@ -130,7 +130,7 @@ in
     wayland.enable = true;
     settings = {
       Autologin = {
-        Session = "hyprland-uwsm.desktop";
+        Session = "niri.desktop";
         User = "carjin";
       };
     };

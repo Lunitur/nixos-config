@@ -1,4 +1,3 @@
-
 { pkgs, ... }:
 
 {
@@ -9,7 +8,7 @@
       screenshots = true;
       clock = true;
       indicator = true;
-      indicator-radius = 200;
+      indicator-radius = 400;
       indicator-thickness = 20;
       effect-blur = "8x3";
       fade-in = 0.5;

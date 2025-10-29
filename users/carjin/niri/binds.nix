@@ -1,6 +1,79 @@
 {
   programs.niri.settings = {
     binds = {
+      "Mod+B".action.spawn = [
+        "nu"
+        "-c"
+        "cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | append (ls cheatsheets) | where type == file | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}"
+      ];
+
+      "Mod+Shift+Tab".action.toggle-overview = [ ];
+      "Ctrl+Alt+Delete".action.quit = [ ];
+
+      "Print".action.screenshot = [ ];
+      "Ctrl+Print".action.screenshot-screen = [ ];
+      "Alt+Print".action.screenshot-window = [ ];
+
+      "Mod+Shift+Page_Down".action.move-workspace-down = [ ];
+      "Mod+Shift+Page_Up".action.move-workspace-up = [ ];
+      "Mod+Shift+U".action.move-workspace-down = [ ];
+      "Mod+Shift+I".action.move-workspace-up = [ ];
+
+      "Mod+Page_Down".action.focus-workspace-down = [ ];
+      "Mod+Page_Up".action.focus-workspace-up = [ ];
+      "Mod+U".action.focus-workspace-down = [ ];
+      "Mod+I".action.focus-workspace-up = [ ];
+      "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = [ ];
+      "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = [ ];
+      "Mod+Ctrl+U".action.move-column-to-workspace-down = [ ];
+      "Mod+Ctrl+I".action.move-column-to-workspace-up = [ ];
+
+      "Mod+Home".action.focus-column-first = [ ];
+      "Mod+End".action.focus-column-last = [ ];
+      "Mod+Ctrl+Home".action.move-column-to-first = [ ];
+      "Mod+Ctrl+End".action.move-column-to-last = [ ];
+
+      "Mod+Shift+Left".action.focus-monitor-left = [ ];
+      "Mod+Shift+Down".action.focus-monitor-down = [ ];
+      "Mod+Shift+Up".action.focus-monitor-up = [ ];
+      "Mod+Shift+Right".action.focus-monitor-right = [ ];
+      "Mod+Shift+H".action.focus-monitor-left = [ ];
+      # "Mod+Shift+J".action.focus-monitor-down = [ ];
+      # "Mod+Shift+K".action.focus-monitor-up = [ ];
+      "Mod+Shift+L".action.focus-monitor-right = [ ];
+
+      "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = [ ];
+      "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = [ ];
+      "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = [ ];
+      "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = [ ];
+      "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = [ ];
+      "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = [ ];
+      "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = [ ];
+      "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = [ ];
+      "Mod+Ctrl+Left".action.move-column-left = [ ];
+      "Mod+Ctrl+Down".action.move-window-down = [ ];
+      "Mod+Ctrl+Up".action.move-window-up = [ ];
+      "Mod+Ctrl+Right".action.move-column-right = [ ];
+      "Mod+Ctrl+H".action.move-column-left = [ ];
+      "Mod+Ctrl+J".action.move-window-down = [ ];
+      "Mod+Ctrl+K".action.move-window-up = [ ];
+      "Mod+Ctrl+L".action.move-column-right = [ ];
+
+      "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
+      "Mod+BracketRight".action.consume-or-expel-window-right = [ ];
+
+      "Mod+Comma".action.consume-window-into-column = [ ];
+      "Mod+Period".action.expel-window-from-column = [ ];
+
+      "Mod+R".action.switch-preset-column-width = [ ];
+      # "Mod+R".action.spawn.switch-preset-column-width-back = [];
+      "Mod+Shift+R".action.switch-preset-window-height = [ ];
+      "Mod+Ctrl+R".action.reset-window-height = [ ];
+      "Mod+F".action.maximize-column = [ ];
+      "Mod+Shift+F".action.fullscreen-window = [ ];
+
+      "Mod+Tab".action.focus-workspace-previous = [ ];
+      "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
       "Mod+Return".action.spawn = [ "footclient" ];
       "Mod+Q".action.close-window = [ ];
       # "Mod+Shift+Q".action.exit = [ ];
@@ -13,8 +86,8 @@
         "sh"
         "cliphist list | fuzzel -d | cliphist decode | wl-copy"
       ];
-      "Mod+F1".action.spawn = [ "loginctl lock-session" ];
-      "Mod+F2".action.spawn = [ "hyprpicker -an" ];
+      "Mod+F1".action.spawn = [ "swaylock" ];
+      # "Mod+F2".action.spawn = [ "hyprpicker -an" ];
       "Mod+Shift+N".action.spawn = [ "swaync-client -t" ];
       "Mod+O".action.spawn = [ "firefox" ];
       "Mod+Alt+O".action.spawn = [
@@ -25,14 +98,14 @@
         "firefox"
         "https://search.nixos.org/packages"
       ];
-      "Mod+B".action.spawn = [
-        "sh"
-        "nu -c 'cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | where type == file | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
-      ];
-      "Mod+C".action.spawn = [
-        "sh"
-        "nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
-      ];
+      # "Mod+B".action.spawn = [
+      #   "sh"
+      #   "nu -c 'cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | where type == file | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
+      # ];
+      # "Mod+C".action.spawn = [
+      #   "sh"
+      #   "nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
+      # ];
       "Mod+W".action.spawn = [ "looking-glass-client -f /dev/kvmfr0 -m KEY_INSERT -F -T" ];
       "Mod+V".action.spawn = [ "pavucontrol" ];
       "Mod+S".action.spawn = [ "grimblast --notify --freeze copysave area" ];

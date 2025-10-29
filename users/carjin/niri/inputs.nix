@@ -1,8 +1,10 @@
 {
   programs.niri.settings.input = {
-    keyboard.xkb.options = "caps:escape";
-    keyboard.xkb.variant = "us";
-    keyboard.xkb.layout = "hr";
+    keyboard.xkb = {
+      options = "caps:escape";
+      variant = "us";
+      layout = "hr";
+    };
 
     touchpad = {
       natural-scroll = true;

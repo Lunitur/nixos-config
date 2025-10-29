@@ -5,6 +5,6 @@
     ./thunar.nix
     ./kmonad.nix
     # ./wlr.nix
-    ./hyprland.nix
+    # ./hyprland.nix
   ];
 }

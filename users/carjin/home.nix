@@ -25,7 +25,7 @@
     ./fonts.nix
     ./latex.nix
     ./packages.nix
-    ./hyprland
+    # ./hyprland
     ./waybar
     ./nushell
     ./fuzzel.nix
