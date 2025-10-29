@@ -3,7 +3,12 @@
     prefer-no-csd = true;
     window-rules = [
       {
-        # geometry-corner-radius = 12;
+        geometry-corner-radius = {
+          bottom-left = 12.0;
+          bottom-right = 12.0;
+          top-left = 12.0;
+          top-right = 12.0;
+        };
         clip-to-geometry = true;
         # prefer-no-csd = true;
       }
