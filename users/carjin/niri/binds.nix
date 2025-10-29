@@ -81,14 +81,21 @@
       # "Mod+F".action.fullscreen = [ ];
       "Mod+D".action.spawn = [ "fuzzel" ];
       "Mod+P".action.toggle-window-floating = [ ];
-      "Mod+E".action.spawn = [ "bemoji -cn" ];
+      "Mod+E".action.spawn = [
+        "bemoji"
+        "-cn"
+      ];
       "Mod+Z".action.spawn = [
         "sh"
+        "-c"
         "cliphist list | fuzzel -d | cliphist decode | wl-copy"
       ];
       "Mod+F1".action.spawn = [ "swaylock" ];
       # "Mod+F2".action.spawn = [ "hyprpicker -an" ];
-      "Mod+Shift+N".action.spawn = [ "swaync-client -t" ];
+      "Mod+Shift+N".action.spawn = [
+        "swaync-client"
+        "-t"
+      ];
       "Mod+O".action.spawn = [ "firefox" ];
       "Mod+Alt+O".action.spawn = [
         "firefox"
@@ -106,9 +113,16 @@
       #   "sh"
       #   "nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
       # ];
-      "Mod+W".action.spawn = [ "looking-glass-client -f /dev/kvmfr0 -m KEY_INSERT -F -T" ];
+      "Mod+W".action.spawn = [
+        "looking-glass-client"
+        "-f"
+        "/dev/kvmfr0"
+        "-m"
+        "KEY_INSERT"
+        "-F"
+        "-T"
+      ];
       "Mod+V".action.spawn = [ "pavucontrol" ];
-      "Mod+S".action.spawn = [ "grimblast --notify --freeze copysave area" ];
       "Mod+H".action.focus-column-left = [ ];
       "Mod+L".action.focus-column-right = [ ];
       "Mod+K".action.focus-window-up = [ ];
