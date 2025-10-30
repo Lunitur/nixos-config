@@ -138,6 +138,7 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
+          niri.nixosModules.niri
           {
             home-manager = {
               extraSpecialArgs = {

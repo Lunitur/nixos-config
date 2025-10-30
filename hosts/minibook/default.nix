@@ -21,6 +21,8 @@ in
   #   "http://victus.akita-bleak.ts.net?priority=50"
   # ];
 
+  programs.niri.enable = true;
+
   environment.systemPackages =
     (with pkgs-unstable; [
       # jetbrains.idea-community-bin
@@ -69,7 +71,7 @@ in
     wayland.enable = true;
     settings = {
       Autologin = {
-        Session = "hyprland-uwsm.desktop";
+        Session = "niri.desktop";
         User = "carjin";
       };
     };
