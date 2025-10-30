@@ -25,12 +25,13 @@
     ./fonts.nix
     ./latex.nix
     ./packages.nix
-    ./hyprland
+    # ./hyprland
     ./waybar
     ./nushell
     ./fuzzel.nix
     ./firefox.nix
     ./emacs.nix
+    ./niri
     # ./stylix
     # ./theme
   ];

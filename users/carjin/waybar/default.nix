@@ -29,6 +29,7 @@ let
 in
 {
   programs.waybar = {
+    systemd.enable = true;
     enable = true;
     settings = {
       mainBar = {
@@ -37,12 +38,15 @@ in
         modifier-reset = lib.mkIf is-minibook "release";
         layer = "top";
         position = "top";
-        height = 30;
+        height = 40;
         margin-top = 0;
         margin-bottom = 0;
         margin-left = 0;
         margin-right = 0;
-        modules-left = [ "hyprland/workspaces" ];
+        modules-left = [
+          # "niri/workspaces"
+          "wlr/taskbar"
+        ];
         modules-center = [ ];
         modules-right = lib.optional is-victus "custom/gpu" ++ [
           "memory"
@@ -54,15 +58,36 @@ in
           "tray"
         ];
 
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-          show-special = true;
-          special-visible-only = true;
+        # "hyprland/workspaces" = {
+        #   disable-scroll = true;
+        #   show-special = true;
+        #   special-visible-only = true;
+        #   all-outputs = false;
+        #   format = "{id}";
+        #   persistent-workspaces = {
+        #     "*" = 3;
+        #   };
+        # };
+
+        "niri/workspaces" = {
+          # disable-scroll = true;
+          # show-special = true;
+          # special-visible-only = true;
           all-outputs = false;
-          format = "{id}";
-          persistent-workspaces = {
-            "*" = 3;
-          };
+          format = "{name}";
+          # persistent-workspaces = {
+          #   "*" = 3;
+          # };
+        };
+
+        "wlr/taskbar" = {
+          # "all-outputs"= true;
+          # "format"= "{icon} {title} {short_state}";
+          format = "{icon}";
+          tooltip-format = "{title} | {app_id}";
+          on-click = "activate";
+          on-click-middle = "close";
+          on-click-right = "fullscreen";
         };
 
         temperature = {

@@ -41,6 +41,36 @@ in
     color: #${colors.mantle};
   }
 
+
+  #taskbar {
+    background: #${colors.mantle}; 
+    padding: 5px;
+    border-radius: 10px;
+    margin: 12px 5px 0px 5px;
+  }
+
+  #taskbar button {
+    background: transparent;
+    border-radius: 20px;
+  }
+
+  #taskbar button:hover {
+    background: #${colors.grey};
+  }
+
+  #taskbar button.active {
+    background: #${colors.primary};
+  }
+
+  #taskbar button.active label {
+    color: #${colors.mantle};
+  }
+
+  #taskbar {
+    margin-left: 7px;
+  }
+
+
   #clock, #temperature, #battery, #pulseaudio, #tray, #custom-power, #custom-gpu, #memory, #cpu {
     background: #${colors.mantle};
     border-radius: 10px;

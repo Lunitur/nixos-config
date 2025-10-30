@@ -29,6 +29,8 @@ in
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
 
+  programs.niri.enable = true;
+
   environment.systemPackages = with pkgs; [
     multimonitor
     virtiofsd # libvirt folder sharing
@@ -98,7 +100,8 @@ in
     wayland.enable = true;
     settings = {
       Autologin = {
-        Session = "hyprland-uwsm.desktop";
+        # Session = "hyprland-uwsm.desktop";
+        Session = "niri.desktop";
         User = "carjin";
       };
     };
