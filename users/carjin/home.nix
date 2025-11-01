@@ -23,7 +23,7 @@
     ./rofi.nix
     ./kitty.nix
     ./fonts.nix
-    ./latex.nix
+    # ./latex.nix
     ./packages.nix
     # ./hyprland
     ./waybar
