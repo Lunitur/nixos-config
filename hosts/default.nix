@@ -47,6 +47,8 @@ in
     "archiver-3.5.1"
   ];
 
+  niri-flake.cache.enable = false;
+
   boot.tmp.cleanOnBoot = true;
 
   nixpkgs.config.allowUnfree = true;
