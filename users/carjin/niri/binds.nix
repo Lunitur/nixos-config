@@ -1,6 +1,11 @@
 {
   programs.niri.settings = {
     binds = {
+      "Mod+W".action.spawn = [
+        "pkill"
+        "-SIGUSR1"
+        "waybar"
+      ];
       "Mod+B".action.spawn = [
         "nu"
         "-c"
@@ -113,7 +118,7 @@
       #   "sh"
       #   "nu -c 'cd ~/Nextcloud/cheatsheets; ls | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
       # ];
-      "Mod+W".action.spawn = [
+      "Mod+Shift+W".action.spawn = [
         "looking-glass-client"
         "-f"
         "/dev/kvmfr0"
