@@ -7,7 +7,7 @@
       lines = 15;
       width = 40;
       icons-enabled = "yes";
-      launch-prefix = "uwsm app -- ";
+      # launch-prefix = "uwsm app -- ";
     };
     colors = {
       # background = "1e1e2eff";
