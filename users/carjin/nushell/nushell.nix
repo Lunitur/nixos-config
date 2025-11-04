@@ -63,7 +63,7 @@
             split row (char esep) |
         #    prepend /home/myuser/.apps |
             append /usr/bin/env |
-            append $"($env.HOME)/System"
+            append $"($env.HOME)/.config/emacs/bin"
             )
 
             ${import ./zoxide.nix}
@@ -89,6 +89,7 @@
         nixos = "hx ~/nixos";
         lls = "ls -l | reject target num_links inode readonly created accessed";
         nix-repl = "nix repl ~/nixos#nixosConfigurations.${osConfig.networking.hostName}";
+        em = "emacs";
       };
     };
     carapace.enable = true;

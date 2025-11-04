@@ -9,6 +9,8 @@
       protonup-ng
     ])
     ++ (with pkgs; [
+      pandoc
+      lean4
       kdePackages.ghostwriter
       pgcli
       pcsx2
