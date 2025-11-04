@@ -3,7 +3,7 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-gtk;
+    package = pkgs.emacs-pgtk; # .override { withX = false; };
   };
   services.emacs.enable = true;
 
