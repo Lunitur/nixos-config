@@ -13,15 +13,9 @@
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    # nixpkgs-stable.url = "github:Lunitur/nixpkgs/nixos-24.11";
     # nixpkgs-stable.url = "path:/home/carjin/nixpkgs";
 
-    # nixpkgs-stable.follows = "nixos-cosmic/nixpkgs-stable"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
-
-    # nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    # nixos-hardware.url = "path:/home/carjin/nixos-hardware";
 
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -34,12 +28,6 @@
     };
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
-
-    hyprland.url = "github:hyprwm/Hyprland";
-    split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces";
-      inputs.hyprland.follows = "hyprland";
-    };
 
     niri = {
       url = "github:sodiboo/niri-flake";
