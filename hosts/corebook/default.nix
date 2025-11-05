@@ -18,8 +18,8 @@ in
     ../../modules/jupyter.nix
   ];
 
-  services.mysql.enable = true;
-  services.mysql.package = pkgs.mariadb;
+  # services.mysql.enable = true;
+  # services.mysql.package = pkgs.mariadb;
 
   programs.niri.enable = true;
 
