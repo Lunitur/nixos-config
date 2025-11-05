@@ -12,8 +12,9 @@
       indicator-thickness = 20;
       effect-blur = "8x3";
       fade-in = 0.5;
-      datestr = "%A, %B %d, %Y";
+      datestr = "%B %d, %Y";
       timestr = "%I:%M %p";
+      font-size = 100;
     };
   };
 }
