@@ -24,6 +24,37 @@ in
     ../../modules/anarhizam-org.nix
   ];
 
+  services = {
+    # upower.enable = true;
+
+    tlp = {
+      enable = true;
+      settings = {
+        # sudo tlp-stat to see current and possbile values
+
+        # CPU_BOOST_ON_BAT = 0;
+        CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+        START_CHARGE_THRESH_BAT0 = 80;
+        STOP_CHARGE_THRESH_BAT0 = 95;
+        TLP_DEFAULT_MODE = "BAT";
+        # Tell tlp to always run in default mode
+        # TLP_PERSISTENT_DEFAULT = 1;
+
+        PLATFORM_PROFILE_ON_AC = "balanced";
+        PLATFORM_PROFILE_ON_BAT = "low-power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+        CPU_HWP_DYN_BOOST_ON_AC = 1;
+        CPU_HWP_DYN_BOOST_ON_BAT = 0;
+
+        # Don't autosuspend USB devices (Dell Monitor -> Input Devices)
+        USB_AUTOSUSPEND = 0;
+        # USB_EXCLUDE_WWAN = 1;
+        # USB_DENYLIST = "3434:0820 046d:c548"; # Keychron Q2 Max + Logitech Bolt Receiver
+      };
+    };
+  };
+
   services.udev.extraRules = ''
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
