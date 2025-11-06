@@ -43,8 +43,8 @@
       "Mod+Shift+Up".action.focus-monitor-up = [ ];
       "Mod+Shift+Right".action.focus-monitor-right = [ ];
       "Mod+Shift+H".action.focus-monitor-left = [ ];
-      # "Mod+Shift+J".action.focus-monitor-down = [ ];
-      # "Mod+Shift+K".action.focus-monitor-up = [ ];
+      "Mod+Shift+J".action.focus-monitor-down = [ ];
+      "Mod+Shift+K".action.focus-monitor-up = [ ];
       "Mod+Shift+L".action.focus-monitor-right = [ ];
 
       "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = [ ];
@@ -134,8 +134,8 @@
       "Mod+J".action.focus-window-down = [ ];
       # "Mod+Shift+H".action.move-window-to-column-left = [ ];
       # "Mod+Shift+L".action.move-window-to-column-right = [ ];
-      "Mod+Shift+K".action.move-window-up = [ ];
-      "Mod+Shift+J".action.move-window-down = [ ];
+      # "Mod+Shift+K".action.move-window-up = [ ];
+      # "Mod+Shift+J".action.move-window-down = [ ];
       # "Mod+Tab".action.focus-last-workspace = [ ];
       "Mod+1".action.focus-workspace = [ 1 ];
       "Mod+2".action.focus-workspace = [ 2 ];
