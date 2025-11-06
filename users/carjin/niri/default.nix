@@ -11,6 +11,19 @@
     ./inputs.nix
   ];
 
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = with pkgs; [
+  #     xdg-desktop-portal-wlr
+  #     xdg-desktop-portal-gtk
+  #   ];
+  #   config = {
+  #     common = {
+  #       default = [ "wlr" "gtk" ];
+  #     };
+  #   };
+  # };
+
   programs.niri.settings.environment = {
     "NIXOS_OZONE_WL" = "1";
     "ELECTRON_OZONE_PLATFORM_HINT" = "auto";
@@ -26,5 +39,6 @@
     wl-clipboard
     playerctl
     xwayland-satellite
+    nautilus # required for file picker to work
   ];
 }

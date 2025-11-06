@@ -7,6 +7,7 @@
       nmap
       ani-cli
       protonup-ng
+      heroic
     ])
     ++ (with pkgs; [
       pandoc
@@ -26,7 +27,6 @@
       clj-kondo
       babashka
       leiningen
-      heroic
       xfce.xfce4-taskmanager
       telegram-desktop
       vesktop
