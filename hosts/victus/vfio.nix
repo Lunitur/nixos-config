@@ -31,12 +31,17 @@ in
           #   "nvidia_drm"
         ];
 
-        kernelParams =
-          [
-            # enable IOMMU
-            "amd_iommu=on"
-          ]
-          ++ lib.optional cfg.enable
+        blacklistedKernelModules = lib.optionals cfg.enable [
+          "nvidia"
+          "nouveau"
+        ];
+
+        kernelParams = [
+          # enable IOMMU
+          "amd_iommu=on"
+        ]
+        ++
+          lib.optional cfg.enable
             # isolate the GPU
             ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
       };
