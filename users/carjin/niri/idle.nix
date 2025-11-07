@@ -28,11 +28,11 @@
         timeout = 900;
         command = "${pkgs.systemd}/bin/loginctl lock-session";
       }
-      # {
-      #   timeout = 630;
-      #   command = "${pkgs.sway}/bin/swaymsg 'output * dpms off'";
-      #   resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * dpms on'";
-      # }
+      {
+        timeout = 630;
+        command = "niri msg action power-off-monitors";
+        resumeCommand = "niri msg action power-on-monitors";
+      }
     ];
   };
 }
