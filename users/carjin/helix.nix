@@ -44,6 +44,11 @@
       };
       language = [
         {
+          name = "typst";
+          formatter.command = "typstyle";
+          auto-format = true;
+        }
+        {
           name = "latex";
           auto-format = true;
           # config.texlab.build.onSave = true;
@@ -75,6 +80,7 @@
             "basedpyright"
             "ruff"
           ];
+          auto-format = true;
         }
       ];
     };

@@ -32,6 +32,7 @@
     ./firefox.nix
     ./emacs.nix
     ./niri
+    ./typst.nix
     # ./stylix
     # ./theme
   ];
