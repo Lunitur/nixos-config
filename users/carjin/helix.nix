@@ -42,6 +42,10 @@
           "--preview"
         ];
       };
+      language-server.lean-language-server = {
+        command = "${pkgs.lean4}/bin/lean";
+        args = [ "--server" ];
+      };
       language = [
         {
           name = "typst";
@@ -81,6 +85,14 @@
             "ruff"
           ];
           auto-format = true;
+        }
+        {
+          name = "lean";
+          scope = "source.lean";
+          file-types = [ "lean" ];
+          comment-token = "--";
+          language-servers = [ "lean-language-server" ];
+          roots = [ "lean-toolchain" ];
         }
       ];
     };
