@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   services.swayidle = {
@@ -30,7 +30,7 @@
       }
       {
         timeout = 630;
-        command = "niri msg action power-off-monitors";
+        command = "${inputs.niri.apps.x86_64-linux.default.program} msg action power-off-monitors";
         resumeCommand = "niri msg action power-on-monitors";
       }
     ];
