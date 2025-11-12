@@ -31,7 +31,6 @@
       {
         timeout = 630;
         command = "${inputs.niri.apps.x86_64-linux.default.program} msg action power-off-monitors";
-        resumeCommand = "niri msg action power-on-monitors";
       }
     ];
   };
