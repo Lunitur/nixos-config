@@ -110,6 +110,10 @@
         "firefox"
         "https://search.nixos.org/packages"
       ];
+      "Mod+Alt+G".action.spawn = [
+        "firefox"
+        "https://gemini.google.com"
+      ];
       # "Mod+B".action.spawn = [
       #   "sh"
       #   "nu -c 'cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | where type == file | $in.name | str join \"\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}'"
