@@ -41,5 +41,6 @@
     xwayland-satellite
     nautilus # required for file picker to work
     mission-center
+    imv
   ];
 }
