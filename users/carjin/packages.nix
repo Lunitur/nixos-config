@@ -11,6 +11,7 @@
     ])
     ++ (with pkgs; [
       pandoc
+      moonlight-qt
       lean4
       kdePackages.ghostwriter
       pgcli
