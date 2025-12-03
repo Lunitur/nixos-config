@@ -154,7 +154,7 @@ in
   boot.resumeDevice = "/dev/disk/by-uuid/ef200b06-21a4-4383-b8fb-6bb845714809";
   boot.kernelParams = [ "resume_offset=1933233" ];
 
-  services.logind.lidSwitch = "hibernate";
+  services.logind.settings.Login.HandleLidSwitch = "hibernate";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -182,7 +182,7 @@ in
         intel-media-driver
         intel-compute-runtime
 
-        vaapiVdpau
+        libva-vdpau-driver
         libvdpau-va-gl
       ];
     };

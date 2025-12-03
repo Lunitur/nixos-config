@@ -15,7 +15,7 @@
       dejavu_fonts
       jetbrains-mono
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       fira-code
       source-code-pro
       nanum-gothic-coding

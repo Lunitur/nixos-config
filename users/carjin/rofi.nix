@@ -1,7 +1,7 @@
-{ pkgs, config, ...}: 
+{ pkgs, config, ... }:
 let
   colors = import ./theme;
-in 
+in
 {
   xdg.configFile."rofi/config.rasi".text = ''
     /*****----- Configuration -----*****/
@@ -157,7 +157,7 @@ in
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
+    package = pkgs.rofi;
   };
 
   home.packages = with pkgs; [

@@ -88,7 +88,7 @@ in
 
   # swapDevices = [ { device = "/var/swapfile"; } ];
   boot.initrd.systemd.enable = true;
-  services.logind.lidSwitch = "hibernate"; # "hybrid-sleep";
+  services.logind.settings.Login.HandleLidSwitch = "hibernate"; # "hybrid-sleep";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

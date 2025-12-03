@@ -1,9 +1,11 @@
 {
   programs.git = {
     enable = true;
-    userEmail = "karlo.puselj@gmail.com";
-    userName = "Lunitur";
-    extraConfig = {
+    settings = {
+      user = {
+        email = "karlo.puselj@gmail.com";
+        name = "Lunitur";
+      };
       receive.denyCurrentBranch = "warn";
       pull.rebase = true;
       core.editor = "hx";
