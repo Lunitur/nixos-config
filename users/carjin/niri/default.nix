@@ -30,6 +30,7 @@
   };
 
   home.packages = with pkgs; [
+    loupe
     swaybg
     networkmanagerapplet
     wlr-randr
