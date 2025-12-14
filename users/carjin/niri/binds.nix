@@ -131,6 +131,7 @@
         "-F"
         "-T"
       ];
+      "Mod+Shift+V".action.spawn = [ "blueman-manager" ];
       "Mod+V".action.spawn = [ "pavucontrol" ];
       "Mod+H".action.focus-column-left = [ ];
       "Mod+L".action.focus-column-right = [ ];
