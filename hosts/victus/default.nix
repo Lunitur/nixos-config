@@ -10,7 +10,6 @@
 let
   multimonitor = import ./multimonitor.nix { inherit pkgs; };
   inherit (pkgs.stdenv.hostPlatform) system;
-  umu = inputs.umu.packages.${system}.umu-launcher;
 in
 {
   imports = [
@@ -71,7 +70,6 @@ in
     heroic
     rpcs3
     vial
-    umu
     vanilla-dmz
     usbutils
   ];
@@ -144,15 +142,6 @@ in
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
-      ovmf = {
-        enable = true;
-        packages = [
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd
-        ];
-      };
     };
   };
 
