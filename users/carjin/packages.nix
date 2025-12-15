@@ -1,8 +1,14 @@
 { pkgs, pkgs-unstable, ... }:
+let
+  local-pkgs = import ../../packages { inherit pkgs; };
+in
 {
 
   home.packages =
-    (with pkgs-unstable; [
+    (with local-pkgs; [
+      hashcards
+    ])
+    ++ (with pkgs-unstable; [
       tldr
       nmap
       ani-cli
