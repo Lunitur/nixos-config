@@ -19,7 +19,7 @@ in
       ytfzf
       pandoc
       moonlight-qt
-      lean4
+      elan
       kdePackages.ghostwriter
       pgcli
       pcsx2
