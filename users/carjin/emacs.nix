@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.emacs-pgtk; # .override { withX = false; };
   };
-  services.emacs.enable = true;
+  services.emacs.enable = false;
 
   home.sessionPath = [
     "$HOME/.config/emacs/bin"
