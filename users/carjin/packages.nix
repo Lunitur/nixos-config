@@ -38,7 +38,6 @@
       chromium
       nextcloud-client
       oterm
-      mpv
       peazip
       lutris
       deluge-gtk

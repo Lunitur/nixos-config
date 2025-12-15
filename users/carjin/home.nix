@@ -9,6 +9,7 @@
 
   imports = [
     ./dotfiles.nix
+    ./mpv.nix
     ./jujutsu.nix
     # ./distrobox.nix
     ./pueue.nix
