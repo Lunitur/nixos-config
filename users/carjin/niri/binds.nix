@@ -82,7 +82,10 @@
       "Mod+Return".action.spawn = [ "footclient" ];
       "Mod+Q".action.close-window = [ ];
       # "Mod+Shift+Q".action.exit = [ ];
-      "Mod+N".action.spawn = [ "footclient yazi" ];
+      "Mod+N".action.spawn = [
+        "footclient"
+        "yazi"
+      ];
       # "Mod+F".action.fullscreen = [ ];
       "Mod+D".action.spawn = [ "fuzzel" ];
       "Mod+P".action.toggle-window-floating = [ ];
