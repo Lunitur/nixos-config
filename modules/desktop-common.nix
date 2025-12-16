@@ -2,7 +2,7 @@
   imports = [
     ./pipewire.nix
     ./polkit.nix
-    ./thunar.nix
+    # ./thunar.nix
     ./kmonad.nix
     # ./wlr.nix
     # ./hyprland.nix

@@ -9,6 +9,7 @@
 
   imports = [
     ./dotfiles.nix
+    ./xdg-mime.nix
     ./yazi.nix
     ./mpv.nix
     ./jujutsu.nix
