@@ -9,13 +9,14 @@ in
       hashcards
     ])
     ++ (with pkgs-unstable; [
-      tldr
+      tlrc
       nmap
       ani-cli
       protonup-ng
       heroic
     ])
     ++ (with pkgs; [
+      ytfzf
       pandoc
       moonlight-qt
       lean4

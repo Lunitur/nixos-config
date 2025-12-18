@@ -79,10 +79,6 @@ in
       xarchiver
       nil # Nix language server
       cabal-install
-      sbt
-      mill
-      metals
-      julia
       fzf
       zoxide
       eza
@@ -91,7 +87,6 @@ in
       mc
       btop
       bat
-      ihp-new
     ])
     ++ (with user-pkgs; [ ammonite.ammonite_3_5 ]);
 
@@ -111,6 +106,11 @@ in
   networking.firewall.allowedUDPPorts = [ 22 ];
 
   services.mullvad-vpn.enable = true;
+
+  environment.variables = {
+    EDITOR = "vim";
+    VISUAL = "vim";
+  };
 
   nix.gc = {
     automatic = true;
