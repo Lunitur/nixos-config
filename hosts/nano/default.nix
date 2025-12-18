@@ -58,12 +58,16 @@
 
   mailserver = {
     enable = true;
+    stateVersion = 3;
     fqdn = "mail.anarhizam.org";
     domains = [ "anarhizam.org" ];
 
     # A list of all login accounts. To create the password hashes, use
     # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
     loginAccounts = {
+      "karlo.puselj@anarhizam.org" = {
+        hashedPasswordFile = "/etc/mail/karlo";
+      };
       "carjin@anarhizam.org" = {
         hashedPasswordFile = "/etc/mail/carjin";
         # aliases = ["postmaster@example.com"];
@@ -82,7 +86,7 @@
   };
 
   services.discourse = {
-    enable = true;
+    enable = false;
     database.ignorePostgresqlVersion = true;
     admin = {
       username = "carjin";
@@ -121,7 +125,7 @@
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud32;
     hostName = "nextcloud.anarhizam.org";
     https = true;
     config = {

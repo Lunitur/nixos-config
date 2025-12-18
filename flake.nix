@@ -27,7 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
 
     niri = {
       url = "github:sodiboo/niri-flake";
