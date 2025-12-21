@@ -65,7 +65,6 @@
             append /usr/bin/env |
             append $"($env.HOME)/.config/emacs/bin"
             )
-
             ${import ./zoxide.nix}
             ${import ./completers.nix}
             ${import ./startup.nix}

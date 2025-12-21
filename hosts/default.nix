@@ -67,7 +67,6 @@ in
       git
       tree
       wget
-      nano
       nushell
       gvfs
       pueue
@@ -108,8 +107,13 @@ in
   services.mullvad-vpn.enable = true;
 
   environment.variables = {
-    EDITOR = "vim";
-    VISUAL = "vim";
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
+
+  environment.sessionVariables = {
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   nix.gc = {
