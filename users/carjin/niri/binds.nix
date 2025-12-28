@@ -1,7 +1,7 @@
 {
   programs.niri.settings = {
     binds = {
-      "Mod+W".action.spawn = [
+      "Mod+Ctrl+W".action.spawn = [
         "pkill"
         "-SIGUSR1"
         "waybar"
