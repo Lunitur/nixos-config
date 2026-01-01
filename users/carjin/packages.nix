@@ -16,6 +16,7 @@ in
       heroic
     ])
     ++ (with pkgs; [
+      prismlauncher
       ytfzf
       pandoc
       moonlight-qt
