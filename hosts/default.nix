@@ -64,6 +64,7 @@ in
 
   environment.systemPackages =
     (with pkgs; [
+      nix-inspect
       git
       tree
       wget
