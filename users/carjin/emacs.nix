@@ -15,6 +15,6 @@
     ripgrep
     coreutils
     fd
-    clang
+    # clang
   ];
 }

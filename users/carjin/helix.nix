@@ -74,6 +74,12 @@
           # linter.command = "${pkgs.haskellPackages.hlint}/bin/hlint";
         }
         {
+          name = "cpp";
+          auto-format = true;
+          formatter.command = "clang-format";
+          formatter.args = [ "--style=file" ];
+        }
+        {
           name = "scala";
           auto-format = true;
           # formatter.command = "${pkgs.scalafmt}/bin/scalafmt";
