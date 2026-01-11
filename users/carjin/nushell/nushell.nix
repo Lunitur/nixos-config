@@ -87,7 +87,8 @@
         nixos-switch = "nh os switch ~/nixos";
         nixos = "hx ~/nixos";
         lls = "ls -l | reject target num_links inode readonly created accessed";
-        nix-repl = "nix repl ~/nixos#nixosConfigurations.${osConfig.networking.hostName}";
+        nix-repl = "nixos-rebuild repl ~/nixos#nixosConfigurations.${osConfig.networking.hostName}";
+        nix-eval = "nix eval ~/nixos/#nixosConfigurations.${osConfig.networking.hostName}.config.system.build.toplevel.drvPath";
         em = "emacs";
         gpro = "gemini -m gemini-3-pro-preview";
       };
