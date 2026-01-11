@@ -11,6 +11,7 @@
     ./dotfiles.nix
     ./xdg-mime.nix
     ./yazi.nix
+    ./gemini-cli.nix
     ./mpv.nix
     ./jujutsu.nix
     # ./distrobox.nix
@@ -20,6 +21,7 @@
     # ./conky.nix
     ./helix.nix
     ./git.nix
+    ./ssh.nix
     ./zsh.nix
     ./udiskie.nix
     ./swaync.nix

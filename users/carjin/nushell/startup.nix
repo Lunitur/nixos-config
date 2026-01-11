@@ -4,10 +4,10 @@
   }
 
   # SSH Agent loading
-  let ssh_agent_file = ( $nu.temp-path | path join $"ssh-agent-($env.USER).nuon" )
-  if ($ssh_agent_file | path exists) {
-      open $ssh_agent_file | load-env
-  }
+  # let ssh_agent_file = ( $nu.temp-path | path join $"ssh-agent-($env.USER).nuon" )
+  # if ($ssh_agent_file | path exists) {
+  #     open $ssh_agent_file | load-env
+  # }
 
   def nsh [...pkgs : string] {
       nix-shell --run nu -p ...$pkgs 

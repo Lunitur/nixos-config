@@ -28,7 +28,6 @@ in
       zulu
       gimp3
       vscode-langservers-extracted
-      gemini-cli
       clojure
       clojure-lsp
       cljfmt

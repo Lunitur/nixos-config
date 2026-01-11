@@ -89,6 +89,7 @@
         lls = "ls -l | reject target num_links inode readonly created accessed";
         nix-repl = "nix repl ~/nixos#nixosConfigurations.${osConfig.networking.hostName}";
         em = "emacs";
+        gpro = "gemini -m gemini-3-pro-preview";
       };
     };
     carapace.enable = true;
