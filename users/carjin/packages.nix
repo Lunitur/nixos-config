@@ -1,4 +1,9 @@
-{ pkgs, pkgs-unstable, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 let
   local-pkgs = import ../../packages { inherit pkgs; };
 in
@@ -16,6 +21,7 @@ in
       heroic
     ])
     ++ (with pkgs; [
+      # (inputs.hashcards.packages.x86_64-linux.default)
       prismlauncher
       ytfzf
       pandoc

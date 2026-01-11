@@ -1,45 +1,39 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, fetchzip
-, pkg-config
-, openssl
-, sqlite
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  fetchzip,
+  pkg-config,
+  openssl,
+  sqlite,
 }:
 
-let
-  katex = fetchzip {
-    url = "https://github.com/KaTeX/KaTeX/releases/download/v0.16.25/katex.tar.gz";
-    sha256 = "14mz8gdr4ggfq9lsvfrr8mvw2ghls30hwk4q1w63b1x6fmmyy91d";
-  };
-in
 rustPlatform.buildRustPackage rec {
   pname = "hashcards";
-  version = "unstable-2025-12-14";
+  version = "0.3.0";
 
   src = fetchFromGitHub {
     owner = "eudoxia0";
     repo = "hashcards";
-    rev = "73fabc22752ebf2ff57216d5d57e3737e2c28492";
-    sha256 = "1wr2pym6vzrjamvzp9fdyg1s9w2bvw4rsc6f0lqyxkg3s5hvw5mv";
+    rev = "1513a749c6fd5ff05f0b2038002e08718cf1d4ce";
+    sha256 = "sha256-6ElKZ5/QJO6TYg9MQfLv2f4Gbj8yu4igERuHa+xGC4Q=";
   };
 
-  cargoHash = "sha256-vo73XFzE8ruGc7o36ugoCFTcJzuioQ7UCcsxFzt3fIg=";
+  cargoHash = "sha256-d41ThobHMEWoLCjYGybHP7FVmUmO+Hi6qkp30/R1baE=";
 
   nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ openssl sqlite ];
+  buildInputs = [
+    openssl
+    sqlite
+  ];
 
-  preBuild = ''
-    mkdir -p vendor/katex
-    cp -r ${katex}/* vendor/katex/
-    chmod -R u+w vendor/katex
-    sed -i 's|fonts/|/katex/fonts/|g' vendor/katex/katex.min.css
-  '';
+  # Disables `cargo test`
+  doCheck = false;
 
   meta = with lib; {
     description = "A plain text-based spaced repetition system";
     homepage = "https://github.com/eudoxia0/hashcards";
     license = licenses.asl20;
-    maintainers = [];
+    maintainers = [ ];
   };
 }

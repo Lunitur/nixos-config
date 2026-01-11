@@ -2,6 +2,11 @@
   description = "Nixos config flake";
 
   inputs = {
+    hashcards = {
+      url = "github:eudoxia0/hashcards/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     firefox-gnome-theme = {
       url = "github:rafaelmardojai/firefox-gnome-theme";
       flake = false;
