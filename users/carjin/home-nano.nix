@@ -48,18 +48,6 @@
 
   home.stateVersion = "23.11";
 
-  systemd.user.services.hyprpaper = {
-    Unit = {
-      After = [ "wayland-session-waitenv.service" ];
-    };
-  };
-
-  systemd.user.services.hypridle = {
-    Unit = {
-      After = [ "wayland-session-waitenv.service" ];
-    };
-  };
-
   home.sessionVariables = {
     EDITOR = "hx";
   };

@@ -106,8 +106,8 @@
         };
       };
     };
-    home.packages = with pkgs; [
-      zoxide
-    ];
   };
+  home.packages = with pkgs; [
+    zoxide
+  ];
 }
