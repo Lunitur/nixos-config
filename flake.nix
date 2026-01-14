@@ -2,6 +2,10 @@
   description = "Nixos config flake";
 
   inputs = {
+    arhivar = {
+      url = "gitlab:Lunitur/arhivar/main";
+    };
+
     hashcards = {
       url = "github:eudoxia0/hashcards/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

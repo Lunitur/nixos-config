@@ -10,6 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     ./common.nix
+    ./arhivar.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -251,11 +252,15 @@
       80
       443
       9980
+      8000
+      2222
     ];
     allowedTCPPorts = [
       80
       443
       9980
+      8000
+      2222
     ];
   };
 
