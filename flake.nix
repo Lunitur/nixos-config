@@ -212,7 +212,21 @@
           ./users/carjin/user.nix
           ./network
           simple-nixos-mailserver.nixosModule
+          home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
+          {
+            home-manager = {
+              extraSpecialArgs = {
+                inherit pkgs-unstable inputs;
+              };
+              users = {
+                carjin = ./users/carjin/home-nano.nix;
+              };
+
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+            };
+          }
         ];
       };
     };
