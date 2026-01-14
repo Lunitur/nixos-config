@@ -80,7 +80,6 @@ in
       nil # Nix language server
       cabal-install
       fzf
-      zoxide
       eza
       carapace
       ripgrep-all
