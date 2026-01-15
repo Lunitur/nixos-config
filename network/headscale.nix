@@ -7,7 +7,11 @@
     settings = {
       server_url = "https://headscale.anarhizam.org";
       dns = {
-        base_domain = "anarhizam.org";
+        base_domain = "ts.anarhizam.org";
+        nameservers.global = [
+          "1.1.1.1"
+          "1.0.0.1"
+        ];
       };
     };
   };

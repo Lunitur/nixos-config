@@ -47,13 +47,11 @@
           recommendedProxySettings = true;
           proxyWebsockets = true;
         };
-        locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
 
       "nextcloud.anarhizam.org" = {
         forceSSL = true;
         enableACME = true;
-        locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
 
       "headscale.anarhizam.org" = {
@@ -63,7 +61,6 @@
           proxyPass = "http://localhost:8080";
           proxyWebsockets = true;
         };
-        locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
     };
   };
@@ -264,13 +261,17 @@
       443
       9980
       8000
+      8080
+      50443
       2222
     ];
     allowedTCPPorts = [
       80
       443
+      3478
       9980
       8000
+      8080
       2222
     ];
   };
