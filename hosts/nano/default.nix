@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./common.nix
     ./arhivar.nix
+    ../../network/headscale.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -52,6 +53,16 @@
       "nextcloud.anarhizam.org" = {
         forceSSL = true;
         enableACME = true;
+        locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
+      };
+
+      "headscale.anarhizam.org" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:8080";
+          proxyWebsockets = true;
+        };
         locations."/.well-known/acme-challenge".root = "/var/lib/acme/acme-challenge";
       };
     };
