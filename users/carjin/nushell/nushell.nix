@@ -89,6 +89,7 @@
         lls = "ls -l | reject target num_links inode readonly created accessed";
         nix-repl = "nixos-rebuild repl --flake ~/nixos#${osConfig.networking.hostName}";
         nix-eval = "nix eval ~/nixos/#nixosConfigurations.${osConfig.networking.hostName}.config.system.build.toplevel.drvPath";
+        nh-victus = "nh os switch ~/nixos -- --substituters \"http://cache.nixos.org http://victus\"";
         em = "emacs";
         gpro = "gemini -m gemini-3-pro-preview";
       };
