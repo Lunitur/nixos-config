@@ -90,4 +90,10 @@
 
 (require 'f)
 (after! gptel
-  (gptel-make-gemini "Gemini" :key (f-read-text "~/Nextcloud/gemini.key") :stream t))
+  (setq gptel-model 'gemini-3-flash-preview
+        gptel-backend
+        (gptel-make-gemini "Gemini"
+          :key (f-read-text "~/Nextcloud/gemini.key")
+          :stream t
+          :models '(gemini-3-flash-preview))
+        ))
