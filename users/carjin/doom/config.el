@@ -28,7 +28,6 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
-
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -75,11 +74,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 (setq shell-file-name (executable-find
-      "bash"))
+                       "bash"))
 
 (setq-default vterm-shell
-      "/run/current-system/sw/bin/nu") (setq-default
-      explicit-shell-file-name "/run/current-system/sw/bin/nu")
+              "/run/current-system/sw/bin/nu") (setq-default
+              explicit-shell-file-name "/run/current-system/sw/bin/nu")
 
 ;; Show documentation in a popup
 (corfu-popupinfo-mode)
@@ -88,3 +87,7 @@
  'nix-mode-hook
  (add-hook 'before-save-hook
            'nix-format-before-save))
+
+(require 'f)
+(after! gptel
+  (gptel-make-gemini "Gemini" :key (f-read-text "~/Nextcloud/gemini.key") :stream t))
