@@ -2,7 +2,7 @@
 {
   configurations.nixos.freebook.module = {
     imports = [
-      ../../hosts/freebook
+      config.flake.modules.nixos.hosts.freebook.default
       config.flake.modules.nixos.hosts.default
       config.flake.modules.nixos.network.default
       inputs.nixos-hardware.nixosModules.common-cpu-intel
