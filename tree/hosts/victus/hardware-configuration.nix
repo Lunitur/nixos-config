@@ -1,0 +1,61 @@
+{ ... }: {
+  flake.modules.nixos.hosts.victus.hardware = { config, lib, pkgs, modulesPath, ... }: {
+    imports = [
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+    boot.initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+      "sdhci_pci"
+    ];
+    boot.initrd.kernelModules = [ ];
+    boot.kernelModules = [ "kvm-amd" ];
+    boot.extraModulePackages = [ ];
+
+    fileSystems."/" = {
+      device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
+      fsType = "btrfs";
+      options = [
+        "subvol=@nixos/root"
+      ];
+    };
+
+    fileSystems."/home" = {
+      device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
+      fsType = "btrfs";
+      options = [
+        "subvol=@nixos/home"
+        "compress=zstd"
+      ];
+    };
+
+    fileSystems."/nix" = {
+      device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
+      fsType = "btrfs";
+      options = [
+        "subvol=@nixos/nix"
+        "noatime"
+      ];
+    };
+
+    fileSystems."/boot/efi" = {
+      device = "/dev/disk/by-uuid/00D1-7AF3";
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+
+    swapDevices = [ ];
+
+    networking.useDHCP = lib.mkDefault true;
+
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+}

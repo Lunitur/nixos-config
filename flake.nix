@@ -17,7 +17,8 @@
     };
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
-    # nixpkgs-unstable.url = "github:Lunitur/nixpkgs/master";
+    
+    nixpkgs.follows = "nixpkgs-unstable";
 
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 
@@ -42,196 +43,17 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs-stable";
+    };
+
+    import-tree.url = "github:vic/import-tree";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs-unstable,
-      nixpkgs-stable,
-      nixos-hardware,
-      home-manager-stable,
-      simple-nixos-mailserver,
-      stylix,
-      niri,
-      ...
-    }@inputs:
-    let
-      pkgs-unstable = import nixpkgs-unstable {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-        overlays = [ niri.overlays.niri ];
-      };
-      pkgs-unstable-arm = import nixpkgs-unstable {
-        system = "aarch64-linux";
-        config.allowUnfree = true;
-        overlays = [ ];
-      };
-      specialArgs = {
-        inherit
-          pkgs-unstable
-          pkgs-unstable-arm
-          inputs
-          ;
-      };
-    in
-    {
-      nixosConfigurations.victus = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/victus
-          ./hosts # defaults
-          ./network
-          ./modules/desktop-common.nix
-          nixos-hardware.nixosModules.common-cpu-amd
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-hidpi
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          niri.nixosModules.niri
-          {
-            home-manager = {
-              # also pass inputs to home-manager modules
-              extraSpecialArgs = {
-                inherit pkgs-unstable inputs;
-              };
-              users = {
-                carjin = ./users/carjin/home.nix;
-              };
-
-              backupFileExtension = "backup";
-              useGlobalPkgs = true;
-            };
-          } # modules.cosmic
-        ];
-      };
-      nixosConfigurations.centaur = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/centaur
-          ./hosts # defaults
-          ./network
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          #          modules.cosmic
-        ];
-      };
-      nixosConfigurations.minibook = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/minibook
-          ./hosts # defaults
-          ./network
-          ./modules/desktop-common.nix
-          nixos-hardware.nixosModules.chuwi-minibook-x
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-hidpi
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          niri.nixosModules.niri
-          {
-            home-manager = {
-              extraSpecialArgs = {
-                inherit pkgs-unstable inputs;
-              };
-              users = {
-                carjin = ./users/carjin/home.nix;
-              };
-
-              backupFileExtension = "backup";
-              useGlobalPkgs = true;
-            };
-
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
-        ];
-      };
-      nixosConfigurations.freebook = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/freebook
-          ./hosts # defaults
-          ./network
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-hidpi
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-        ];
-      };
-      nixosConfigurations.corebook = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/corebook
-          ./hosts # defaults
-          ./network
-          ./modules/desktop-common.nix
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-hidpi
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          niri.nixosModules.niri
-          {
-            home-manager = {
-              extraSpecialArgs = {
-                inherit pkgs-unstable inputs;
-              };
-              users = {
-                carjin = ./users/carjin/home.nix;
-              };
-
-              backupFileExtension = "backup";
-              useGlobalPkgs = true;
-            };
-
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-
-          }
-          # nixos-cosmic.nixosModules.default
-        ];
-      };
-      nixosConfigurations.nano = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/nano
-          ./users/carjin/user.nix
-          ./network
-          simple-nixos-mailserver.nixosModule
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          {
-            home-manager = {
-              extraSpecialArgs = {
-                inherit pkgs-unstable inputs;
-              };
-              users = {
-                carjin = ./users/carjin/home-nano.nix;
-              };
-
-              backupFileExtension = "backup";
-              useGlobalPkgs = true;
-            };
-          }
-        ];
-      };
-    };
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; }
+      (inputs.import-tree ./tree);
 }
