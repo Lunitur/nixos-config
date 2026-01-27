@@ -2,7 +2,7 @@
 {
   configurations.nixos.corebook.module = { pkgs-unstable, ... }: {
     imports = [
-      ../../hosts/corebook
+      config.flake.modules.nixos.hosts.corebook.default
       config.flake.modules.nixos.hosts.default
       config.flake.modules.nixos.network.default
       config.flake.modules.nixos.desktop-common

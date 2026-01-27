@@ -2,7 +2,7 @@
 {
   configurations.nixos.minibook.module = { pkgs-unstable, ... }: {
     imports = [
-      ../../hosts/minibook
+      config.flake.modules.nixos.hosts.minibook.default
       config.flake.modules.nixos.hosts.default
       config.flake.modules.nixos.network.default
       config.flake.modules.nixos.desktop-common
