@@ -92,6 +92,7 @@
         nh-victus = "nh os switch ~/nixos -- --substituters \"http://cache.nixos.org http://victus\"";
         em = "emacs";
         gpro = "gemini -m gemini-3-pro-preview";
+        gflash = "gemini -m gemini-3-flash-preview";
       };
     };
     carapace.enable = true;
