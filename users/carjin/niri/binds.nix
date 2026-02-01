@@ -17,56 +17,38 @@
         "cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | append (ls cheatsheets) | where type == file | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}"
       ];
 
-      "Mod+Shift+Tab".action.toggle-overview = [ ];
+      "Mod+Tab".action.toggle-overview = [ ];
       "Ctrl+Alt+Delete".action.quit = [ ];
 
-      "Print".action.screenshot = [ ];
-      "Ctrl+Print".action.screenshot-screen = [ ];
-      "Alt+Print".action.screenshot-window = [ ];
+      "Mod+S".action.screenshot = [ ];
+      "Mod+Ctrl+S".action.screenshot-screen = [ ];
+      "Mod+Alt+S".action.screenshot-window = [ ];
 
-      "Mod+Shift+Page_Down".action.move-workspace-down = [ ];
-      "Mod+Shift+Page_Up".action.move-workspace-up = [ ];
-      "Mod+Shift+U".action.move-workspace-down = [ ];
-      "Mod+Shift+I".action.move-workspace-up = [ ];
+      "Mod+Ctrl+Shift+J".action.move-workspace-down = [ ];
+      "Mod+Ctrl+Shift+K".action.move-workspace-up = [ ];
 
-      "Mod+Page_Down".action.focus-workspace-down = [ ];
-      "Mod+Page_Up".action.focus-workspace-up = [ ];
       "Mod+J".action.focus-workspace-down = [ ];
       "Mod+K".action.focus-workspace-up = [ ];
-      "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = [ ];
-      "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = [ ];
-      "Mod+Ctrl+U".action.move-column-to-workspace-down = [ ];
-      "Mod+Ctrl+I".action.move-column-to-workspace-up = [ ];
+      "Mod+Ctrl+J".action.move-column-to-workspace-down = [ ];
+      "Mod+Ctrl+K".action.move-column-to-workspace-up = [ ];
 
       "Mod+Home".action.focus-column-first = [ ];
       "Mod+End".action.focus-column-last = [ ];
       "Mod+Ctrl+Home".action.move-column-to-first = [ ];
       "Mod+Ctrl+End".action.move-column-to-last = [ ];
 
-      "Mod+Shift+Left".action.focus-monitor-left = [ ];
-      "Mod+Shift+Down".action.focus-monitor-down = [ ];
-      "Mod+Shift+Up".action.focus-monitor-up = [ ];
-      "Mod+Shift+Right".action.focus-monitor-right = [ ];
       "Mod+Shift+H".action.focus-monitor-left = [ ];
       "Mod+Shift+J".action.focus-monitor-down = [ ];
       "Mod+Shift+K".action.focus-monitor-up = [ ];
       "Mod+Shift+L".action.focus-monitor-right = [ ];
 
-      "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = [ ];
-      "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = [ ];
-      "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = [ ];
-      "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = [ ];
-      "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = [ ];
-      "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = [ ];
-      "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = [ ];
-      "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = [ ];
-      "Mod+Ctrl+Left".action.move-column-left = [ ];
-      "Mod+Ctrl+Down".action.move-window-down = [ ];
-      "Mod+Ctrl+Up".action.move-window-up = [ ];
-      "Mod+Ctrl+Right".action.move-column-right = [ ];
+      # "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = [ ];
+      # "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = [ ];
+      # "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = [ ];
+      # "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = [ ];
       "Mod+Ctrl+H".action.move-column-left = [ ];
-      "Mod+Ctrl+J".action.move-window-down = [ ];
-      "Mod+Ctrl+K".action.move-window-up = [ ];
+      # "Mod+Ctrl+J".action.move-window-down = [ ];
+      # "Mod+Ctrl+K".action.move-window-up = [ ];
       "Mod+Ctrl+L".action.move-column-right = [ ];
 
       "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
@@ -82,7 +64,7 @@
       "Mod+F".action.maximize-column = [ ];
       "Mod+Shift+F".action.fullscreen-window = [ ];
 
-      "Mod+Tab".action.focus-workspace-previous = [ ];
+      # "Mod+Tab".action.focus-workspace-previous = [ ];
       "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
       "Mod+Return".action.spawn = [ "footclient" ];
       "Mod+Q".action.close-window = [ ];
