@@ -31,8 +31,8 @@
 
       "Mod+Page_Down".action.focus-workspace-down = [ ];
       "Mod+Page_Up".action.focus-workspace-up = [ ];
-      "Mod+U".action.focus-workspace-down = [ ];
-      "Mod+I".action.focus-workspace-up = [ ];
+      "Mod+J".action.focus-workspace-down = [ ];
+      "Mod+K".action.focus-workspace-up = [ ];
       "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = [ ];
       "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = [ ];
       "Mod+Ctrl+U".action.move-column-to-workspace-down = [ ];
@@ -143,8 +143,8 @@
       "Mod+V".action.spawn = [ "pavucontrol" ];
       "Mod+H".action.focus-column-left = [ ];
       "Mod+L".action.focus-column-right = [ ];
-      "Mod+K".action.focus-window-up = [ ];
-      "Mod+J".action.focus-window-down = [ ];
+      # "Mod+K".action.focus-window-up = [ ];
+      # "Mod+J".action.focus-window-down = [ ];
       # "Mod+Shift+H".action.move-window-to-column-left = [ ];
       # "Mod+Shift+L".action.move-window-to-column-right = [ ];
       # "Mod+Shift+K".action.move-window-up = [ ];
