@@ -98,8 +98,16 @@ in
     enableSSHSupport = true;
   };
 
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      # Disable challenge-response (often used for passwords)
+      KbdInteractiveAuthentication = false;
+      PubkeyAuthentication = true;
+      PermitRootLogin = "prohibit-password";
+    };
+  };
 
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [ 22 ];
