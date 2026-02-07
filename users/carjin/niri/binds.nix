@@ -24,9 +24,6 @@
       "Mod+Ctrl+S".action.screenshot-screen = [ ];
       "Mod+Alt+S".action.screenshot-window = [ ];
 
-      "Mod+Ctrl+Shift+J".action.move-workspace-down = [ ];
-      "Mod+Ctrl+Shift+K".action.move-workspace-up = [ ];
-
       "Mod+J".action.focus-workspace-down = [ ];
       "Mod+K".action.focus-workspace-up = [ ];
       "Mod+Ctrl+J".action.move-column-to-workspace-down = [ ];
@@ -42,10 +39,10 @@
       "Mod+Shift+K".action.focus-monitor-up = [ ];
       "Mod+Shift+L".action.focus-monitor-right = [ ];
 
-      # "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = [ ];
-      # "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = [ ];
-      # "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = [ ];
-      # "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = [ ];
+      "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = [ ];
+      "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = [ ];
+      "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = [ ];
+      "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = [ ];
       "Mod+Ctrl+H".action.move-column-left = [ ];
       # "Mod+Ctrl+J".action.move-window-down = [ ];
       # "Mod+Ctrl+K".action.move-window-up = [ ];
