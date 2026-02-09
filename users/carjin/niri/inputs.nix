@@ -10,6 +10,7 @@
       natural-scroll = true;
       tap = true;
       dwt = true;
+      accel-speed = 0.3;
     };
 
   };
