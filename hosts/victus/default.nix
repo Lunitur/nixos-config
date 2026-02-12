@@ -21,6 +21,7 @@ in
     ../../users/carjin/user.nix
     ../../modules/usb-tethering.nix
     ../../modules/anarhizam-org.nix
+    ../../modules/ram.nix
   ];
 
   services = {
@@ -84,6 +85,8 @@ in
     mfcl3730cdnlpr
     mfcl3730cdncupswrapper
   ];
+
+  services.colord.enable = true;
 
   environment.variables = {
     XCURSOR_THEME = "DMZ-Black"; # Match your theme's exact name

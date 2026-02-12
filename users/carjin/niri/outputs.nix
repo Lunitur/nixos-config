@@ -2,6 +2,8 @@
   programs.niri.settings = {
     outputs = {
       "eDP-1" = {
+        # To improve color quality/saturation, you can load an ICC profile:
+        # color-profile.path = "/path/to/your/profile.icc";
         mode = {
           width = 1920;
           height = 1080;
