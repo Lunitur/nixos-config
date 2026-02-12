@@ -1,5 +1,5 @@
 {
-  boot.kernelSysctl = {
+  boot.kernel.sysctl = {
     # Delay flushing data to disk.
     # 60-80% of RAM can be dirty before blocking processes.
     "vm.dirty_ratio" = 80;
