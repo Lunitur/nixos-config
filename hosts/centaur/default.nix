@@ -6,7 +6,7 @@
   config,
   lib,
   pkgs,
-  modules,
+  inputs,
   pkgs-unstable,
   ...
 }:
@@ -14,8 +14,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    modules.hyprland
-    modules.nix-ld
+    ../../modules/hyprland.nix
+    ../../modules/nix-ld.nix
     ../../users/carjin/user.nix
     ../../users/lsimek/user.nix
     ./kmonad.nix
@@ -24,11 +24,11 @@
   home-manager = {
     # also pass inputs to home-manager modules
     extraSpecialArgs = {
-      inherit modules pkgs-unstable;
+      inherit inputs pkgs-unstable;
     };
     users = {
-      carjin = import ../../users/carjin/home.nix;
-      lsimek = import ../../users/lsimek/home.nix;
+      carjin = ../../users/carjin/home.nix;
+      lsimek = ../../users/lsimek/home.nix;
     };
 
     backupFileExtension = "backup";
@@ -188,13 +188,14 @@
     nushell
     xfce.thunar
     picom
-    nerdfonts
+    nerd-fonts.jetbrains-mono
     pueue
     ollama-cuda
     heroic
   ];
 
   programs.vim = {
+    enable = true;
     defaultEditor = true;
     #     config = ''
     #       set number relativenumber

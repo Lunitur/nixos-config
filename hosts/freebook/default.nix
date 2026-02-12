@@ -4,7 +4,6 @@
   pkgs,
   pkgs-unstable,
   inputs,
-  modules,
   ...
 }:
 let
@@ -13,7 +12,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.hyprland
+    ../../modules/hyprland.nix
     ../../users/lsimek/user.nix
   ];
 
@@ -39,10 +38,10 @@ in
   home-manager = {
     # also pass inputs to home-manager modules
     extraSpecialArgs = {
-      inherit modules pkgs-unstable;
+      inherit pkgs-unstable;
     };
     users = {
-      lsimek = import ../../users/lsimek/home.nix;
+      lsimek = ../../users/lsimek/home.nix;
     };
 
     backupFileExtension = "backup";

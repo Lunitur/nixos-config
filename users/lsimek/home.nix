@@ -2,16 +2,15 @@
   config,
   pkgs,
   pkgs-unstable,
-  modules,
   ...
 }:
 
 {
 
   imports = [
-    modules.nushell
+    ../carjin/nushell/default.nix
     # modules.nixvim
-    modules.stylix-hm
+    ../carjin/stylix/default.nix
     ./dotfiles.nix
   ];
 

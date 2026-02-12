@@ -108,18 +108,6 @@
           } # modules.cosmic
         ];
       };
-      nixosConfigurations.centaur = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/centaur
-          ./hosts # defaults
-          ./network
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          #          modules.cosmic
-        ];
-      };
       nixosConfigurations.minibook = nixpkgs-stable.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64-linux";
@@ -169,6 +157,7 @@
           nixos-hardware.nixosModules.common-hidpi
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
+          niri.nixosModules.niri
         ];
       };
       nixosConfigurations.corebook = nixpkgs-stable.lib.nixosSystem {

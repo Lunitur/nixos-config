@@ -3,7 +3,7 @@
     outputs = {
       "eDP-1" = {
         # To improve color quality/saturation, you can load an ICC profile:
-        color-profile.path = "${../../../hosts/victus/color-profile-1.icm}";
+        # icc-profile = "${../../../hosts/victus/color-profile-1.icm}";
         mode = {
           width = 1920;
           height = 1080;
