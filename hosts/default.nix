@@ -140,4 +140,6 @@ in
 
   users.defaultUserShell = pkgs.nushell;
 
+  programs.niri.package = pkgs.niri;
+
 }
