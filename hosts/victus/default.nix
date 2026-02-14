@@ -73,6 +73,7 @@ in
     vial
     vanilla-dmz
     usbutils
+    argyllcms
   ];
 
   boot.initrd.systemd.enable = true;
@@ -87,6 +88,8 @@ in
   ];
 
   services.colord.enable = true;
+
+  environment.etc."color-profile.icm".source = ./color-profile-1.icm;
 
   environment.variables = {
     XCURSOR_THEME = "DMZ-Black"; # Match your theme's exact name

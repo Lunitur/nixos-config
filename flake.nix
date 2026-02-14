@@ -42,6 +42,11 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+
+    colord = {
+      url = "path:/home/carjin/colord";
+      flake = false;
+    };
   };
 
   outputs =
@@ -60,7 +65,7 @@
       pkgs-unstable = import nixpkgs-unstable {
         system = "x86_64-linux";
         config.allowUnfree = true;
-        overlays = [ niri.overlays.niri ];
+        overlays = [ ];
       };
       pkgs-unstable-arm = import nixpkgs-unstable {
         system = "aarch64-linux";

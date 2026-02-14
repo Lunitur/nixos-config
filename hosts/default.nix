@@ -3,6 +3,7 @@
   lib,
   pkgs,
   pkgs-unstable,
+  inputs,
   ...
 }:
 let
@@ -40,7 +41,10 @@ in
     };
   };
 
-  nixpkgs.overlays = [ (import ../overlays/brother.nix) ];
+  nixpkgs.overlays = [
+    (import ../overlays/brother.nix)
+    ((import ../overlays/colord.nix) inputs.colord)
+  ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-27.3.11"
@@ -64,7 +68,9 @@ in
 
   environment.systemPackages =
     (with pkgs; [
+      file
       nix-inspect
+      jq
       git
       tree
       wget
