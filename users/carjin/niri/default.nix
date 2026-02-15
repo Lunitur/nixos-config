@@ -81,13 +81,13 @@ in
 
     layout {
         focus-ring {
-            width 4
-            active-color "#${theme."primary-pale"}"
-            inactive-color "#${theme."grey-dark"}"
+            width 2
+            active-color "#${theme."primary"}"
+            inactive-color "#${theme."grey"}"
         }
 
         border {
-            off
+            on
             width 4
             active-color "#${theme.primary}"
             inactive-color "#${theme."grey-dark"}"
@@ -202,7 +202,6 @@ in
         XF86AudioPrev { spawn "playerctl" "previous"; }
     }
   '';
-  programs.niri.package = pkgs-unstable.niri;
 
   home.packages = with pkgs; [
     loupe
