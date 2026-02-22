@@ -19,13 +19,6 @@
     ];
 
     # Post-startup script to ensure correct ownership and permissions for all databases
-    postStart = ''
-      $PSQL -U postgres -c "ALTER DATABASE anarhizam_dev OWNER TO \"anarhizam-org\";"
-      $PSQL -U postgres -c "ALTER DATABASE anarhizam_test OWNER TO \"anarhizam-org\";"
-      $PSQL -U postgres -d anarhizam_dev -c "GRANT ALL ON SCHEMA public TO \"anarhizam-org\";"
-      $PSQL -U postgres -d anarhizam_test -c "GRANT ALL ON SCHEMA public TO \"anarhizam-org\";"
-    '';
-
     authentication = pkgs.lib.mkForce ''
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
       local   all             all                                     trust
