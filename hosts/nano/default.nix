@@ -267,6 +267,35 @@
 
   networking.interfaces.enp1s0.useDHCP = true;
 
+  services.journald.extraConfig = ''
+    MaxRetentionSec=1month
+    SystemMaxUse=500M
+  '';
+
+  services.logrotate.enable = true;
+  services.logrotate.settings.header = {
+    global = true;
+    priority = 1;
+    keep = 5; # Keep 5 rotations
+    frequency = "weekly";
+  };
+
+  systemd.services.podman-gc = {
+    description = "Podman garbage collection";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.podman}/bin/podman system prune -f";
+    };
+  };
+
+  systemd.timers.podman-gc = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+    };
+  };
+
   system.stateVersion = "24.05";
 
 }
