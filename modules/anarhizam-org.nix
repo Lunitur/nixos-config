@@ -35,14 +35,16 @@
     ];
     wantedBy = [ "multi-user.target" ];
 
+    path = [ pkgs.git ];
+
     environment = {
       MIX_ENV = "prod";
       PHX_SERVER = "true";
       PORT = "3000";
       PHX_HOST = "anarhizam.org";
       DATABASE_URL = "ecto://anarhizam-org@localhost/anarhizam-org";
-      MIX_HOME = "/home/carjin/.nix-mix";
-      HEX_HOME = "/home/carjin/.nix-hex";
+      MIX_HOME = "/home/carjin/blog-anarhizam-org/.nix-mix";
+      HEX_HOME = "/home/carjin/blog-anarhizam-org/.nix-hex";
     };
 
     serviceConfig = {
