@@ -97,3 +97,7 @@
           :stream t
           :models '(gemini-3-flash-preview))
         ))
+
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '(elixir-mode . ("expert" "--stdio"))))
