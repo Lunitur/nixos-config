@@ -153,6 +153,8 @@ in
 
   programs.virt-manager.enable = true;
 
+  virtualisation.spiceUSBRedirection.enable = true;
+
   specialisation = {
     vfio.configuration = {
       vfio.enable = lib.mkForce true;

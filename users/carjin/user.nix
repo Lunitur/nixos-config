@@ -18,6 +18,7 @@
       "input"
       "libvirtd"
       "wireshark"
+      "kvm"
     ]; # 'input' for kmonad
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDhjgro/JnCCqYuHT/eiTv0EYqW8kN/MYL/nBmOJ+5l9 karlo.puselj@gmail.com"

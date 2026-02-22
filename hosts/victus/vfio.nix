@@ -45,8 +45,6 @@ in
             # isolate the GPU
             ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
       };
-
-      virtualisation.spiceUSBRedirection.enable = true;
     };
 }
 

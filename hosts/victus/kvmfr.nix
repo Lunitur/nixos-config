@@ -4,7 +4,8 @@
   boot.kernelModules = [ "kvmfr" ];
 
   services.udev.extraRules = ''
-    SUBSYSTEM=="kvmfr", OWNER="carjin", GROUP="kvm", MODE="0660"
+    SUBSYSTEM=="kvmfr", OWNER="carjin", GROUP="kvm", MODE="0660", TAG+="uaccess"
+    KERNEL=="kvmfr0", OWNER="carjin", GROUP="kvm", MODE="0660", TAG+="uaccess"
   '';
 
   virtualisation.libvirtd.qemu.verbatimConfig = ''
