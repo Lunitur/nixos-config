@@ -41,6 +41,8 @@
       PORT = "3000";
       PHX_HOST = "anarhizam.org";
       DATABASE_URL = "ecto://anarhizam-org@localhost/anarhizam-org";
+      MIX_HOME = "/home/carjin/.nix-mix";
+      HEX_HOME = "/home/carjin/.nix-hex";
     };
 
     serviceConfig = {

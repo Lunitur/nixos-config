@@ -127,9 +127,6 @@
       adminpassFile = "/etc/private/nextcloud-admin-pass";
       adminuser = "root";
       dbtype = "sqlite";
-      extraOptions = {
-        trashbin_retention_obligation = "auto, 30";
-      };
     };
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps)
@@ -154,6 +151,7 @@
         overwritewebroot = dir;
         overwrite.cli.url = "${prot}://${host}${dir}/";
         htaccess.RewriteBase = dir;
+        trashbin_retention_obligation = "auto, 30";
         trusted_domains = [
           "nano"
           "nano.akita-bleak.ts.net"
