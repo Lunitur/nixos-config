@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 {
   services.postgresql = {
@@ -27,7 +32,7 @@
     '';
   };
 
-  systemd.services.anarhizam-org = {
+  systemd.services.anarhizam-org = lib.mkIf (config.networking.hostName == "nano") {
     description = "Anarhizam.org Phoenix Server";
     after = [
       "network.target"
