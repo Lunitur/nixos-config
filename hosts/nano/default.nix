@@ -12,27 +12,13 @@
     ./common.nix
     ./arhivar.nix
     ../../network/headscale.nix
+    ../../modules/anarhizam-org.nix
   ];
 
   environment.systemPackages = with pkgs; [
     helix
     zulu
   ];
-
-  systemd.services.anarhizam-org = {
-    description = "Anarhizam.org Server";
-
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      User = "carjin";
-      ExecStart = "${pkgs.zulu}/bin/java -jar /home/carjin/anarhizam-org/anarhizam-org-0.1.0-SNAPSHOT-standalone.jar";
-
-      Restart = "on-failure";
-      RestartSec = "10s";
-    };
-  };
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "karlo.puselj@gmail.com";
