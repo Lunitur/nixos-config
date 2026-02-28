@@ -98,6 +98,23 @@
           :models '(gemini-3-flash-preview))
         ))
 
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq gc-cons-threshold (* 100 1024 1024))
+
 (after! eglot
   (add-to-list 'eglot-server-programs
-               '(elixir-mode . ("expert" "--stdio"))))
+               '((elixir-mode elixir-ts-mode heex-mode phoenix-heex-mode) . ("expert" "--stdio")))
+
+  ;; Disable expensive features that might cause freezes in large templates
+  ;; (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
+  ;; (add-to-list 'eglot-ignored-server-capabilities :inlayHintProvider)
+  ;; (add-to-list 'eglot-ignored-server-capabilities :semanticTokensProvider)
+
+  ;; (setq eglot-events-buffer-size 0)
+  (setq eglot-sync-timeout 10)
+  ;; (setq eglot-send-changes-idle-time 1.0)
+  )
+
+(after! consult
+  ;; Automatically preview files with a 0.2-second delay while scrolling
+  (setq consult-preview-key '(:debounce 0.2 any)))
