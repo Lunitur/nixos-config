@@ -60,6 +60,9 @@
     # A list of all login accounts. To create the password hashes, use
     # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
     loginAccounts = {
+      "admin@anarhizam.org" = {
+        hashedPasswordFile = "/etc/mail/admin";
+      };
       "karlo.puselj@anarhizam.org" = {
         hashedPasswordFile = "/etc/mail/karlo";
       };
