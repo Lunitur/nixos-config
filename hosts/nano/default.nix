@@ -63,6 +63,9 @@
       "admin@anarhizam.org" = {
         hashedPasswordFile = "/etc/mail/admin";
       };
+      "postman@anarhizam.org" = {
+        hashedPasswordFile = "/etc/mail/admin";
+      };
       "karlo.puselj@anarhizam.org" = {
         hashedPasswordFile = "/etc/mail/karlo";
       };
