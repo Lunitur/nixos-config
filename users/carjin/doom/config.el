@@ -118,3 +118,20 @@
 (after! consult
   ;; Automatically preview files with a 0.2-second delay while scrolling
   (setq consult-preview-key '(:debounce 0.2 any)))
+
+(use-package! mcp
+  :after gptel
+  :config
+  (require 'mcp-hub)
+  ;; Define your MCP servers here:
+  (setq mcp-hub-servers
+        '(("filesystem" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem") :roots ("/home/carjin/nixos" "/home/carjin/projects")))
+          ;; Example: Web search (SearxNG)
+          ;; ("searxng" . (:command "npx" :args ("-y" "mcp-searxng-server" "--url" "http://localhost:8080")))
+          ))
+
+  ;; Start all defined servers automatically
+  (add-hook 'after-init-hook #'mcp-hub-start-all-server)
+
+  ;; (Optional) Automatically connect gptel to the MCP servers when you start an Emacs session
+  (add-hook 'after-init-hook #'gptel-mcp-connect))

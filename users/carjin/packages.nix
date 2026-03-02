@@ -22,6 +22,7 @@ in
     ])
     ++ (with pkgs; [
       # (inputs.hashcards.packages.x86_64-linux.default)
+      discord
       mangal
       mangayomi
       antigravity-fhs
