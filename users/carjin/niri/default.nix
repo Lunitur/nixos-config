@@ -101,6 +101,8 @@ in
         clip-to-geometry true
     }
 
+    workspace "emacs-scratchpad" {}
+
     binds {
         Mod+W { spawn "pkill" "-SIGUSR1" "waybar"; }
         Mod+Ctrl+W { spawn "pkill" "-SIGUSR1" "wlsunset"; }
@@ -153,7 +155,7 @@ in
         Mod+N { spawn "footclient" "yazi"; }
         Mod+D { spawn "fuzzel"; }
         Mod+P { toggle-window-floating; }
-        Mod+E { spawn "bemoji" "-cn"; }
+        Mod+E { spawn "nu" "/home/carjin/nixos/users/carjin/scripts/emacs-scratchpad.nu"; }
         Mod+Z { spawn "sh" "-c" "cliphist list | fuzzel -d | cliphist decode | wl-copy"; }
         Mod+F1 { spawn "swaylock"; }
         Mod+Shift+N { spawn "swaync-client" "-t"; }

@@ -70,6 +70,7 @@ in
       kdePackages.kdenlive
       yt-dlp
       bemoji
+      jq
       (rstudioWrapper.override {
         packages = with rPackages; [
           ggplot2
