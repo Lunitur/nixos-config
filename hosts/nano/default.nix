@@ -14,6 +14,7 @@
     ./metrics.nix
     ../../network/headscale.nix
     ../../modules/anarhizam-org.nix
+    ../../modules/irc.nix
   ];
 
   environment.systemPackages = with pkgs; [
