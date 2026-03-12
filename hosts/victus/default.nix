@@ -79,6 +79,10 @@ in
 
   boot.initrd.systemd.enable = true;
 
+  networking.extraHosts = ''
+    127.0.0.1 irc.local
+  '';
+
   programs.adb.enable = true;
   users.users.carjin.extraGroups = [ "adbusers" ];
 
