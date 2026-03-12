@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./common.nix
     ./arhivar.nix
+    ./metrics.nix
     ../../network/headscale.nix
     ../../modules/anarhizam-org.nix
   ];

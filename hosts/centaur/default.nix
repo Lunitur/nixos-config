@@ -78,12 +78,13 @@
   services.ollama = {
     enable = true;
     openFirewall = true;
-    host = "localhost";
+    host = "0.0.0.0";
     loadModels = [
       "deepseek-r1:70b"
       "deepseek-r1:32b-qwen-distill-q8_0"
       "deepseek-r1:14b-qwen-distill-fp16"
       "deepseek-r1:14b"
+      "qwen3-coder-next"
       # "deepseek-r1:32b"
     ];
     acceleration = "cuda";

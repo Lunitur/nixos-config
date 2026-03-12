@@ -249,7 +249,7 @@ in
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
   boot.kernelParams = [
     "amd_iommu=on"
     "acpi_osi=Linux"

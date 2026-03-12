@@ -95,8 +95,12 @@
         (gptel-make-gemini "Gemini"
           :key (f-read-text "~/Nextcloud/gemini.key")
           :stream t
-          :models '(gemini-3-flash-preview))
-        ))
+          :models '(gemini-3-flash-preview)))
+
+  (gptel-make-ollama "Ollama"
+    :host "centaur:11434"
+    :stream t
+    :models '(qwen3-coder-next)))
 
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq gc-cons-threshold (* 100 1024 1024))
@@ -121,17 +125,15 @@
 
 (use-package! mcp
   :after gptel
+  :init
+  (setq mcp-hub-servers
+        '(("filesystem" . (:command "nix" :args ("shell" "nixpkgs#nodejs" "-c" "npx" "-y" "@modelcontextprotocol/server-filesystem") :roots ("/home/carjin/nixos" "/home/carjin/projects")))))
   :config
   (require 'mcp-hub)
-  ;; Define your MCP servers here:
-  (setq mcp-hub-servers
-        '(("filesystem" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-filesystem") :roots ("/home/carjin/nixos" "/home/carjin/projects")))
-          ;; Example: Web search (SearxNG)
-          ;; ("searxng" . (:command "npx" :args ("-y" "mcp-searxng-server" "--url" "http://localhost:8080")))
-          ))
+  (require 'gptel-integrations)
 
   ;; Start all defined servers automatically
-  (add-hook 'after-init-hook #'mcp-hub-start-all-server)
+  (mcp-hub-start-all-server)
 
-  ;; (Optional) Automatically connect gptel to the MCP servers when you start an Emacs session
-  (add-hook 'after-init-hook #'gptel-mcp-connect))
+  ;; Automatically connect gptel to the MCP servers
+  (gptel-mcp-connect))
