@@ -60,3 +60,5 @@
 (package! mcp
   :recipe (:host github
            :repo "lizqwerscott/mcp.el"))
+
+(package! nushell-mode)

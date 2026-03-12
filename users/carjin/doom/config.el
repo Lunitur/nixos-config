@@ -137,3 +137,5 @@
 
   ;; Automatically connect gptel to the MCP servers
   (gptel-mcp-connect))
+
+(use-package! nushell-mode)
