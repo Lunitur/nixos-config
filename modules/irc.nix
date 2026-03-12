@@ -16,9 +16,10 @@ in
       network.name = "AnarhizamIRC";
       server = {
         name = domain;
+        enforce-utf8 = true;
         listeners = {
           ":6667" = {};
-          "127.0.0.1:8081" = {}; # Auto-detects WebSockets
+          "127.0.0.1:8081" = { websocket = true; }; # Explicitly enable WebSockets
         } // lib.optionalAttrs isProd {
           ":6697" = {
             tls = {
