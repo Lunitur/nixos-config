@@ -46,7 +46,7 @@ in
     locations."= /config.json".alias = pkgs.writeText "gamja-config.json" ''
       {
         "server": {
-          "url": "''${if useACME then "wss" else "ws"}://''${domain}/webirc/",
+          "url": "${if useACME then "wss" else "ws"}://${domain}/webirc/",
           "name": "AnarhizamIRC",
           "autoconnect": true
         }
