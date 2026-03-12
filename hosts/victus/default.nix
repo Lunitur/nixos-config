@@ -22,6 +22,7 @@ in
     ../../modules/usb-tethering.nix
     ../../modules/anarhizam-org.nix
     ../../modules/ram.nix
+    ../../modules/irc.nix
   ];
 
   services = {

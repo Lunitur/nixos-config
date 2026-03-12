@@ -1,21 +1,29 @@
 { config, pkgs, lib, ... }:
 
+let
+  isProd = config.networking.hostName == "nano";
+  domain = if isProd then "irc.anarhizam.org" else "irc.local";
+  useACME = isProd;
+in
 {
-  networking.firewall.allowedTCPPorts = [ 6667 6697 ];
+  networking.firewall.allowedTCPPorts = [ 6667 6697 80 443 ];
+
+  services.nginx.enable = true;
 
   services.ergochat = {
     enable = true;
     settings = {
       network.name = "Anarhizam IRC";
       server = {
-        name = "irc.anarhizam.org";
+        name = domain;
         listeners = {
           ":6667" = {};
           "127.0.0.1:8081" = {}; # Auto-detects WebSockets
+        } // lib.optionalAttrs isProd {
           ":6697" = {
             tls = {
-              cert = "/var/lib/acme/irc.anarhizam.org/cert.pem";
-              key = "/var/lib/acme/irc.anarhizam.org/key.pem";
+              cert = "/var/lib/acme/${domain}/cert.pem";
+              key = "/var/lib/acme/${domain}/key.pem";
             };
           };
         };
@@ -25,9 +33,9 @@
 
   systemd.services.ergochat.serviceConfig.SupplementaryGroups = [ "nginx" ];
 
-  services.nginx.virtualHosts."irc.anarhizam.org" = {
-    enableACME = true;
-    forceSSL = true;
+  services.nginx.virtualHosts."${domain}" = {
+    enableACME = useACME;
+    forceSSL = useACME;
     root = pkgs.gamja;
     
     locations."/" = {
@@ -37,7 +45,7 @@
     locations."/config.json".alias = pkgs.writeText "gamja-config.json" ''
       {
         "server": {
-          "url": "wss://irc.anarhizam.org/webirc/",
+          "url": "${if useACME then "wss" else "ws"}://${domain}/webirc/",
           "name": "Anarhizam IRC",
           "autoconnect": true
         }
