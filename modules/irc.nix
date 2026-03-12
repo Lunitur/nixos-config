@@ -42,7 +42,7 @@ in
       tryFiles = "$uri $uri/ /index.html";
     };
 
-    locations."/config.json".alias = pkgs.writeText "gamja-config.json" ''
+    locations."= /config.json".alias = pkgs.writeText "gamja-config.json" ''
       {
         "server": {
           "url": "${if useACME then "wss" else "ws"}://${domain}/webirc/",
