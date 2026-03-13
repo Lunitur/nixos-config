@@ -63,7 +63,19 @@ in
       dconf
       anki-bin
       gedit
-      libreoffice
+      (pkgs.symlinkJoin {
+        name = "libreoffice";
+        paths = [ pkgs.libreoffice ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          for bin in $out/bin/*; do
+            wrapProgram "$bin" \
+              --set SAL_USE_VCLPLUGIN gtk3 \
+              --set GDK_BACKEND wayland \
+              --set GTK_THEME Adwaita:light
+          done
+        '';
+      })
       vscode-fhs
       thunderbird
       halloy
