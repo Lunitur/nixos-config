@@ -81,11 +81,7 @@ in
       stylix.targets = {
         firefox.profileNames = [ "default" ];
         waybar.enable = false;
-        # hyprland.enable = false;
-        # hyprlock.enable = false;
         vscode.enable = false;
-        # wofi.enable = false;
-        # libreoffice.enable = false;
       };
     };
   };
