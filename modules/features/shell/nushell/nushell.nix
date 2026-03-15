@@ -11,69 +11,58 @@
         edit_mode = "vi";
       };
       extraConfig = ''
-            let carapace_completer = {|spans|
-            carapace $spans.0 nushell $spans | from json
+
+        let carapace_completer = {|spans|
+          carapace $spans.0 nushell ...$spans | from json
+        }
+
+        $env.config = {
+          show_banner: false
+          completions: {
+            case_sensitive: false
+            quick: true
+            partial: true
+            algorithm: "fuzzy"
+            external: {
+              enable: true
+              completer: $carapace_completer
             }
-            $env.config = {
-              hooks: {
-                command_not_found: {
-                  |cmd_name| try {
-                     let dbPath = "/nix/var/nix/profiles/per-user/root/channels/nixos/programs.sqlite"
-                     let system = "x86_64-linux"
-                     let db = open $dbPath | $in.Programs
-                     let program_name = $cmd_name | split words | get 0
-
-                     let list = $db | where system == $system and name == $program_name
-                                    | select package
-                                    | get package
-
-                     if ($list | is-empty) {
-                       print "No non-local packages found.\n"
-                     } else {
-                       let selected_package = $list | input list "Select package";
-
-                       ^nix-shell -p $selected_package
-                     #  ^nix-shell --run $"nu -e '($cmd_name)'" -p $selected_package
-                     }
-                   }
-                }
-              pre_prompt: [{ ||
-                if (which direnv | is-empty) {
-                 return
-                }
-
-                direnv export json | from json | default {} | load-env
-              }]
-
-              env_change: {
-               #  PWD: {|before, after| if (($"($after)/shell.nix" | path exists) and ($env.IN_NIX_SHELL? | describe) == nothing) { nix-shell --command nu } }
+          }
+          hooks: {
+            pre_prompt: [{ ||
+              if (which direnv | is-empty) {
+                return
               }
-
-             }
-
-             show_banner: false,
-             completions: {
-               case_sensitive: false # case-sensitive completions
-               quick: true    # set to false to prevent auto-selecting completions
-               partial: true    # set to false to prevent partial filling of the prompt
-               algorithm: "fuzzy"    # prefix or fuzzy
-             }
+              direnv export json | from json | default {} | load-env
+            }]
+            env_change: {
+              PWD: [
+                # {|before, after| if (($"($after)/shell.nix" | path exists) and ($env.IN_NIX_SHELL? | describe) == "nothing") { nix-shell --command nu } }
+              ]
             }
-            $env.PATH = ($env.PATH |
-            split row (char esep) |
-        #    prepend /home/myuser/.apps |
-            append /usr/bin/env |
-            append $"($env.HOME)/.config/emacs/bin"
-            )
-            ${import ./zoxide.nix}
-            ${import ./completers.nix}
-            ${import ./startup.nix}
+          }
+        }
 
-            const init_path = $"($nu.home-path)/.init.nu"
-            touch $init_path
-            source $init_path
+        # $env.config.hooks.command_not_found =  source ${pkgs.nix-index}/etc/profile.d/command-not-found.nu
+        source ${pkgs.comma}/share/comma/command-not-found.nu
 
-            # fastfetch --packages-disabled nix
+        $env.PATH = (
+          $env.PATH
+          | split row (char esep)
+          | append "/usr/bin"
+          | append $"($env.HOME)/.config/emacs/bin"
+          | uniq
+        )
+
+        ${import ./zoxide.nix}
+        ${import ./completers.nix}
+        ${import ./startup.nix}
+
+        const init_path = $"($nu.home-path)/.init.nu"
+        if not ($init_path | path exists) {
+          touch $init_path
+        }
+        source $init_path
       '';
       shellAliases = {
         vi = "hx";

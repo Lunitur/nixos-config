@@ -24,6 +24,8 @@ in
 
   programs.niri.enable = true;
 
+  programs.nix-index-database.comma.enable = true;
+
   environment.systemPackages =
     (with pkgs-unstable; [
       # jetbrains.idea-community-bin

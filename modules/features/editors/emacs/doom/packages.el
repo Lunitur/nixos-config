@@ -62,3 +62,5 @@
            :repo "lizqwerscott/mcp.el"))
 
 (package! nushell-mode)
+
+(package! dired-preview)

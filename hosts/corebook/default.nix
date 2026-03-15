@@ -21,6 +21,8 @@ in
     services.jupyter.enable = true;
   };
 
+  programs.nix-index-database.comma.enable = true;
+
   # services.mysql.enable = true;
   # services.mysql.package = pkgs.mariadb;
 

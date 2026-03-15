@@ -143,3 +143,10 @@
 (after! ess
   (setq ess-ask-for-ess-directory nil
         ess-local-process-name "R"))
+
+(use-package! dired-preview
+  :hook (dired-mode . dired-preview-mode)
+  :config
+  (setq dired-preview-delay 0.1)
+  ;; keep previews from freezing emacs on massive files
+  (setq dired-preview-max-size (expt 2 20)))

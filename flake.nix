@@ -52,6 +52,11 @@
       url = "path:/home/carjin/colord";
       flake = false;
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
   };
 
   outputs =
@@ -65,6 +70,7 @@
       stylix,
       niri,
       nixvim,
+      nix-index-database,
       ...
     }@inputs:
     let
@@ -101,6 +107,7 @@
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           nixos-hardware.nixosModules.common-hidpi
+          nix-index-database.nixosModules.default
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
           niri.nixosModules.niri
@@ -189,6 +196,7 @@
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
           niri.nixosModules.niri
+          nix-index-database.nixosModules.default
           {
             features = {
               desktop = {
@@ -258,6 +266,7 @@
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
           niri.nixosModules.niri
+          nix-index-database.nixosModules.default
           {
             features = {
               desktop = {
