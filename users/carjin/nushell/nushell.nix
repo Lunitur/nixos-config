@@ -25,11 +25,11 @@
 
                      let list = $db | where system == $system and name == $program_name
                                     | select package
-                                    | get package 
+                                    | get package
 
                      if ($list | is-empty) {
                        print "No non-local packages found.\n"
-                     } else { 
+                     } else {
                        let selected_package = $list | input list "Select package";
 
                        ^nix-shell -p $selected_package
@@ -44,13 +44,13 @@
 
                 direnv export json | from json | default {} | load-env
               }]
-               
+
               env_change: {
                #  PWD: {|before, after| if (($"($after)/shell.nix" | path exists) and ($env.IN_NIX_SHELL? | describe) == nothing) { nix-shell --command nu } }
               }
 
              }
-            
+
              show_banner: false,
              completions: {
                case_sensitive: false # case-sensitive completions
@@ -58,8 +58,8 @@
                partial: true    # set to false to prevent partial filling of the prompt
                algorithm: "fuzzy"    # prefix or fuzzy
              }
-            } 
-            $env.PATH = ($env.PATH | 
+            }
+            $env.PATH = ($env.PATH |
             split row (char esep) |
         #    prepend /home/myuser/.apps |
             append /usr/bin/env |
@@ -90,7 +90,7 @@
         nix-repl = "nixos-rebuild repl --flake ~/nixos#${osConfig.networking.hostName}";
         nix-eval = "nix eval ~/nixos/#nixosConfigurations.${osConfig.networking.hostName}.config.system.build.toplevel.drvPath";
         nh-victus = "nh os switch ~/nixos -- --substituters \"http://cache.nixos.org http://victus\"";
-        em = "emacs";
+        em = "emacsclient";
         gpro = "gemini -m gemini-3-pro-preview --include-directories ~/nixos";
         gflash = "gemini -m gemini-3-flash-preview --include-directories ~/nixos";
       };

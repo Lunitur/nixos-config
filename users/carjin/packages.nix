@@ -83,13 +83,16 @@ in
       yt-dlp
       bemoji
       jq
-      (rstudioWrapper.override {
+      (rWrapper.override {
         packages = with rPackages; [
           ggplot2
           dplyr
           xts
           tidyverse
+          Bolstad
+          languageserver
         ];
       })
+      julia-bin
     ]);
 }

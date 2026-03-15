@@ -123,19 +123,23 @@
   ;; Automatically preview files with a 0.2-second delay while scrolling
   (setq consult-preview-key '(:debounce 0.2 any)))
 
-(use-package! mcp
-  :after gptel
-  :init
-  (setq mcp-hub-servers
-        '(("filesystem" . (:command "nix" :args ("shell" "nixpkgs#nodejs" "-c" "npx" "-y" "@modelcontextprotocol/server-filesystem") :roots ("/home/carjin/nixos" "/home/carjin/projects")))))
-  :config
-  (require 'mcp-hub)
-  (require 'gptel-integrations)
+;; (use-package! mcp
+;;   :after gptel
+;;   :init
+;;   (setq mcp-hub-servers
+;;         '(("filesystem" . (:command "nix" :args ("shell" "nixpkgs#nodejs" "-c" "npx" "-y" "@modelcontextprotocol/server-filesystem") :roots ("/home/carjin/nixos" "/home/carjin/projects")))))
+;;   :config
+;;   (require 'mcp-hub)
+;;   (require 'gptel-integrations)
 
-  ;; Start all defined servers automatically
-  (mcp-hub-start-all-server)
+;;   ;; Start all defined servers automatically
+;;   (mcp-hub-start-all-server)
 
-  ;; Automatically connect gptel to the MCP servers
-  (gptel-mcp-connect))
+;;   ;; Automatically connect gptel to the MCP servers
+;;   (gptel-mcp-connect))
 
 (use-package! nushell-mode)
+
+(after! ess
+  (setq ess-ask-for-ess-directory nil
+        ess-local-process-name "R"))
