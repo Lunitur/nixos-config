@@ -61,6 +61,7 @@ in
           oterm
           peazip
           lutris
+          hyprpicker
           deluge-gtk
           osu-lazer-bin
           dconf

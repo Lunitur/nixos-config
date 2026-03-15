@@ -30,7 +30,7 @@ in
             error = "#${colors.error}";
             success = "#${colors.success}";
             yellow = "#${colors.yellow}";
-            purple = "#${colors.purple}";
+            purple = "#${colors.warning}";
             grey = "#${colors.grey}";
           };
 
@@ -73,7 +73,7 @@ in
 
           username = {
             show_always = true;
-            style_user = "primary bold";
+            style_user = "yellow bold";
             style_root = "error bold";
             format = "[$user]($style)";
           };
@@ -87,7 +87,7 @@ in
 
           directory = {
             read_only = " 󰌾";
-            home_symbol = " ~";
+            home_symbol = " ~";
             style = "info bold";
             truncate_to_repo = true;
             truncation_length = 3;
@@ -97,13 +97,13 @@ in
 
           git_branch = {
             symbol = "󰊢 ";
-            style = "text bold";
+            style = "warning bold";
             format = "on [$symbol$branch]($style) ";
           };
 
           git_status = {
             format = "([$all_status$ahead_behind]($style)) ";
-            style = "purple bold";
+            style = "info bold";
             conflicted = "=$count ";
             ahead = "⇡$count ";
             behind = "⇣$count ";

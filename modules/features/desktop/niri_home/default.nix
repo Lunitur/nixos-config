@@ -152,6 +152,7 @@ in
         Mod+Shift+Slash { show-hotkey-overlay; }
         Mod+Return { spawn "footclient"; }
         Mod+Q { close-window; }
+        Mod+Shift+P { spawn "sh" "-c" "hyprpicker -a"; }
         Mod+N { spawn "footclient" "yazi"; }
         Mod+D { spawn "fuzzel"; }
         Mod+P { toggle-window-floating; }
