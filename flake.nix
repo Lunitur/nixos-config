@@ -117,7 +117,6 @@
               editors = {
                 helix.enable = true;
                 emacs.enable = true;
-                nixvim.enable = true;
               };
               shell = {
                 zsh.enable = true;
@@ -147,6 +146,7 @@
                 avahi.enable = true;
               };
               common = {
+                theme.stylix.enable = true;
                 dotfiles.enable = true;
                 fonts.enable = true;
                 packages.enable = true;
@@ -213,6 +213,7 @@
               services.udiskie.enable = true;
               network.base.enable = true;
               common = {
+                theme.stylix.enable = true;
                 dotfiles.enable = true;
                 fonts.enable = true;
                 packages.enable = true;
@@ -241,23 +242,6 @@
               trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
             };
           }
-        ];
-      };
-      nixosConfigurations.freebook = nixpkgs-stable.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/freebook
-          ./hosts # defaults
-          ./network
-          ./modules/features/all.nix
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          nixos-hardware.nixosModules.common-hidpi
-          home-manager-stable.nixosModules.default
-          stylix.nixosModules.stylix
-          niri.nixosModules.niri
         ];
       };
       nixosConfigurations.corebook = nixpkgs-stable.lib.nixosSystem {
@@ -292,6 +276,7 @@
               apps.firefox.enable = true;
               network.base.enable = true;
               common = {
+                theme.stylix.enable = true;
                 dotfiles.enable = true;
                 fonts.enable = true;
                 packages.enable = true;
@@ -329,7 +314,7 @@
         system = "aarch64-linux";
         modules = [
           ./hosts/nano
-          ./users/carjin/user.nix
+          ./users/carjin
           ./modules/features/all.nix
           simple-nixos-mailserver.nixosModule
           home-manager-stable.nixosModules.default
@@ -350,6 +335,7 @@
               services.pueue.enable = true;
               network.base.enable = true;
               common = {
+                theme.stylix.enable = true;
                 dotfiles.enable = true;
                 xdg-mime.enable = true;
               };

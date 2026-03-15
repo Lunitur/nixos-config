@@ -17,7 +17,7 @@ in
     ./hardware-configuration.nix
     ./vfio.nix
     ./kvmfr.nix
-    ../../users/carjin/user.nix
+    ../../users/carjin
   ];
 
   features = {

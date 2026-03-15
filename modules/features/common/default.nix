@@ -6,5 +6,6 @@
     ./packages.nix
     ./polkit.nix
     ./xdg-mime.nix
+    ./theme
   ];
 }

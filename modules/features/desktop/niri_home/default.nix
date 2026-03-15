@@ -155,7 +155,7 @@ in
         Mod+N { spawn "footclient" "yazi"; }
         Mod+D { spawn "fuzzel"; }
         Mod+P { toggle-window-floating; }
-        Mod+E { spawn "nu" "/home/carjin/nixos/users/carjin/scripts/emacs-scratchpad.nu"; }
+        Mod+E { spawn "nu" "/home/carjin/nixos/modules/features/scripts/emacs-scratchpad.nu"; }
         Mod+Z { spawn "sh" "-c" "cliphist list | fuzzel -d | cliphist decode | wl-copy"; }
         Mod+F1 { spawn "swaylock"; }
         Mod+Shift+N { spawn "swaync-client" "-t"; }
@@ -163,7 +163,7 @@ in
         Mod+Alt+O { spawn "firefox" "https://search.nixos.org/options"; }
         Mod+Alt+P { spawn "firefox" "https://search.nixos.org/packages"; }
         Mod+Alt+G { spawn "firefox" "https://gemini.google.com"; }
-        
+
         Mod+Shift+W { spawn "looking-glass-client" "-f" "/dev/kvmfr0" "-m" "KEY_INSERT" "-F" "-T"; }
         Mod+Shift+V { spawn "blueman-manager"; }
         Mod+V { spawn "pavucontrol"; }

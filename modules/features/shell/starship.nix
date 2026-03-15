@@ -13,6 +13,8 @@ in
       programs.starship = {
         enable = true;
         enableZshIntegration = true;
+        enableNushellIntegration = true;
+        enableBashIntegration = true;
         settings = {
           format = lib.concatStrings [
             "$username"

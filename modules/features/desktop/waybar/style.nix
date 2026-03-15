@@ -1,5 +1,5 @@
 let
-  colors = import ../../common/theme/default.nix;
+  colors = import ../../common/theme/green.nix;
 in
 ''
   * {

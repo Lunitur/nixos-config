@@ -24,7 +24,6 @@
       trusted-users = [
         "root"
         "carjin"
-        "lsimek"
       ];
     };
   };

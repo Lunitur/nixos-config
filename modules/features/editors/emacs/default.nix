@@ -18,6 +18,8 @@ in
       };
       services.emacs.enable = true;
 
+      # home.file.".config/doom".source = ./doom;
+
       home.sessionPath = [
         "$HOME/.config/emacs/bin"
       ];

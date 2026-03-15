@@ -7,7 +7,6 @@
 }:
 {
   imports = [
-    ./stylix
   ];
 
   users.users.carjin = {

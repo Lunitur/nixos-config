@@ -36,7 +36,6 @@ in
       trusted-users = [
         "root"
         "carjin"
-        # "lsimek"
       ];
     };
   };

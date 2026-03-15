@@ -1,1 +1,5 @@
-import ./green.nix
+{
+  imports = [
+    ./stylix.nix
+  ];
+}

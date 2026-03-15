@@ -13,7 +13,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../users/carjin/user.nix
+    ../../users/carjin
   ];
 
   features = {
