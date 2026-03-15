@@ -12,9 +12,10 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/hyprland.nix
     ../../users/lsimek/user.nix
   ];
+
+  features.desktop.hyprland.enable = true;
 
   # nix.settings.extra-substituters = [
   #   "http://victus.akita-bleak.ts.net?priority=50"

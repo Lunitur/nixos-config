@@ -14,16 +14,23 @@ in
 {
   imports = [
     ./gputoggle.nix
-    ../../modules/jupyter.nix
     ./hardware-configuration.nix
     ./vfio.nix
     ./kvmfr.nix
     ../../users/carjin/user.nix
-    ../../modules/usb-tethering.nix
-    ../../modules/anarhizam-org.nix
-    ../../modules/ram.nix
-    ../../modules/irc.nix
   ];
+
+  features = {
+    services = {
+      jupyter.enable = true;
+      anarhizam.enable = true;
+      irc.enable = true;
+    };
+    hardware = {
+      usb-tethering.enable = true;
+      ram.enable = true;
+    };
+  };
 
   services = {
     # upower.enable = true;

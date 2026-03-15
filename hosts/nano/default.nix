@@ -12,10 +12,15 @@
     ./common.nix
     ./arhivar.nix
     ./metrics.nix
-    ../../network/headscale.nix
-    ../../modules/anarhizam-org.nix
-    ../../modules/irc.nix
   ];
+
+  features = {
+    network.headscale.enable = true;
+    services = {
+      anarhizam.enable = true;
+      irc.enable = true;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     helix

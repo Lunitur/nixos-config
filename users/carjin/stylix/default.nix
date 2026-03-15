@@ -45,6 +45,5 @@
     };
 
     image = ../wallpapers/desktop6.png;
-
   };
 }

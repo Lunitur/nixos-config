@@ -14,8 +14,9 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../users/carjin/user.nix
-    ../../modules/jupyter.nix
   ];
+
+  features.services.jupyter.enable = true;
 
   # nix.settings.extra-substituters = [
   #   "http://victus.akita-bleak.ts.net?priority=50"

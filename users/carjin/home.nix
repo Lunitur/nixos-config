@@ -81,6 +81,7 @@
       hyprlock.enable = false;
       vscode.enable = false;
       wofi.enable = false;
+      libreoffice.enable = false;
     };
   };
 

@@ -1,5 +1,5 @@
 let
-  colors = import ../theme;
+  colors = import ../../../modules/features/common/theme/default.nix;
 in
 {
   scheme = colors.scheme;

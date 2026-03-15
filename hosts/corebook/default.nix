@@ -14,9 +14,12 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../users/carjin/user.nix
-    ../../modules/usb-tethering.nix
-    ../../modules/jupyter.nix
   ];
+
+  features = {
+    hardware.usb-tethering.enable = true;
+    services.jupyter.enable = true;
+  };
 
   # services.mysql.enable = true;
   # services.mysql.package = pkgs.mariadb;

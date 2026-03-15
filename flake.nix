@@ -43,6 +43,11 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
     colord = {
       url = "path:/home/carjin/colord";
       flake = false;
@@ -59,6 +64,7 @@
       simple-nixos-mailserver,
       stylix,
       niri,
+      nixvim,
       ...
     }@inputs:
     let
@@ -77,6 +83,8 @@
           pkgs-unstable
           pkgs-unstable-arm
           inputs
+          niri
+          nixvim
           ;
       };
     in
@@ -87,8 +95,7 @@
         modules = [
           ./hosts/victus
           ./hosts # defaults
-          ./network
-          ./modules/desktop-common.nix
+          ./modules/features/all.nix
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           nixos-hardware.nixosModules.common-pc-laptop
@@ -98,19 +105,73 @@
           stylix.nixosModules.stylix
           niri.nixosModules.niri
           {
+            features = {
+              desktop = {
+                niri.enable = true;
+                waybar.enable = true;
+                foot.enable = true;
+                kitty.enable = true;
+                fuzzel.enable = true;
+                swaync.enable = true;
+              };
+              editors = {
+                helix.enable = true;
+                emacs.enable = true;
+                nixvim.enable = true;
+              };
+              shell = {
+                zsh.enable = true;
+                nushell.enable = true;
+                starship.enable = true;
+                git.enable = true;
+                ssh.enable = true;
+                jujutsu.enable = true;
+                yazi.enable = true;
+              };
+              apps = {
+                firefox.enable = true;
+                mpv.enable = true;
+                zathura.enable = true;
+                typst.enable = true;
+                gemini-cli.enable = true;
+              };
+              services = {
+                pueue.enable = true;
+                udiskie.enable = true;
+              };
+              network = {
+                base.enable = true;
+                tailscale.enable = true;
+                syncthing.enable = true;
+                spotify.enable = true;
+                avahi.enable = true;
+              };
+              common = {
+                dotfiles.enable = true;
+                fonts.enable = true;
+                packages.enable = true;
+                xdg-mime.enable = true;
+              };
+            };
+
             home-manager = {
               # also pass inputs to home-manager modules
               extraSpecialArgs = {
                 inherit pkgs-unstable inputs;
               };
               users = {
-                carjin = ./users/carjin/home.nix;
+                carjin = {
+                  home.username = "carjin";
+                  home.homeDirectory = "/home/carjin";
+                  home.stateVersion = "23.11";
+                  programs.home-manager.enable = true;
+                };
               };
 
               backupFileExtension = "backup";
               useGlobalPkgs = true;
             };
-          } # modules.cosmic
+          }
         ];
       };
       nixosConfigurations.minibook = nixpkgs-stable.lib.nixosSystem {
@@ -119,8 +180,7 @@
         modules = [
           ./hosts/minibook
           ./hosts # defaults
-          ./network
-          ./modules/desktop-common.nix
+          ./modules/features/all.nix
           nixos-hardware.nixosModules.chuwi-minibook-x
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc-laptop
@@ -130,12 +190,46 @@
           stylix.nixosModules.stylix
           niri.nixosModules.niri
           {
+            features = {
+              desktop = {
+                niri.enable = true;
+                waybar.enable = true;
+                foot.enable = true;
+                fuzzel.enable = true;
+                swaync.enable = true;
+              };
+              editors.helix.enable = true;
+              shell = {
+                zsh.enable = true;
+                nushell.enable = true;
+                starship.enable = true;
+                git.enable = true;
+                yazi.enable = true;
+              };
+              apps = {
+                firefox.enable = true;
+                mpv.enable = true;
+              };
+              services.udiskie.enable = true;
+              network.base.enable = true;
+              common = {
+                dotfiles.enable = true;
+                fonts.enable = true;
+                packages.enable = true;
+              };
+            };
+
             home-manager = {
               extraSpecialArgs = {
                 inherit pkgs-unstable inputs;
               };
               users = {
-                carjin = ./users/carjin/home.nix;
+                carjin = {
+                  home.username = "carjin";
+                  home.homeDirectory = "/home/carjin";
+                  home.stateVersion = "23.11";
+                  programs.home-manager.enable = true;
+                };
               };
 
               backupFileExtension = "backup";
@@ -156,6 +250,7 @@
           ./hosts/freebook
           ./hosts # defaults
           ./network
+          ./modules/features/all.nix
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-laptop-ssd
@@ -171,8 +266,7 @@
         modules = [
           ./hosts/corebook
           ./hosts # defaults
-          ./network
-          ./modules/desktop-common.nix
+          ./modules/features/all.nix
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-laptop-ssd
@@ -181,12 +275,40 @@
           stylix.nixosModules.stylix
           niri.nixosModules.niri
           {
+            features = {
+              desktop = {
+                niri.enable = true;
+                waybar.enable = true;
+                foot.enable = true;
+                fuzzel.enable = true;
+              };
+              editors.helix.enable = true;
+              shell = {
+                zsh.enable = true;
+                nushell.enable = true;
+                starship.enable = true;
+                git.enable = true;
+              };
+              apps.firefox.enable = true;
+              network.base.enable = true;
+              common = {
+                dotfiles.enable = true;
+                fonts.enable = true;
+                packages.enable = true;
+              };
+            };
+
             home-manager = {
               extraSpecialArgs = {
                 inherit pkgs-unstable inputs;
               };
               users = {
-                carjin = ./users/carjin/home.nix;
+                carjin = {
+                  home.username = "carjin";
+                  home.homeDirectory = "/home/carjin";
+                  home.stateVersion = "23.11";
+                  programs.home-manager.enable = true;
+                };
               };
 
               backupFileExtension = "backup";
@@ -208,17 +330,42 @@
         modules = [
           ./hosts/nano
           ./users/carjin/user.nix
-          ./network
+          ./modules/features/all.nix
           simple-nixos-mailserver.nixosModule
           home-manager-stable.nixosModules.default
           stylix.nixosModules.stylix
           {
+            features = {
+              editors.helix.enable = true;
+              shell = {
+                zsh.enable = true;
+                nushell.enable = true;
+                starship.enable = true;
+                git.enable = true;
+                ssh.enable = true;
+                jujutsu.enable = true;
+                yazi.enable = true;
+              };
+              apps.gemini-cli.enable = true;
+              services.pueue.enable = true;
+              network.base.enable = true;
+              common = {
+                dotfiles.enable = true;
+                xdg-mime.enable = true;
+              };
+            };
+
             home-manager = {
               extraSpecialArgs = {
                 inherit pkgs-unstable inputs;
               };
               users = {
-                carjin = ./users/carjin/home-nano.nix;
+                carjin = {
+                  home.username = "carjin";
+                  home.homeDirectory = "/home/carjin";
+                  home.stateVersion = "23.11";
+                  programs.home-manager.enable = true;
+                };
               };
 
               backupFileExtension = "backup";

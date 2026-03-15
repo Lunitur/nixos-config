@@ -14,12 +14,15 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/hyprland.nix
-    ../../modules/nix-ld.nix
     ../../users/carjin/user.nix
     ../../users/lsimek/user.nix
     ./kmonad.nix
   ];
+
+  features = {
+    desktop.hyprland.enable = true;
+    common.nix-ld.enable = true;
+  };
 
   home-manager = {
     # also pass inputs to home-manager modules
