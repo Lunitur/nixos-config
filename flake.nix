@@ -321,6 +321,7 @@
           stylix.nixosModules.stylix
           {
             features = {
+              hardware.audio.enable = false;
               editors.helix.enable = true;
               shell = {
                 zsh.enable = true;
