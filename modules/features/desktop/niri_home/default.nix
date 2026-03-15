@@ -155,7 +155,7 @@ in
         Mod+N { spawn "footclient" "yazi"; }
         Mod+D { spawn "fuzzel"; }
         Mod+P { toggle-window-floating; }
-        Mod+E { spawn "nu" "/home/carjin/nixos/modules/features/scripts/emacs-scratchpad.nu"; }
+        Mod+E { spawn "nu" "~/nixos/modules/features/shell/scripts/emacs-scratchpad.nu"; }
         Mod+Z { spawn "sh" "-c" "cliphist list | fuzzel -d | cliphist decode | wl-copy"; }
         Mod+F1 { spawn "swaylock"; }
         Mod+Shift+N { spawn "swaync-client" "-t"; }
