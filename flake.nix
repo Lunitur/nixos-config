@@ -333,7 +333,11 @@
               };
               apps.gemini-cli.enable = true;
               services.pueue.enable = true;
-              network.base.enable = true;
+              network = {
+                headscale.enable = true;
+                tailscale.enable = true;
+                base.enable = true;
+              };
               common = {
                 theme.stylix.enable = true;
                 dotfiles.enable = true;
