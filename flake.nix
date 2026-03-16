@@ -275,20 +275,39 @@
                 foot.enable = true;
                 fuzzel.enable = true;
               };
-              editors.helix.enable = true;
               shell = {
                 zsh.enable = true;
                 nushell.enable = true;
                 starship.enable = true;
                 git.enable = true;
+                ssh.enable = true;
+                jujutsu.enable = true;
+                yazi.enable = true;
               };
-              apps.firefox.enable = true;
-              network.base.enable = true;
+              apps = {
+                firefox.enable = true;
+                mpv.enable = true;
+                zathura.enable = true;
+                typst.enable = true;
+                gemini-cli.enable = true;
+              };
+              services = {
+                pueue.enable = true;
+                udiskie.enable = true;
+              };
+              network = {
+                base.enable = true;
+                tailscale.enable = true;
+                syncthing.enable = true;
+                spotify.enable = true;
+                avahi.enable = true;
+              };
               common = {
                 theme.stylix.enable = true;
                 dotfiles.enable = true;
                 fonts.enable = true;
                 packages.enable = true;
+                xdg-mime.enable = true;
               };
             };
 
