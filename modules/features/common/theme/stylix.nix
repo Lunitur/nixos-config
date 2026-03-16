@@ -49,8 +49,8 @@ in
           package = pkgs.noto-fonts-color-emoji;
         };
         monospace = {
-          name = "JetBrains Mono";
-          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "Iosevka";
+          package = pkgs.nerd-fonts.iosevka;
         };
         sansSerif = {
           name = "Noto Sans";
