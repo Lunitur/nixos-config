@@ -13,13 +13,13 @@ in
     home-manager.users.carjin = {
       programs.gemini-cli = {
         enable = true;
-        defaultModel = "gemini-3-pro-preview";
         settings = {
           general = {
             preferredEditor = "hx";
             vimMode = true;
             disableAutoUpdate = true;
             disableUpdateNag = true;
+            previewFeatures = true;
           };
           context = {
             fileName = [
@@ -34,11 +34,13 @@ in
           };
           ui = {
             theme = "Default";
+            footer.hideContextPercentage = false;
           };
           privacy.usageStatisticsEnabled = false;
           experimental = {
             plan = true;
             modelSteering = true;
+            skills = true;
           };
         };
       };
