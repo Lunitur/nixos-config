@@ -3,11 +3,10 @@
   ...
 }:
 {
-  flake.modules.nixos.corebook = {
+  flake.nixosModules.corebook = {
     imports = [
-      inputs.self.modules.nixos.corebook-base
-      inputs.self.modules.nixos.hosts-default
-      inputs.self.modules.nixos.allFeatures
+      inputs.self.nixosModules.hosts-default
+      inputs.self.nixosModules.allFeatures
       inputs.nixos-hardware.nixosModules.common-cpu-intel
       inputs.nixos-hardware.nixosModules.common-pc-laptop
       inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd

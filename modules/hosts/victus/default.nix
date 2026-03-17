@@ -15,7 +15,7 @@
     in
     {
       imports = [
-        inputs.self.modules.nixos.user-carjin
+        inputs.self.nixosModules.user-carjin
       ];
 
       features = {
