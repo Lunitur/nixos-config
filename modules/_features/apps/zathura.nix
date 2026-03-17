@@ -20,7 +20,7 @@ in
           u = "scroll half_up";
         };
         options = {
-          font = "JetBrains Mono Bold 13";
+          font = "Iosevka Bold 13";
           # copy selection to system clipboard
           selection-clipboard = "clipboard";
           incremental-search = true;

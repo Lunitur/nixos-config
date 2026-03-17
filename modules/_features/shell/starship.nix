@@ -91,7 +91,7 @@ in
             style = "info bold";
             truncate_to_repo = true;
             truncation_length = 3;
-            truncation_symbol = "…/";
+            truncation_symbol = "./";
             format = " in [$path]($style)[$read_only]($read_only_style) ";
           };
 

@@ -150,3 +150,8 @@
   (setq dired-preview-delay 0.1)
   ;; keep previews from freezing emacs on massive files
   (setq dired-preview-max-size (expt 2 20)))
+
+(after! dired
+  (map! :map dired-mode-map
+        :n "J" #'dired-preview-page-down
+        :n "K" #'dired-preview-page-up))

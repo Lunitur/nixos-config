@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, config, pkgs, lib, ... }:
 {
   home = {
     sessionVariables.BROWSER = "firefox";
@@ -22,12 +22,16 @@
         "gnomeTheme.bookmarksToolbarUnderTabs" = true;
         "gnomeTheme.normalWidthTabs" = false;
         "gnomeTheme.tabsAsHeaderbar" = false;
+        "gnomeTheme.useSystemFonts" = true;
         "browser.fullscreen.autohide" = false;
+        "font.name.monospace.x-western" = "Iosevka";
+        "font.name.sans-serif.x-western" = "Noto Sans";
+        "font.name.serif.x-western" = "Noto Serif";
       };
-      userChrome = ''
+      userChrome = lib.mkAfter ''
         @import "firefox-gnome-theme/userChrome.css";
       '';
-      userContent = ''
+      userContent = lib.mkAfter ''
         @import "firefox-gnome-theme/userContent.css";
       '';
     };
