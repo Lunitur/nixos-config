@@ -22,16 +22,21 @@
             config.allowUnfree = true;
           };
           # for arm
-          pkgs-unstable-arm = if system == "aarch64-linux" then 
-            (import inputs.nixpkgs-unstable { system = "aarch64-linux"; config.allowUnfree = true; }) 
-            else null;
+          pkgs-unstable-arm =
+            if system == "aarch64-linux" then
+              (import inputs.nixpkgs-unstable {
+                system = "aarch64-linux";
+                config.allowUnfree = true;
+              })
+            else
+              null;
           # other inputs that were in specialArgs
           niri = inputs.niri;
           nixvim = inputs.nixvim;
         };
 
         modules = [
-          inputs.self.modules.nixos.${name}
+          inputs.self.nixosModules.${name}
           { nixpkgs.hostPlatform = lib.mkDefault system; }
         ];
       };

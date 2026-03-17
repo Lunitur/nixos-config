@@ -1,13 +1,14 @@
 {
   inputs,
+  self,
   ...
 }:
 {
-  flake.modules.nixos.victus = {
+  flake.nixosModules.victus = {
     imports = [
-      inputs.self.modules.nixos.victus-base
-      inputs.self.modules.nixos.hosts-default
-      inputs.self.modules.nixos.allFeatures
+      inputs.self.nixosModules.hosts-default
+      inputs.self.nixosModules.allFeatures
+      self.nixosModules.kvmfr
       inputs.nixos-hardware.nixosModules.common-cpu-amd
       inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
       inputs.nixos-hardware.nixosModules.common-pc-laptop
@@ -73,8 +74,8 @@
             inherit inputs;
             inherit (inputs) self;
             pkgs-unstable = import inputs.nixpkgs-unstable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
+              system = "x86_64-linux";
+              config.allowUnfree = true;
             };
           };
           users = {

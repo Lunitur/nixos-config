@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.modules.nixos.allFeatures = {
+  flake.nixosModules.allFeatures = {
     _class = "nixos";
     imports = [
       ../_features/apps
