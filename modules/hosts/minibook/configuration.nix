@@ -3,11 +3,10 @@
   ...
 }:
 {
-  flake.modules.nixos.minibook = {
+  flake.nixosModules.minibook = {
     imports = [
-      inputs.self.modules.nixos.minibook-base
-      inputs.self.modules.nixos.hosts-default
-      inputs.self.modules.nixos.allFeatures
+      inputs.self.nixosModules.hosts-default
+      inputs.self.nixosModules.allFeatures
       inputs.nixos-hardware.nixosModules.chuwi-minibook-x
       inputs.nixos-hardware.nixosModules.common-cpu-intel
       inputs.nixos-hardware.nixosModules.common-pc-laptop

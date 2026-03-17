@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.x86_64-linux.gpu-win = (
+      packages.gpu-win = (
         pkgs.writeShellScriptBin "gpu-win" ''
           set -x
 
@@ -24,7 +24,7 @@
           sudo virsh start win10
         ''
       );
-      packages.x86_64-linux.gpu-linux = (
+      packages.gpu-linux = (
         pkgs.writeShellScriptBin "gpu-linux" ''
           #!/usr/bin/env bash
           set -x

@@ -3,304 +3,303 @@
   ...
 }:
 {
-  flake.modules.nixos.nano-base = {
-    config,
-    lib,
-    pkgs,
-    ...
-  }:
-  {
-    imports = [
-      inputs.self.modules.nixos.nano-hardware
-      inputs.self.modules.nixos.nano-common
-      inputs.self.modules.nixos.nano-arhivar
-      inputs.self.modules.nixos.nano-metrics
-      inputs.self.modules.nixos.user-carjin
-    ];
+  flake.nixosModules.nano =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    {
+      imports = [
+        inputs.self.nixosModules.arhivar
+        inputs.self.nixosModules.anarhizam-metrics
+        inputs.self.nixosModules.user-carjin
+      ];
 
-    features = {
-      network.headscale.enable = true;
-      services = {
-        anarhizam.enable = true;
-        irc.enable = true;
+      features = {
+        network.headscale.enable = true;
+        services = {
+          anarhizam.enable = true;
+          irc.enable = true;
+        };
       };
-    };
 
-    environment.systemPackages = with pkgs; [
-      helix
-      zulu
-    ];
+      environment.systemPackages = with pkgs; [
+        helix
+        zulu
+      ];
 
-    security.acme.acceptTerms = true;
-    security.acme.defaults.email = "karlo.puselj@gmail.com";
-    services.nginx = {
-      enable = true;
-      virtualHosts = {
-        "anarhizam.org" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://localhost:3000";
-            recommendedProxySettings = true;
-            proxyWebsockets = true;
+      security.acme.acceptTerms = true;
+      security.acme.defaults.email = "karlo.puselj@gmail.com";
+      services.nginx = {
+        enable = true;
+        virtualHosts = {
+          "anarhizam.org" = {
+            addSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://localhost:3000";
+              recommendedProxySettings = true;
+              proxyWebsockets = true;
+            };
+          };
+
+          "nextcloud.anarhizam.org" = {
+            forceSSL = true;
+            enableACME = true;
+          };
+
+          "headscale.anarhizam.org" = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://localhost:8080";
+              proxyWebsockets = true;
+            };
           };
         };
+      };
 
-        "nextcloud.anarhizam.org" = {
-          forceSSL = true;
-          enableACME = true;
-        };
+      mailserver = {
+        enable = true;
+        stateVersion = 3;
+        fqdn = "mail.anarhizam.org";
+        domains = [ "anarhizam.org" ];
 
-        "headscale.anarhizam.org" = {
-          forceSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://localhost:8080";
-            proxyWebsockets = true;
+        loginAccounts = {
+          "admin@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/admin";
+          };
+          "postman@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/admin";
+          };
+          "karlo.puselj@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/karlo";
+          };
+          "carjin@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/carjin";
+          };
+          "lsimek@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/lsimek";
+          };
+          "discourse@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/discourse";
+          };
+          "marko@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/marko";
           };
         };
+        certificateScheme = "acme-nginx";
       };
-    };
 
-    mailserver = {
-      enable = true;
-      stateVersion = 3;
-      fqdn = "mail.anarhizam.org";
-      domains = [ "anarhizam.org" ];
+      services.discourse = {
+        enable = false;
+        database.ignorePostgresqlVersion = true;
+        admin = {
+          username = "carjin";
+          email = "carjin@anarhizam.org";
+          fullName = "Carjin";
+          passwordFile = "/etc/discourse/adminpass";
 
-      loginAccounts = {
-        "admin@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/admin";
         };
-        "postman@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/admin";
+        mail.outgoing = {
+          username = "discourse@anarhizam.org";
+          passwordFile = "/etc/discourse/mailpass";
+          domain = "anarhizam.org";
+          authentication = "plain";
+          serverAddress = "mail.anarhizam.org";
         };
-        "karlo.puselj@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/karlo";
-        };
-        "carjin@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/carjin";
-        };
-        "lsimek@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/lsimek";
-        };
-        "discourse@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/discourse";
-        };
-        "marko@anarhizam.org" = {
-          hashedPasswordFile = "/etc/mail/marko";
-        };
-      };
-      certificateScheme = "acme-nginx";
-    };
-
-    services.discourse = {
-      enable = false;
-      database.ignorePostgresqlVersion = true;
-      admin = {
-        username = "carjin";
-        email = "carjin@anarhizam.org";
-        fullName = "Carjin";
-        passwordFile = "/etc/discourse/adminpass";
+        secretKeyBaseFile = "/etc/discourse/secretKeyBase";
+        hostname = "discourse.anarhizam.org";
 
       };
-      mail.outgoing = {
-        username = "discourse@anarhizam.org";
-        passwordFile = "/etc/discourse/mailpass";
-        domain = "anarhizam.org";
-        authentication = "plain";
-        serverAddress = "mail.anarhizam.org";
-      };
-      secretKeyBaseFile = "/etc/discourse/secretKeyBase";
-      hostname = "discourse.anarhizam.org";
 
-    };
-
-    services.postgresql = {
-      enable = true;
-      ensureDatabases = [ "discourse" ];
-      authentication = pkgs.lib.mkOverride 10 ''
-        #type database  DBuser  auth-method
-        local all       all     trust
-        host  all       all     127.0.0.1/32   trust
-        host  all       all     ::1/128        trust
-      '';
-      ensureUsers = [
-        {
-          name = "discourse";
-          ensureDBOwnership = true;
-        }
-      ];
-    };
-
-    services.nextcloud = {
-      enable = true;
-      package = pkgs.nextcloud32;
-      hostName = "nextcloud.anarhizam.org";
-      https = true;
-      config = {
-        adminpassFile = "/etc/private/nextcloud-admin-pass";
-        adminuser = "root";
-        dbtype = "sqlite";
-      };
-      extraApps = {
-        inherit (config.services.nextcloud.package.packages.apps)
-          contacts
-          calendar
-          tasks
-          richdocuments
-          groupfolders
-          deck
-          ;
-      };
-      extraAppsEnable = true;
-      settings =
-        let
-          prot = "https"; # or https
-          host = "nextcloud.anarhizam.org";
-          dir = "/";
-        in
-        {
-          overwriteprotocol = prot;
-          overwritehost = host;
-          overwritewebroot = dir;
-          overwrite.cli.url = "${prot}://${host}${dir}/";
-          htaccess.RewriteBase = dir;
-          trashbin_retention_obligation = "auto, 30";
-          trusted_domains = [
-            "nano"
-            "nano.akita-bleak.ts.net"
-            "localhost"
-            "nextcloud.anarhizam.org"
-          ];
-          log_type = "file";
-        };
-    };
-
-    virtualisation.oci-containers.containers.collabora = {
-      image = "docker.io/collabora/code:latest";
-      ports = [ "9980:9980/tcp" ];
-      environment = {
-        server_name = "office.anarhizam.org";
-        aliasgroup1 = "https://nextcloud.anarhizam.org:443";
-        dictionaries = "en_US hr_HR";
-        username = "username";
-        password = "password";
-        extra_params = "--o:ssl.enable=false --o:ssl.termination=true --o:per_document.max_concurrency=2";
-      };
-      extraOptions = [
-        "--pull=newer"
-      ];
-    };
-
-    #Collabora Virtual Hosts
-    services.nginx.virtualHosts.${config.virtualisation.oci-containers.containers.collabora.environment.server_name} =
-      {
-        enableACME = true;
-        addSSL = true;
-
-        extraConfig = ''
-           # static files
-           location ^~ /browser {
-             proxy_pass http://127.0.0.1:9980;
-             proxy_set_header Host $host;
-           }
-
-           # WOPI discovery URL
-           location ^~ /hosting/discovery {
-             proxy_pass http://127.0.0.1:9980;
-             proxy_set_header Host $host;
-           }
-
-           # Capabilities
-           location ^~ /hosting/capabilities {
-             proxy_pass http://127.0.0.1:9980;
-             proxy_set_header Host $host;
-          }
-
-          # main websocket
-          location ~ ^/cool/(.*)/ws$ {
-            proxy_pass http://127.0.0.1:9980;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_set_header Host $host;
-            proxy_read_timeout 36000s;
-          }
-
-          # download, presentation and image upload
-          location ~ ^/(c|l)ool {
-            proxy_pass http://127.0.0.1:9980;
-            proxy_set_header Host $host;
-          }
-
-          # Admin Console websocket
-          location ^~ /cool/adminws {
-            proxy_pass http://127.0.0.1:9980;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_set_header Host $host;
-            proxy_read_timeout 36000s;
-          }
+      services.postgresql = {
+        enable = true;
+        ensureDatabases = [ "discourse" ];
+        authentication = pkgs.lib.mkOverride 10 ''
+          #type database  DBuser  auth-method
+          local all       all     trust
+          host  all       all     127.0.0.1/32   trust
+          host  all       all     ::1/128        trust
         '';
+        ensureUsers = [
+          {
+            name = "discourse";
+            ensureDBOwnership = true;
+          }
+        ];
       };
 
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-
-    networking.hostName = "nano";
-    networking.firewall = {
-      allowedUDPPorts = [
-        80
-        443
-        9980
-        8000
-        8080
-        50443
-        2222
-      ];
-      allowedTCPPorts = [
-        80
-        443
-        3478
-        9980
-        8000
-        8080
-        2222
-      ];
-    };
-
-    networking.interfaces.enp1s0.useDHCP = true;
-
-    services.journald.extraConfig = ''
-      MaxRetentionSec=1month
-      SystemMaxUse=500M
-    '';
-
-    services.logrotate.enable = true;
-    services.logrotate.settings.header = {
-      global = true;
-      priority = 1;
-      keep = 5; # Keep 5 rotations
-      frequency = "weekly";
-    };
-
-    systemd.services.podman-gc = {
-      description = "Podman garbage collection";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.podman}/bin/podman system prune -f";
+      services.nextcloud = {
+        enable = true;
+        package = pkgs.nextcloud32;
+        hostName = "nextcloud.anarhizam.org";
+        https = true;
+        config = {
+          adminpassFile = "/etc/private/nextcloud-admin-pass";
+          adminuser = "root";
+          dbtype = "sqlite";
+        };
+        extraApps = {
+          inherit (config.services.nextcloud.package.packages.apps)
+            contacts
+            calendar
+            tasks
+            richdocuments
+            groupfolders
+            deck
+            ;
+        };
+        extraAppsEnable = true;
+        settings =
+          let
+            prot = "https"; # or https
+            host = "nextcloud.anarhizam.org";
+            dir = "/";
+          in
+          {
+            overwriteprotocol = prot;
+            overwritehost = host;
+            overwritewebroot = dir;
+            overwrite.cli.url = "${prot}://${host}${dir}/";
+            htaccess.RewriteBase = dir;
+            trashbin_retention_obligation = "auto, 30";
+            trusted_domains = [
+              "nano"
+              "nano.akita-bleak.ts.net"
+              "localhost"
+              "nextcloud.anarhizam.org"
+            ];
+            log_type = "file";
+          };
       };
-    };
 
-    systemd.timers.podman-gc = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "weekly";
-        Persistent = true;
+      virtualisation.oci-containers.containers.collabora = {
+        image = "docker.io/collabora/code:latest";
+        ports = [ "9980:9980/tcp" ];
+        environment = {
+          server_name = "office.anarhizam.org";
+          aliasgroup1 = "https://nextcloud.anarhizam.org:443";
+          dictionaries = "en_US hr_HR";
+          username = "username";
+          password = "password";
+          extra_params = "--o:ssl.enable=false --o:ssl.termination=true --o:per_document.max_concurrency=2";
+        };
+        extraOptions = [
+          "--pull=newer"
+        ];
       };
+
+      #Collabora Virtual Hosts
+      services.nginx.virtualHosts.${config.virtualisation.oci-containers.containers.collabora.environment.server_name} =
+        {
+          enableACME = true;
+          addSSL = true;
+
+          extraConfig = ''
+             # static files
+             location ^~ /browser {
+               proxy_pass http://127.0.0.1:9980;
+               proxy_set_header Host $host;
+             }
+
+             # WOPI discovery URL
+             location ^~ /hosting/discovery {
+               proxy_pass http://127.0.0.1:9980;
+               proxy_set_header Host $host;
+             }
+
+             # Capabilities
+             location ^~ /hosting/capabilities {
+               proxy_pass http://127.0.0.1:9980;
+               proxy_set_header Host $host;
+            }
+
+            # main websocket
+            location ~ ^/cool/(.*)/ws$ {
+              proxy_pass http://127.0.0.1:9980;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_set_header Host $host;
+              proxy_read_timeout 36000s;
+            }
+
+            # download, presentation and image upload
+            location ~ ^/(c|l)ool {
+              proxy_pass http://127.0.0.1:9980;
+              proxy_set_header Host $host;
+            }
+
+            # Admin Console websocket
+            location ^~ /cool/adminws {
+              proxy_pass http://127.0.0.1:9980;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "Upgrade";
+              proxy_set_header Host $host;
+              proxy_read_timeout 36000s;
+            }
+          '';
+        };
+
+      boot.loader.systemd-boot.enable = true;
+      boot.loader.efi.canTouchEfiVariables = true;
+
+      networking.hostName = "nano";
+      networking.firewall = {
+        allowedUDPPorts = [
+          80
+          443
+          9980
+          8000
+          8080
+          50443
+          2222
+        ];
+        allowedTCPPorts = [
+          80
+          443
+          3478
+          9980
+          8000
+          8080
+          2222
+        ];
+      };
+
+      networking.interfaces.enp1s0.useDHCP = true;
+
+      services.journald.extraConfig = ''
+        MaxRetentionSec=1month
+        SystemMaxUse=500M
+      '';
+
+      services.logrotate.enable = true;
+      services.logrotate.settings.header = {
+        global = true;
+        priority = 1;
+        keep = 5; # Keep 5 rotations
+        frequency = "weekly";
+      };
+
+      systemd.services.podman-gc = {
+        description = "Podman garbage collection";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.podman}/bin/podman system prune -f";
+        };
+      };
+
+      systemd.timers.podman-gc = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "weekly";
+          Persistent = true;
+        };
+      };
+
+      system.stateVersion = "24.05";
+
     };
-
-    system.stateVersion = "24.05";
-
-  };
 }

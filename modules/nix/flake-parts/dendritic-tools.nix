@@ -12,7 +12,6 @@
   # https://github.com/vic/import-tree
 
   imports = [
-    inputs.flake-parts.flakeModules.modules
   ];
 
   # set flake.systems

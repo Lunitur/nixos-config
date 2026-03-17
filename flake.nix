@@ -18,6 +18,8 @@
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
 
+    nixpkgs.follows = "nixpkgs-stable";
+
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";

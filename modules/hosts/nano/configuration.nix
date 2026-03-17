@@ -3,11 +3,10 @@
   ...
 }:
 {
-  flake.modules.nixos.nano = {
+  flake.nixosModules.nano = {
     imports = [
-      inputs.self.modules.nixos.nano-base
-      inputs.self.modules.nixos.hosts-default
-      inputs.self.modules.nixos.allFeatures
+      inputs.self.nixosModules.hosts-default
+      inputs.self.nixosModules.allFeatures
       inputs.simple-nixos-mailserver.nixosModule
       inputs.home-manager-stable.nixosModules.default
       inputs.stylix.nixosModules.stylix
