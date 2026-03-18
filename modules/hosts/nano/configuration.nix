@@ -3,6 +3,8 @@
   ...
 }:
 {
+  flake.nixosConfigurations = inputs.self.lib.mkNixos "aarch64-linux" "nano";
+
   flake.nixosModules.nano = {
     imports = [
       inputs.self.nixosModules.all

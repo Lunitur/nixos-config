@@ -4,48 +4,51 @@
   ...
 }:
 {
-  flake.nixosModules.victus = {
-    config,
-    pkgs,
-    pkgs-unstable,
-    ...
-  }:
-  {
-    imports = [
-      inputs.self.nixosModules.all
-      inputs.self.nixosModules.desktop
-      self.nixosModules.kvmfr
-      inputs.nixos-hardware.nixosModules.common-cpu-amd
-      inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-      inputs.nixos-hardware.nixosModules.common-pc-laptop
-      inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-      inputs.nixos-hardware.nixosModules.common-hidpi
-      inputs.nix-index-database.nixosModules.default
-      inputs.home-manager-stable.nixosModules.default
-      inputs.stylix.nixosModules.stylix
-      inputs.niri.nixosModules.niri
-      {
-        home-manager = {
-          # also pass inputs to home-manager modules
-          extraSpecialArgs = {
-            inherit inputs;
-            inherit (inputs) self;
-            inherit pkgs-unstable;
-          };
-          users = {
-            carjin = {
-              imports = [ inputs.self.homeModules.desktop ];
-              home.username = "carjin";
-              home.homeDirectory = "/home/carjin";
-              home.stateVersion = "23.11";
-              programs.home-manager.enable = true;
-            };
-          };
+  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "victus";
 
-          backupFileExtension = "backup";
-          useGlobalPkgs = true;
-        };
-      }
-    ];
-  };
+  flake.nixosModules.victus =
+    {
+      config,
+      pkgs,
+      pkgs-unstable,
+      ...
+    }:
+    {
+      imports = [
+        inputs.self.nixosModules.all
+        inputs.self.nixosModules.desktop
+        self.nixosModules.kvmfr
+        inputs.nixos-hardware.nixosModules.common-cpu-amd
+        inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+        inputs.nixos-hardware.nixosModules.common-pc-laptop
+        inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+        inputs.nixos-hardware.nixosModules.common-hidpi
+        inputs.nix-index-database.nixosModules.default
+        inputs.home-manager-stable.nixosModules.default
+        inputs.stylix.nixosModules.stylix
+        inputs.niri.nixosModules.niri
+        {
+          home-manager = {
+            # also pass inputs to home-manager modules
+            extraSpecialArgs = {
+              inherit inputs;
+              inherit (inputs) self;
+              inherit pkgs-unstable;
+            };
+            users = {
+              carjin = {
+                imports = [ inputs.self.homeModules.desktop ];
+                home.username = "carjin";
+                home.homeDirectory = "/home/carjin";
+                home.stateVersion = "23.11";
+                programs.home-manager.enable = true;
+              };
+            };
+
+            backupFileExtension = "backup";
+            useGlobalPkgs = true;
+          };
+        }
+      ];
+    };
 }
