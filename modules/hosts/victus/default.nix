@@ -18,18 +18,6 @@
         inputs.self.nixosModules.user-carjin
       ];
 
-      features = {
-        services = {
-          jupyter.enable = true;
-          anarhizam.enable = true;
-          irc.enable = true;
-        };
-        hardware = {
-          usb-tethering.enable = true;
-          ram.enable = true;
-        };
-      };
-
       programs.nix-index-database.comma.enable = true;
 
       services = {

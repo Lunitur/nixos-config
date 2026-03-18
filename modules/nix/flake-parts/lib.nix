@@ -11,6 +11,11 @@
     default = { };
   };
 
+  options.flake.homeModules = lib.mkOption {
+    type = lib.types.attrsOf lib.types.unspecified;
+    default = { };
+  };
+
   config.flake.lib = {
 
     mkNixos = system: name: {
@@ -20,6 +25,7 @@
           pkgs-unstable = import inputs.nixpkgs-unstable {
             inherit system;
             config.allowUnfree = true;
+            config.allowUnfreePredicate = (_: true);
           };
           # for arm
           pkgs-unstable-arm =
@@ -27,6 +33,7 @@
               (import inputs.nixpkgs-unstable {
                 system = "aarch64-linux";
                 config.allowUnfree = true;
+                config.allowUnfreePredicate = (_: true);
               })
             else
               null;
@@ -37,7 +44,11 @@
 
         modules = [
           inputs.self.nixosModules.${name}
-          { nixpkgs.hostPlatform = lib.mkDefault system; }
+          { 
+            nixpkgs.hostPlatform = lib.mkDefault system;
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.config.allowUnfreePredicate = (_: true);
+          }
         ];
       };
     };

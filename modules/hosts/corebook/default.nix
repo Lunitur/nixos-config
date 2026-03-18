@@ -10,19 +10,10 @@
       pkgs,
       ...
     }:
-    let
-      monitor = import ../../../scripts/monitor-corebook.nix { inherit pkgs; };
-      user-pkgs = import ../../_packages { inherit pkgs; };
-    in
     {
       imports = [
         inputs.self.nixosModules.user-carjin
       ];
-
-      features = {
-        hardware.usb-tethering.enable = true;
-        services.jupyter.enable = true;
-      };
 
       programs.nix-index-database.comma.enable = true;
 

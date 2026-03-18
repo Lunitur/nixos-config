@@ -5,9 +5,15 @@
 }:
 {
   flake.nixosModules.victus = {
+    config,
+    pkgs,
+    pkgs-unstable,
+    ...
+  }:
+  {
     imports = [
-      inputs.self.nixosModules.hosts-default
-      inputs.self.nixosModules.allFeatures
+      inputs.self.nixosModules.all
+      inputs.self.nixosModules.desktop
       self.nixosModules.kvmfr
       inputs.nixos-hardware.nixosModules.common-cpu-amd
       inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -19,67 +25,16 @@
       inputs.stylix.nixosModules.stylix
       inputs.niri.nixosModules.niri
       {
-        features = {
-          desktop = {
-            niri.enable = true;
-            waybar.enable = true;
-            foot.enable = true;
-            kitty.enable = true;
-            fuzzel.enable = true;
-            swaync.enable = true;
-          };
-          editors = {
-            helix.enable = true;
-            emacs.enable = true;
-          };
-          shell = {
-            zsh.enable = true;
-            nushell.enable = true;
-            starship.enable = true;
-            git.enable = true;
-            ssh.enable = true;
-            jujutsu.enable = true;
-            yazi.enable = true;
-          };
-          apps = {
-            firefox.enable = true;
-            mpv.enable = true;
-            zathura.enable = true;
-            typst.enable = true;
-            gemini-cli.enable = true;
-          };
-          services = {
-            pueue.enable = true;
-            udiskie.enable = true;
-          };
-          network = {
-            base.enable = true;
-            tailscale.enable = true;
-            syncthing.enable = true;
-            spotify.enable = true;
-            avahi.enable = true;
-          };
-          common = {
-            theme.stylix.enable = true;
-            dotfiles.enable = true;
-            fonts.enable = true;
-            packages.enable = true;
-            xdg-mime.enable = true;
-          };
-        };
-
         home-manager = {
           # also pass inputs to home-manager modules
           extraSpecialArgs = {
             inherit inputs;
             inherit (inputs) self;
-            pkgs-unstable = import inputs.nixpkgs-unstable {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-            };
+            inherit pkgs-unstable;
           };
           users = {
             carjin = {
+              imports = [ inputs.self.homeModules.desktop ];
               home.username = "carjin";
               home.homeDirectory = "/home/carjin";
               home.stateVersion = "23.11";

@@ -16,8 +16,6 @@
         inputs.self.nixosModules.user-carjin
       ];
 
-      features.services.jupyter.enable = true;
-
       programs.niri.enable = true;
 
       programs.nix-index-database.comma.enable = true;

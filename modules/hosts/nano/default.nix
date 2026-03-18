@@ -17,14 +17,6 @@
         inputs.self.nixosModules.user-carjin
       ];
 
-      features = {
-        network.headscale.enable = true;
-        services = {
-          anarhizam.enable = true;
-          irc.enable = true;
-        };
-      };
-
       environment.systemPackages = with pkgs; [
         helix
         zulu
