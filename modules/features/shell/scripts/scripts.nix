@@ -11,13 +11,15 @@
       # Define scripts here or import from underscore files
       screenshot = pkgs.writers.writeNuBin "screenshot" {
         makeWrapperArgs = with pkgs; [
-          "--prefix PATH : ${lib.makeBinPath [
-            libnotify
-            slurp
-            wayshot
-            swappy
-            wl-clipboard
-          ]}"
+          "--prefix PATH : ${
+            lib.makeBinPath [
+              libnotify
+              slurp
+              wayshot
+              swappy
+              wl-clipboard
+            ]
+          }"
         ];
       } (builtins.readFile ./screenshot.nu);
 
@@ -27,9 +29,9 @@
     in
     {
       home.packages = [
-        screenshot
+        # screenshot
         lorem
-        blocks
+        # blocks
       ];
     };
 }

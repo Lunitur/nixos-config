@@ -70,6 +70,8 @@
         vanilla-dmz
         usbutils
         argyllcms
+        gpu-win
+        gpu-linux
       ];
 
       boot.initrd.systemd.enable = true;

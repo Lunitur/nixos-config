@@ -42,10 +42,10 @@
       };
 
       nixpkgs.overlays = [
-        inputs.self.overlays.brother
         inputs.self.overlays.colord
         # inputs.self.overlays.freer-simple
         # inputs.self.overlays.lutris
+        inputs.self.overlays.inputs
         inputs.self.overlays.default
       ];
 

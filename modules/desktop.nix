@@ -6,22 +6,25 @@
       inputs.self.nixosModules.avahi
       inputs.self.nixosModules.common-fonts
       inputs.self.nixosModules.features-common-theme-stylix
-      inputs.self.nixosModules.features-desktop-uwsm
-      inputs.self.nixosModules.features-desktop-wlr
+      # inputs.self.nixosModules.features-desktop-uwsm
+      # inputs.self.nixosModules.features-desktop-wlr
       inputs.self.nixosModules.hardware-audio
       inputs.self.nixosModules.hardware-ram
       inputs.self.nixosModules.hardware-usb-tethering
-      inputs.self.nixosModules.headscale
+      # inputs.self.nixosModules.headscale
       inputs.self.nixosModules.irc-anarhizam-org
       inputs.self.nixosModules.jupyter
-      inputs.self.nixosModules.kmonad
+      # inputs.self.nixosModules.kmonad
       inputs.self.nixosModules.moonlight
       inputs.self.nixosModules.network-base
-      inputs.self.nixosModules.nix-ld
+      # inputs.self.nixosModules.nix-ld
       inputs.self.nixosModules.polkit
       inputs.self.nixosModules.spotify
       inputs.self.nixosModules.syncthing
       inputs.self.nixosModules.tailscale
+    ];
+    nixpkgs.overlays = [
+      inputs.self.overlays.brother
     ];
   };
 
@@ -30,7 +33,6 @@
       inputs.self.homeModules.common-dotfiles
       inputs.self.homeModules.common-fonts
       inputs.self.homeModules.common-theme-stylix
-      inputs.self.homeModules.desktop-conky
       inputs.self.homeModules.desktop-niri
       inputs.self.homeModules.desktop-packages
       inputs.self.homeModules.desktop-waybar
@@ -44,13 +46,12 @@
       inputs.self.homeModules.helix
       inputs.self.homeModules.jujutsu
       inputs.self.homeModules.kitty
-      inputs.self.homeModules.latex
+      # inputs.self.homeModules.latex
       inputs.self.homeModules.ls-colors
       inputs.self.homeModules.mpv
       # inputs.self.homeModules.nixvim
       inputs.self.homeModules.nushell
       inputs.self.homeModules.pueue
-      inputs.self.homeModules.rofi
       inputs.self.homeModules.services-udiskie
       inputs.self.homeModules.shell-scripts
       inputs.self.homeModules.ssh

@@ -8,9 +8,10 @@
         wl-ocr = pkgs.callPackage ./_packages/wl-ocr { };
         hashcards = pkgs.callPackage ./_packages/hashcards { };
         ammonite = ammonites.ammonite_3_5;
+      } // (if pkgs.stdenv.hostPlatform.isx86 then {
         mfcl3730cdn-driver = brother.driver;
         mfcl3730cdn-cupswrapper = brother.cupswrapper;
-      } // ammonites;
+      } else { }) // ammonites;
     in
     {
     packages = lib.filterAttrs (_: lib.isDerivation) allPackages;
