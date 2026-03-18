@@ -4,7 +4,7 @@
     imports = [
       inputs.self.nixosModules.anarhizam-org
       # inputs.self.nixosModules.common-fonts
-      inputs.self.nixosModules.features-common-theme-stylix
+      inputs.self.nixosModules.common-theme-stylix
       inputs.self.nixosModules.headscale
       inputs.self.nixosModules.irc-anarhizam-org
       inputs.self.nixosModules.network-base
@@ -24,7 +24,6 @@
       inputs.self.homeModules.jujutsu
       inputs.self.homeModules.ls-colors
       inputs.self.homeModules.nushell
-      inputs.self.homeModules.pueue
       inputs.self.homeModules.shell-scripts
       inputs.self.homeModules.ssh
       inputs.self.homeModules.starship

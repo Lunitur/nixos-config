@@ -10,7 +10,7 @@
       };
     };
 
-  flake.nixosModules.features-common-theme-stylix =
+  flake.nixosModules.common-theme-stylix =
     {
       config,
       lib,

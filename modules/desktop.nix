@@ -1,36 +1,38 @@
 { inputs, pkgs, ... }:
 {
-  flake.nixosModules.desktop = {
-    imports = [
-      inputs.self.nixosModules.anarhizam-org
-      inputs.self.nixosModules.avahi
-      inputs.self.nixosModules.common-fonts
-      inputs.self.nixosModules.features-common-theme-stylix
-      # inputs.self.nixosModules.features-desktop-uwsm
-      # inputs.self.nixosModules.features-desktop-wlr
-      inputs.self.nixosModules.hardware-audio
-      inputs.self.nixosModules.hardware-ram
-      inputs.self.nixosModules.hardware-usb-tethering
-      # inputs.self.nixosModules.headscale
-      inputs.self.nixosModules.irc-anarhizam-org
-      inputs.self.nixosModules.jupyter
-      # inputs.self.nixosModules.kmonad
-      inputs.self.nixosModules.moonlight
-      inputs.self.nixosModules.network-base
-      # inputs.self.nixosModules.nix-ld
-      inputs.self.nixosModules.polkit
-      inputs.self.nixosModules.spotify
-      inputs.self.nixosModules.syncthing
-      inputs.self.nixosModules.tailscale
-    ];
-    nixpkgs.overlays = [
-      inputs.self.overlays.brother
-    ];
+  flake.nixosModules.desktop =
+    { pkgs, ... }:
+    {
+      imports = [
+        inputs.self.nixosModules.anarhizam-org
+        inputs.self.nixosModules.avahi
+        inputs.self.nixosModules.common-fonts
+        inputs.self.nixosModules.common-theme-stylix
+        # inputs.self.nixosModules.features-desktop-uwsm
+        # inputs.self.nixosModules.features-desktop-wlr
+        inputs.self.nixosModules.hardware-audio
+        inputs.self.nixosModules.hardware-ram
+        inputs.self.nixosModules.hardware-usb-tethering
+        # inputs.self.nixosModules.headscale
+        inputs.self.nixosModules.irc-anarhizam-org
+        inputs.self.nixosModules.jupyter
+        # inputs.self.nixosModules.kmonad
+        inputs.self.nixosModules.moonlight
+        inputs.self.nixosModules.network-base
+        # inputs.self.nixosModules.nix-ld
+        inputs.self.nixosModules.polkit
+        inputs.self.nixosModules.spotify
+        inputs.self.nixosModules.syncthing
+        inputs.self.nixosModules.tailscale
+      ];
+      nixpkgs.overlays = [
+        inputs.self.overlays.brother
+      ];
 
-    environment.packages = with pkgs; [
-      gvfs
-    ];
-  };
+      environment.systemPackages = with pkgs; [
+        gvfs
+      ];
+    };
 
   flake.homeModules.desktop = {
     imports = [
