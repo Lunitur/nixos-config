@@ -19,7 +19,6 @@
 
       environment.systemPackages = with pkgs; [
         helix
-        zulu
       ];
 
       security.acme.acceptTerms = true;

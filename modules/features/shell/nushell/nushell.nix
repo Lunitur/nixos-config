@@ -15,10 +15,6 @@
           };
           extraConfig = ''
 
-            let carapace_completer = {|spans| 
-              carapace $spans.0 nushell ...$spans | from json
-            }
-
             $env.config = {
               show_banner: false
               completions: {
@@ -28,7 +24,6 @@
                 algorithm: "fuzzy"
                 external: {
                   enable: true
-                  completer: $carapace_completer
                 }
               }
               hooks: {
@@ -57,8 +52,9 @@
               | uniq
             )
 
+            $env.CARAPACE_BRIDGES = 'fish,zsh,bash'
+
             ${import ./_zoxide.nix}
-            ${import ./_completers.nix}
             ${import ./_startup.nix}
 
             const init_path = $"($nu.home-path)/.init.nu"
