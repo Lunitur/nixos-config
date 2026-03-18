@@ -157,3 +157,5 @@
         :n "K" #'dired-preview-page-up))
 
 (setq evil-esc-delay 0)
+
+(setq projectile-switch-project-action #'projectile-dired)

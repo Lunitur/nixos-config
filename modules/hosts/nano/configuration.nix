@@ -16,7 +16,10 @@
         home-manager = {
           users = {
             carjin = {
-              imports = [ inputs.self.homeModules.server ];
+              imports = [
+                inputs.self.homeModules.server
+                inputs.self.homeModules.all
+              ];
               home.username = "carjin";
               home.homeDirectory = "/home/carjin";
               home.stateVersion = "23.11";

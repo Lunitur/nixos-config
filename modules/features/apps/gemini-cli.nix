@@ -31,12 +31,18 @@
           ui = {
             theme = "Default";
             footer.hideContextPercentage = false;
+            hideBanner = true;
+            hideTips = true;
           };
           privacy.usageStatisticsEnabled = false;
+          tools = {
+            useRipgrep = true;
+          };
           experimental = {
             plan = true;
             modelSteering = true;
             skills = true;
+            jitContext = true;
           };
         };
       };

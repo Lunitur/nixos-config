@@ -119,6 +119,7 @@
       };
 
       environment.sessionVariables = {
+        FLAKE = "~/nixos";
         EDITOR = "hx";
         VISUAL = "hx";
         GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas";
@@ -133,6 +134,15 @@
       users.defaultUserShell = pkgs.nushell;
 
       programs.niri.package = pkgs.niri;
+
+    };
+
+  flake.homeModules.all =
+    { lib, config, ... }:
+    {
+      programs.nushell.environmentVariables = {
+        NH_FLAKE = "${config.home.homeDirectory}/nixos";
+      };
 
     };
 }

@@ -34,7 +34,10 @@
             };
             users = {
               carjin = {
-                imports = [ inputs.self.homeModules.desktop ];
+                imports = [
+                  inputs.self.homeModules.desktop
+                  inputs.self.homeModules.all
+                ];
                 home.username = "carjin";
                 home.homeDirectory = "/home/carjin";
                 home.stateVersion = "23.11";
