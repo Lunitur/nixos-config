@@ -13,7 +13,7 @@
     {
       imports = [
         inputs.self.nixosModules.arhivar
-        inputs.self.nixosModules.anarhizam-metrics
+        # inputs.self.nixosModules.anarhizam-metrics
         inputs.self.nixosModules.user-carjin
       ];
 
