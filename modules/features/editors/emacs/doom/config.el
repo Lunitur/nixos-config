@@ -155,3 +155,5 @@
   (map! :map dired-mode-map
         :n "J" #'dired-preview-page-down
         :n "K" #'dired-preview-page-up))
+
+(setq evil-esc-delay 0)
