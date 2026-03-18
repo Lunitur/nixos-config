@@ -68,34 +68,24 @@
         longitude = 16.0;
       };
 
-      environment.systemPackages =
-        (with pkgs; [
-          file
-          nix-inspect
-          jq
-          git
-          tree
-          wget
-          nushell
-          gvfs
-          pueue
-          fastfetch
-          unar
-          nixfmt-rfc-style
-          nh
-          bash
-          xarchiver
-          nil # Nix language server
-          cabal-install
-          fzf
-          eza
-          carapace
-          ripgrep-all
-          mc
-          btop
-          bat
-        ])
-        ++ [ pkgs.ammonite.ammonite_3_5 ];
+      environment.systemPackages = with pkgs; [
+        git
+        nano
+        file
+        nix-inspect
+        jq
+        tree
+        wget
+        fastfetch
+        nh
+        bash
+        nil # Nix language server
+        fzf
+        eza
+        ripgrep-all
+        btop
+        bat
+      ];
 
       programs.fish.enable = true;
 

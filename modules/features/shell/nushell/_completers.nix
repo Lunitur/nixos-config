@@ -1,3 +1,4 @@
+{ pkgs, lib, ... }:
 ''
   let carapace_completer = {|spans|
     # if the current command is an alias, get it's expansion
@@ -11,7 +12,7 @@
       $spans
     })
 
-    carapace $spans.0 nushell ...$spans
+    ${lib.getExe pkgs.carapace} $spans.0 nushell ...$spans
     | from json
   }
 

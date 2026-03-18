@@ -46,17 +46,6 @@
       };
 
       environment.systemPackages = with pkgs; [
-        git
-        tree
-        wget
-        nano
-        nushell
-        unar
-        nh
-        bash
-        nil # Nix language server
-        btop
-        bat
       ];
 
       programs.gnupg.agent = {

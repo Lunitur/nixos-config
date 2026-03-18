@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   flake.nixosModules.desktop = {
     imports = [
@@ -25,6 +25,10 @@
     ];
     nixpkgs.overlays = [
       inputs.self.overlays.brother
+    ];
+
+    environment.packages = with pkgs; [
+      gvfs
     ];
   };
 
