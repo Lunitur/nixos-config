@@ -70,6 +70,7 @@ in
 
     spawn-at-startup "footserver"
     spawn-at-startup "signal-desktop" "--start-in-tray"
+    spawn-at-startup "steam" "-silent"
     spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
     spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
     spawn-at-startup "swaybg" "-m" "fill" "-i" "${osConfig.stylix.image}"
@@ -108,12 +109,20 @@ in
         default-window-height { proportion 0.8; }
     }
 
+    window-rule {
+        match app-id="chrome-gemini.google.com__-Default"
+        open-floating true
+        default-column-width { proportion 0.5; }
+        default-window-height { proportion 0.8; }
+    }
+
     workspace "emacs-scratchpad" {}
 
     binds {
         Mod+W { spawn "pkill" "-SIGUSR1" "waybar"; }
         Mod+Ctrl+W { spawn "pkill" "-SIGUSR1" "wlsunset"; }
         Mod+G { spawn "footclient" "-D" "/home/carjin/nixos" "-a" "gemini-chat" "gemini" "-m" "gemini-3-flash-preview"; }
+        Mod+Shift+G { spawn "gemini-webapp"; }
     Mod+B { spawn "nu" "-c" "cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | append (ls cheatsheets) | where type == file | $in.name | str join \"\\n\" | fuzzel -d | if ($in | is-not-empty) {zathura $in}"; }
 
         Mod+Tab { toggle-overview; }

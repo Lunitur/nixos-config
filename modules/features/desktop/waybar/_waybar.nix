@@ -63,7 +63,13 @@ in
           interval = 5;
           format = "{icon} {temperatureC}°";
           tooltip = false;
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         memory = {
@@ -91,7 +97,10 @@ in
             "phone" = "󰣏";
             "portable" = "󰣏";
             "car" = "󰄜";
-            "default" = [ "󰕿" "󰖀" ];
+            "default" = [
+              "󰕿"
+              "󰖀"
+            ];
           };
           on-click = "pavucontrol";
         };
@@ -104,7 +113,13 @@ in
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
           format-alt = "{time} {icon}";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         "custom/gpu" = {

@@ -49,6 +49,9 @@
         mupdf
         inkscape
         chromium
+        (pkgs.writeShellScriptBin "gemini-webapp" ''
+          exec ${pkgs.chromium}/bin/chromium --app="https://gemini.google.com" "$@"
+        '')
         nextcloud-client
         oterm
         lutris

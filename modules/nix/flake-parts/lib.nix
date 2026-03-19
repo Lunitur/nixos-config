@@ -44,7 +44,7 @@
 
         modules = [
           inputs.self.nixosModules.${name}
-          { 
+          {
             nixpkgs.hostPlatform = lib.mkDefault system;
             nixpkgs.config.allowUnfree = true;
             nixpkgs.config.allowUnfreePredicate = (_: true);
