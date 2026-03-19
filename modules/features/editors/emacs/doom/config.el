@@ -159,3 +159,14 @@
 (setq evil-esc-delay 0)
 
 (setq projectile-switch-project-action #'projectile-dired)
+
+(use-package! org-fragtog
+  :after org
+  :hook (org-mode . org-fragtog-mode))
+
+(use-package! citar
+  :after org
+  :custom
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar))

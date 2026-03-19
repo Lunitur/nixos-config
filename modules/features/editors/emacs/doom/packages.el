@@ -64,3 +64,6 @@
 (package! nushell-mode)
 
 (package! dired-preview)
+
+(package! org-fragtog)
+(package! citar)
