@@ -39,6 +39,20 @@
                   ]
                 }
               }
+              keybindings: [
+                {
+                  name: "run_in_bash"
+                  modifier: "control"
+                  keycode: "char_b"
+                  mode: ["emacs", "vi_insert", "vi_normal"]
+                  event: [
+                    {
+                      send: "executehostcommand"
+                      cmd: 'let cmd = (commandline); if not ($cmd | is-empty) { bash -c $cmd; commandline edit --replace "" }'
+                    }
+                  ]
+                }
+              ]
             }
 
             # $env.config.hooks.command_not_found =  source ${pkgs.nix-index}/etc/profile.d/command-not-found.nu
