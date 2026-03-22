@@ -71,6 +71,7 @@ in
     spawn-at-startup "footserver"
     spawn-at-startup "signal-desktop" "--start-in-tray"
     spawn-at-startup "steam" "-silent"
+    spawn-at-startup "noctalia-shell"
     spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
     spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
     spawn-at-startup "swaybg" "-m" "fill" "-i" "${osConfig.stylix.image}"
@@ -119,7 +120,7 @@ in
     workspace "emacs-scratchpad" {}
 
     binds {
-        Mod+W { spawn "pkill" "-SIGUSR1" "waybar"; }
+        # Mod+W { spawn "pkill" "-SIGUSR1" "waybar"; }
         Mod+Ctrl+W { spawn "pkill" "-SIGUSR1" "wlsunset"; }
         Mod+G { spawn "footclient" "-D" "/home/carjin/nixos" "-a" "gemini-chat" "gemini" "-m" "gemini-3-flash-preview"; }
         Mod+Shift+G { spawn "gemini-webapp"; }
@@ -224,6 +225,7 @@ in
   '';
 
   home.packages = with pkgs; [
+    inputs.self.packages.${pkgs.system}.myNoctalia
     loupe
     swaybg
     networkmanagerapplet

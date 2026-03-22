@@ -21,8 +21,8 @@ in
 {
   stylix.targets.waybar.enable = false;
   programs.waybar = {
-    systemd.enable = true;
-    enable = true;
+    systemd.enable = false;
+    enable = false;
     settings = {
       mainBar = {
         mode = lib.mkIf is-minibook "hide";
