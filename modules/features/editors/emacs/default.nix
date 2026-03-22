@@ -7,7 +7,10 @@
         enable = true;
         package = pkgs.emacs-pgtk;
       };
-      services.emacs.enable = true;
+      services.emacs = {
+        enable = true;
+        startWithUserSession = "graphical";
+      };
 
       # home.file.".config/doom".source = ./doom;
 
