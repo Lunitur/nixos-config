@@ -169,7 +169,7 @@
     "screenOverrides": []
   },
   "general": {
-    "avatarImage": "/nix/store/n99d6fkc07sb4xb4rd7cch6b8qrhvvb3-gruvbox-mountain-village.png",
+    "avatarImage": "",
     "dimmerOpacity": 0.15,
     "showScreenCorners": false,
     "forceBlackScreenCorners": false,
@@ -246,7 +246,7 @@
     "settingsPanelSideBarCardStyle": false
   },
   "location": {
-    "name": "Tokyo",
+    "name": "Zagreb",
     "weatherEnabled": true,
     "weatherShowEffects": true,
     "useFahrenheit": false,
@@ -279,7 +279,13 @@
     "enabled": false,
     "overviewEnabled": false,
     "directory": "/home/carjin/Pictures/Wallpapers",
-    "monitorDirectories": [],
+    "monitorDirectories": [
+      {
+        "directory": "/home/carjin/Pictures/Wallpapers",
+        "name": "eDP-1",
+        "wallpaper": ""
+      }
+    ],
     "enableMultiMonitorDirectories": false,
     "showHiddenFiles": false,
     "viewMode": "single",
@@ -574,8 +580,8 @@
     "volumeFeedbackSoundFile": ""
   },
   "brightness": {
-    "brightnessStep": 5,
-    "enforceMinimum": true,
+    "brightnessStep": 1,
+    "enforceMinimum": false,
     "enableDdcSupport": false,
     "backlightDeviceMappings": []
   },
@@ -597,7 +603,7 @@
     "enabled": true,
     "forced": false,
     "autoSchedule": true,
-    "nightTemp": "3107",
+    "nightTemp": "3492",
     "dayTemp": "6500",
     "manualSunrise": "06:30",
     "manualSunset": "18:30"
