@@ -38,7 +38,6 @@
             else
               null;
           # other inputs that were in specialArgs
-          niri = inputs.niri;
           nixvim = inputs.nixvim;
         };
 

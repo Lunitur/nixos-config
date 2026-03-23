@@ -22,7 +22,6 @@
         inputs.nixos-hardware.nixosModules.common-hidpi
         inputs.home-manager-stable.nixosModules.default
         inputs.stylix.nixosModules.stylix
-        inputs.niri.nixosModules.niri
         inputs.nix-index-database.nixosModules.default
         {
           home-manager = {

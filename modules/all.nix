@@ -133,7 +133,7 @@
 
       users.defaultUserShell = pkgs.nushell;
 
-      programs.niri.package = pkgs.niri;
+      programs.niri.package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
 
     };
 

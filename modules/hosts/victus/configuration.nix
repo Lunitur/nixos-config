@@ -26,7 +26,6 @@
         inputs.nix-index-database.nixosModules.default
         inputs.home-manager-stable.nixosModules.default
         inputs.stylix.nixosModules.stylix
-        inputs.niri.nixosModules.niri
         {
           home-manager = {
             # also pass inputs to home-manager modules
