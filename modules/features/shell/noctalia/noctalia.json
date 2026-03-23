@@ -74,26 +74,7 @@
       "center": [],
       "right": [
         {
-          "hideWhenZero": false,
-          "hideWhenZeroUnread": false,
-          "iconColor": "none",
-          "id": "NotificationHistory",
-          "showUnreadBadge": true,
-          "unreadBadgeColor": "primary"
-        },
-        {
-          "iconColor": "none",
-          "id": "PowerProfile"
-        },
-        {
-          "displayMode": "alwaysHide",
-          "iconColor": "none",
-          "id": "Volume",
-          "middleClickCommand": "pwvucontrol || pavucontrol",
-          "textColor": "none"
-        },
-        {
-          "compactMode": true,
+          "compactMode": false,
           "diskPath": "/",
           "iconColor": "none",
           "id": "SystemMonitor",
@@ -101,18 +82,25 @@
           "showCpuFreq": false,
           "showCpuTemp": true,
           "showCpuUsage": true,
-          "showDiskAvailable": false,
-          "showDiskUsage": false,
+          "showDiskAvailable": true,
+          "showDiskUsage": true,
           "showDiskUsageAsPercent": false,
           "showGpuTemp": false,
           "showLoadAverage": false,
           "showMemoryAsPercent": false,
           "showMemoryUsage": true,
-          "showNetworkStats": false,
+          "showNetworkStats": true,
           "showSwapUsage": false,
           "textColor": "none",
           "useMonospaceFont": true,
           "usePadding": false
+        },
+        {
+          "displayMode": "alwaysHide",
+          "iconColor": "none",
+          "id": "Volume",
+          "middleClickCommand": "pwvucontrol || pavucontrol",
+          "textColor": "none"
         },
         {
           "deviceNativePath": "",
@@ -128,13 +116,6 @@
           "iconColor": "none",
           "id": "Microphone",
           "middleClickCommand": "pwvucontrol || pavucontrol",
-          "textColor": "none"
-        },
-        {
-          "displayMode": "forceOpen",
-          "iconColor": "none",
-          "id": "KeyboardLayout",
-          "showIcon": true,
           "textColor": "none"
         },
         {
@@ -154,6 +135,14 @@
           "hidePassive": false,
           "id": "Tray",
           "pinned": []
+        },
+        {
+          "hideWhenZero": false,
+          "hideWhenZeroUnread": false,
+          "iconColor": "none",
+          "id": "NotificationHistory",
+          "showUnreadBadge": true,
+          "unreadBadgeColor": "primary"
         }
       ]
     },
