@@ -1,16 +1,10 @@
 { inputs, ... }:
 {
   flake.overlays = {
-    brother = import ./_overlays/brother.nix;
-    colord = (import ./_overlays/colord.nix) inputs.colord;
-    # freer-simple = import ./_overlays/freer-simple.nix;
-    # lutris = (final: prev: {
-    #   lutris = (import inputs.nixpkgs-unstable {
-    #     system = prev.stdenv.hostPlatform.system;
-    #     config.allowUnfree = true;
-    #     config.allowUnfreePredicate = (_: true);
-    #   }).lutris;
-    # });
+    brother = final: prev: {
+      mfcl3730cdnlpr = (prev.callPackage ./_packages/mfcl3730cdn { }).driver;
+      mfcl3730cdncupswrapper = (prev.callPackage ./_packages/mfcl3730cdn { }).cupswrapper;
+    };
     inputs =
       final: prev:
       let

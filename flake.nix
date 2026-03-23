@@ -43,11 +43,6 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    colord = {
-      url = "path:/home/carjin/colord";
-      flake = false;
-    };
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs-stable";

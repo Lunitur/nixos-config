@@ -140,19 +140,6 @@
         "type": "gitlab"
       }
     },
-    "colord": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1771099202,
-        "narHash": "sha256-wzvhq3alj7pEbU8U4xKxSEtmZ9i2pDYXuKjIGDkyCFs=",
-        "path": "/home/carjin/colord",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/carjin/colord",
-        "type": "path"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1760924934,
@@ -778,7 +765,6 @@
     "root": {
       "inputs": {
         "arhivar": "arhivar",
-        "colord": "colord",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-parts": "flake-parts",
         "hashcards": "hashcards",
