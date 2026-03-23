@@ -51,24 +51,11 @@
           "labelMode": "none",
           "occupiedColor": "secondary",
           "pillSize": 0.6,
-          "showApplications": false,
+          "showApplications": true,
           "showApplicationsHover": false,
           "showBadge": true,
           "showLabelsOnlyWhenOccupied": true,
           "unfocusedIconsOpacity": 1
-        },
-        {
-          "colorizeIcons": false,
-          "hideMode": "visible",
-          "iconScale": 0.9299999999999999,
-          "id": "Taskbar",
-          "maxTaskbarWidth": 40,
-          "onlyActiveWorkspaces": false,
-          "onlySameOutput": true,
-          "showPinnedApps": true,
-          "showTitle": false,
-          "smartWidth": true,
-          "titleWidth": 120
         }
       ],
       "center": [],
