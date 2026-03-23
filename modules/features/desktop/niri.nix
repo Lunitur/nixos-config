@@ -142,7 +142,7 @@
               inactive-color = "#${theme."grey-dark"}";
             };
 
-            gaps = 16;
+            gaps = 0;
           };
 
           window-rules = [
