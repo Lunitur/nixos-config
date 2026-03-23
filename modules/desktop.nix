@@ -62,7 +62,7 @@
       inputs.self.homeModules.shell-scripts
       inputs.self.homeModules.ssh
       inputs.self.homeModules.starship
-      inputs.self.homeModules.swaync
+      # inputs.self.homeModules.swaync
       inputs.self.homeModules.typst
       inputs.self.homeModules.xdg-mime
       inputs.self.homeModules.yazi
