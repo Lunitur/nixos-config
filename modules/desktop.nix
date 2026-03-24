@@ -70,4 +70,13 @@
       inputs.self.homeModules.zsh
     ];
   };
+
+  flake.nixosModules.victus =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = with pkgs; [
+        performous
+        ultrastardx
+      ];
+    };
 }
