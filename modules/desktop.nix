@@ -15,7 +15,7 @@
         inputs.self.nixosModules.hardware-usb-tethering
         # inputs.self.nixosModules.headscale
         inputs.self.nixosModules.irc-anarhizam-org
-        inputs.self.nixosModules.jupyter
+        # inputs.self.nixosModules.jupyter
         # inputs.self.nixosModules.kmonad
         inputs.self.nixosModules.moonlight
         inputs.self.nixosModules.network-base
