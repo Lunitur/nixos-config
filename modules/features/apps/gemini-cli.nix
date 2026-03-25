@@ -4,13 +4,16 @@
     {
       config,
       lib,
+      pkgs-unstable,
       ...
     }:
     {
       programs.gemini-cli = {
         enable = true;
+        package = pkgs-unstable.gemini-cli;
         settings = {
           general = {
+            enableNotifications = true;
             preferredEditor = "hx";
             vimMode = true;
             disableAutoUpdate = true;
