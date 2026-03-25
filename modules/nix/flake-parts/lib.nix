@@ -16,6 +16,11 @@
     default = { };
   };
 
+  options.flake.wrapperModules = lib.mkOption {
+    type = lib.types.attrsOf lib.types.unspecified;
+    default = { };
+  };
+
   config.flake.lib = {
 
     mkNixos = system: name: {

@@ -1,53 +1,97 @@
-{ ... }:
+{ inputs, self, ... }:
 {
-  flake.homeModules.gemini-cli =
+  flake.wrapperModules.gemini-cli =
     {
       config,
       lib,
-      pkgs-unstable,
+      pkgs,
       ...
     }:
+    let
+      inherit (lib) mkOption types;
+    in
     {
-      programs.gemini-cli = {
-        enable = true;
-        package = pkgs-unstable.gemini-cli;
-        settings = {
-          general = {
-            enableNotifications = true;
-            preferredEditor = "hx";
-            vimMode = true;
-            disableAutoUpdate = true;
-            disableUpdateNag = true;
-            previewFeatures = true;
-          };
-          context = {
-            fileName = [
-              "AGENTS.md"
-              "GEMINI.md"
-            ];
-          };
-          security = {
-            auth = {
-              selectedType = "oauth-personal";
-            };
-          };
-          ui = {
-            theme = "Default";
-            footer.hideContextPercentage = false;
-            hideBanner = true;
-            hideTips = true;
-          };
-          privacy.usageStatisticsEnabled = false;
-          tools = {
-            useRipgrep = true;
-          };
-          experimental = {
-            plan = true;
-            modelSteering = true;
-            skills = true;
-            jitContext = true;
-          };
+      options.gemini-cli = {
+        settings = mkOption {
+          type = types.attrs;
+          default = { };
+          description = "Settings for gemini-cli, written to settings.json";
         };
       };
+
+      config = {
+        # Package to be wrapped
+        package = lib.mkDefault pkgs.gemini-cli;
+
+        # These options are from makeWrapper module
+        env.GEMINI_CLI_SYSTEM_SETTINGS_PATH = lib.mkIf (config.gemini-cli.settings != { }) (
+          pkgs.writeText "gemini-settings.json" (builtins.toJSON config.gemini-cli.settings)
+        );
+      };
+    };
+
+  perSystem =
+    { pkgs, ... }:
+    let
+      # Use unstable for the latest gemini-cli features
+      pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+    in
+    {
+      packages.gemini-cli = inputs.wrapper-modules.lib.evalPackage {
+        inherit pkgs;
+        imports = [
+          inputs.wrapper-modules.lib.modules.makeWrapper
+          self.wrapperModules.gemini-cli
+          {
+            # Explicitly use the unstable package
+            package = pkgs-unstable.gemini-cli;
+
+            # Default settings for the project
+            gemini-cli.settings = {
+              general = {
+                enableNotifications = true;
+                preferredEditor = "hx";
+                vimMode = true;
+                previewFeatures = true;
+              };
+              context = {
+                fileName = [
+                  "AGENTS.md"
+                  "GEMINI.md"
+                ];
+              };
+              security = {
+                auth = {
+                  selectedType = "oauth-personal";
+                };
+              };
+              ui = {
+                theme = "Default";
+                footer.hideContextPercentage = false;
+                hideBanner = true;
+                hideTips = true;
+              };
+              privacy.usageStatisticsEnabled = false;
+              tools = {
+                useRipgrep = true;
+              };
+              experimental = {
+                plan = true;
+                modelSteering = true;
+                skills = true;
+                jitContext = true;
+              };
+            };
+          }
+        ];
+      };
+    };
+
+  flake.homeModules.gemini-cli =
+    { pkgs, ... }:
+    {
+      home.packages = [
+        self.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli
+      ];
     };
 }
