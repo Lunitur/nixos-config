@@ -21,7 +21,7 @@
       programs.nix-index-database.comma.enable = true;
 
       services = {
-        # upower.enable = true;
+        upower.enable = true;
 
         tlp = {
           enable = true;
