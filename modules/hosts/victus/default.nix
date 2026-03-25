@@ -204,7 +204,6 @@
       boot.kernelPackages = pkgs.linuxPackages_xanmod;
       boot.kernelParams = [
         "amd_iommu=on"
-        "acpi_osi=Linux"
       ]; # "amd_pstate=disable"
 
       # Enable kernel debug mode
@@ -213,6 +212,14 @@
       services.xserver.displayManager.setupCommands = "${multimonitor}/bin/multimonitor";
 
       networking.hostName = "victus"; # Define your hostname.
+
+      systemd.sleep.extraConfig = ''
+        HibernateDelaySec=2h
+      '';
+
+      services.logind = {
+        lidSwitch = "suspend-then-hibernate";
+      };
 
       system.stateVersion = "23.11";
 

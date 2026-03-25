@@ -14,7 +14,7 @@
         "vm.vfs_cache_pressure" = 50;
       };
       boot.tmp = {
-        useTmpfs = true;
+        useTmpfs = false;
         tmpfsSize = "75%";
       };
       boot.kernelParams = [ "transparent_hugepage=always" ];
