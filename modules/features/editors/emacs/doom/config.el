@@ -6,8 +6,51 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
+(setq user-full-name "Karlo Pušelj"
+      user-mail-address "karlo.puselj@gmail.com")
+
+(after! mu4e
+  (setq mu4e-change-filenames-when-moving t
+        mu4e-update-interval (* 5 60)
+        mu4e-get-mail-command "mbsync -a"
+        mu4e-maildir "~/.mail")
+
+  (setq mu4e-contexts
+        (list
+         (make-mu4e-context
+          :name "Gmail"
+          :match-func (lambda (msg)
+                        (when msg
+                          (string-match-p "^/gmail" (mu4e-message-field msg :maildir))))
+          :vars '((user-mail-address . "karlo.puselj@gmail.com")
+                  (user-full-name . "Karlo Pušelj")
+                  (mu4e-drafts-folder . "/gmail/[Gmail]/Drafts")
+                  (mu4e-sent-folder . "/gmail/[Gmail]/Sent Mail")
+                  (mu4e-trash-folder . "/gmail/[Gmail]/Trash")
+                  (mu4e-refile-folder . "/gmail/[Gmail]/All Mail")
+                  (smtpmail-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-stream-type . starttls)
+                  (message-send-mail-function . message-send-mail-with-sendmail)
+                  (sendmail-program . "msmtp")
+                  (message-sendmail-extra-arguments . ("--read-envelope-from" "-a" "gmail"))))
+         (make-mu4e-context
+          :name "Anarhizam"
+          :match-func (lambda (msg)
+                        (when msg
+                          (string-match-p "^/anarhizam" (mu4e-message-field msg :maildir))))
+          :vars '((user-mail-address . "carjin@anarhizam.org")
+                  (user-full-name . "Karlo Pušelj")
+                  (mu4e-drafts-folder . "/anarhizam/Drafts")
+                  (mu4e-sent-folder . "/anarhizam/Sent")
+                  (mu4e-trash-folder . "/anarhizam/Trash")
+                  (mu4e-refile-folder . "/anarhizam/Archive")
+                  (smtpmail-smtp-server . "mail.anarhizam.org")
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-stream-type . starttls)
+                  (message-send-mail-function . message-send-mail-with-sendmail)
+                  (sendmail-program . "msmtp")
+                  (message-sendmail-extra-arguments . ("--read-envelope-from" "-a" "anarhizam")))))))
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;

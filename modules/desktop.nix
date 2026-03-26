@@ -54,7 +54,9 @@
       inputs.self.homeModules.kitty
       # inputs.self.homeModules.latex
       inputs.self.homeModules.ls-colors
+      inputs.self.homeModules.mail
       inputs.self.homeModules.mpv
+
       # inputs.self.homeModules.nixvim
       inputs.self.homeModules.nushell
       inputs.self.homeModules.pueue

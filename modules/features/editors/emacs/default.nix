@@ -20,6 +20,10 @@
         ripgrep
         coreutils
         fd
+        mu
+        isync
+        msmtp
+        gopass
       ];
     };
 }
