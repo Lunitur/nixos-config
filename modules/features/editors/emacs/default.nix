@@ -6,6 +6,10 @@
       programs.emacs = {
         enable = true;
         package = pkgs.emacs-pgtk;
+        extraPackages = epkgs: [
+          pkgs.mu
+          pkgs.mu.mu4e
+        ];
       };
       services.emacs = {
         enable = true;
@@ -21,6 +25,7 @@
         coreutils
         fd
         mu
+        mu.mu4e
         isync
         msmtp
         gopass
