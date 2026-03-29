@@ -201,7 +201,7 @@
 
 (setq evil-esc-delay 0)
 
-(setq projectile-switch-project-action #'projectile-dired)
+(setq projectile-switch-project-action #'magit-status)
 
 (use-package! org-fragtog
   :after org
