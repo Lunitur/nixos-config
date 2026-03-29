@@ -217,9 +217,7 @@
         HibernateDelaySec=2h
       '';
 
-      services.logind = {
-        lidSwitch = "suspend-then-hibernate";
-      };
+      services.logind.settings.Login.HandleLidSwitch = "suspend";
 
       system.stateVersion = "23.11";
 
