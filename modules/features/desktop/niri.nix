@@ -29,9 +29,9 @@
             };
 
             touchpad = {
-              natural-scroll = null;
-              tap = null;
-              dwt = null;
+              natural-scroll = _: { };
+              tap = _: { };
+              dwt = _: { };
               accel-speed = 0.3;
             };
           };
@@ -40,8 +40,8 @@
             "DP-1" = {
               scale = 1.0;
               transform = "normal";
-              position = {
-                _attrs = {
+              position = _: {
+                props = {
                   x = 0;
                   y = -1080;
                 };
@@ -51,8 +51,8 @@
             "DP-2" = {
               scale = 1.0;
               transform = "normal";
-              position = {
-                _attrs = {
+              position = _: {
+                props = {
                   x = 0;
                   y = -1080;
                 };
@@ -62,8 +62,8 @@
             "DSI-1" = {
               scale = 1.0;
               transform = "270";
-              position = {
-                _attrs = {
+              position = _: {
+                props = {
                   x = 0;
                   y = 0;
                 };
@@ -71,14 +71,14 @@
               mode = "1200x1920@50.002000";
             };
             "HDMI-A-1" = {
-              off = null;
+              off = _: { };
               transform = "normal";
             };
             "eDP-1" = {
               scale = 1.0;
               transform = "normal";
-              position = {
-                _attrs = {
+              position = _: {
+                props = {
                   x = 0;
                   y = 0;
                 };
@@ -201,50 +201,50 @@
               "cd ~/Nextcloud; ls skripte/**/* | append (ls books/**/*) | append (ls ostalo) | append (ls cheatsheets) | where type == file | $in.name | str join (char nl) | fuzzel -d | if ($in | is-not-empty) {zathura $in}"
             ];
 
-            "Mod+Tab".toggle-overview = null;
-            "Ctrl+Alt+Delete".quit = null;
+            "Mod+Tab".toggle-overview = _: { };
+            "Ctrl+Alt+Delete".quit = _: { };
 
-            "Mod+S".screenshot = null;
-            "Mod+Ctrl+S".screenshot-screen = null;
-            "Mod+Alt+S".screenshot-window = null;
+            "Mod+S".screenshot = _: { };
+            "Mod+Ctrl+S".screenshot-screen = _: { };
+            "Mod+Alt+S".screenshot-window = _: { };
 
-            "Mod+J".focus-workspace-down = null;
-            "Mod+K".focus-workspace-up = null;
-            "Mod+Ctrl+J".move-column-to-workspace-down = null;
-            "Mod+Ctrl+K".move-column-to-workspace-up = null;
+            "Mod+J".focus-workspace-down = _: { };
+            "Mod+K".focus-workspace-up = _: { };
+            "Mod+Ctrl+J".move-column-to-workspace-down = _: { };
+            "Mod+Ctrl+K".move-column-to-workspace-up = _: { };
 
-            "Mod+Home".focus-column-first = null;
-            "Mod+End".focus-column-last = null;
-            "Mod+Ctrl+Home".move-column-to-first = null;
-            "Mod+Ctrl+End".move-column-to-last = null;
+            "Mod+Home".focus-column-first = _: { };
+            "Mod+End".focus-column-last = _: { };
+            "Mod+Ctrl+Home".move-column-to-first = _: { };
+            "Mod+Ctrl+End".move-column-to-last = _: { };
 
-            "Mod+Shift+H".focus-monitor-left = null;
-            "Mod+Shift+J".focus-monitor-down = null;
-            "Mod+Shift+K".focus-monitor-up = null;
-            "Mod+Shift+L".focus-monitor-right = null;
+            "Mod+Shift+H".focus-monitor-left = _: { };
+            "Mod+Shift+J".focus-monitor-down = _: { };
+            "Mod+Shift+K".focus-monitor-up = _: { };
+            "Mod+Shift+L".focus-monitor-right = _: { };
 
-            "Mod+Shift+Ctrl+H".move-column-to-monitor-left = null;
-            "Mod+Shift+Ctrl+J".move-column-to-monitor-down = null;
-            "Mod+Shift+Ctrl+K".move-column-to-monitor-up = null;
-            "Mod+Shift+Ctrl+L".move-column-to-monitor-right = null;
-            "Mod+Ctrl+H".move-column-left = null;
-            "Mod+Ctrl+L".move-column-right = null;
+            "Mod+Shift+Ctrl+H".move-column-to-monitor-left = _: { };
+            "Mod+Shift+Ctrl+J".move-column-to-monitor-down = _: { };
+            "Mod+Shift+Ctrl+K".move-column-to-monitor-up = _: { };
+            "Mod+Shift+Ctrl+L".move-column-to-monitor-right = _: { };
+            "Mod+Ctrl+H".move-column-left = _: { };
+            "Mod+Ctrl+L".move-column-right = _: { };
 
-            "Mod+BracketLeft".consume-or-expel-window-left = null;
-            "Mod+BracketRight".consume-or-expel-window-right = null;
+            "Mod+BracketLeft".consume-or-expel-window-left = _: { };
+            "Mod+BracketRight".consume-or-expel-window-right = _: { };
 
-            "Mod+Comma".consume-window-into-column = null;
-            "Mod+Period".expel-window-from-column = null;
+            "Mod+Comma".consume-window-into-column = _: { };
+            "Mod+Period".expel-window-from-column = _: { };
 
-            "Mod+R".switch-preset-column-width = null;
-            "Mod+Shift+R".switch-preset-window-height = null;
-            "Mod+Ctrl+R".reset-window-height = null;
-            "Mod+F".maximize-column = null;
-            "Mod+Shift+F".fullscreen-window = null;
+            "Mod+R".switch-preset-column-width = _: { };
+            "Mod+Shift+R".switch-preset-window-height = _: { };
+            "Mod+Ctrl+R".reset-window-height = _: { };
+            "Mod+F".maximize-column = _: { };
+            "Mod+Shift+F".fullscreen-window = _: { };
 
-            "Mod+Shift+Slash".show-hotkey-overlay = null;
+            "Mod+Shift+Slash".show-hotkey-overlay = _: { };
             "Mod+Return".spawn = [ "footclient" ];
-            "Mod+Q".close-window = null;
+            "Mod+Q".close-window = _: { };
             "Mod+Shift+P".spawn = [
               "sh"
               "-c"
@@ -261,7 +261,7 @@
               "launcher"
               "toggle"
             ];
-            "Mod+P".toggle-window-floating = null;
+            "Mod+P".toggle-window-floating = _: { };
             "Mod+E".spawn = [
               "nu"
               "~/nixos/modules/features/shell/scripts/emacs-scratchpad.nu"
@@ -301,8 +301,8 @@
             ];
             "Mod+Shift+V".spawn = [ "blueman-manager" ];
             "Mod+V".spawn = [ "pavucontrol" ];
-            "Mod+H".focus-column-left = null;
-            "Mod+L".focus-column-right = null;
+            "Mod+H".focus-column-left = _: { };
+            "Mod+L".focus-column-right = _: { };
 
             "Mod+1".focus-workspace = 1;
             "Mod+2".focus-workspace = 2;
