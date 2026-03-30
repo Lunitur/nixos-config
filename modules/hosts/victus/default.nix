@@ -24,31 +24,22 @@
       services = {
         upower.enable = true;
 
-        tlp = {
+        auto-cpufreq = {
           enable = true;
           settings = {
-            # sudo tlp-stat to see current and possbile values
+            charger = {
+              governor = "performance";
+              turbo = "always";
+              energy_performance_preference = "performance";
+              platform_profile = "performance";
+            };
 
-            CPU_SCALING_GOVERNOR_ON_AC = "performance";
-            CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-            EPP_PERF_POLICY_ON_AC = "performance";
-            EPP_PERF_POLICY_ON_BAT = "balance_power";
-            CPU_BOOST_ON_BAT = 0;
-            START_CHARGE_THRESH_BAT0 = 80;
-            STOP_CHARGE_THRESH_BAT0 = 95;
-            TLP_DEFAULT_MODE = "BAT";
-            # Tell tlp to always run in default mode
-            # TLP_PERSISTENT_DEFAULT = 1;
-
-            PLATFORM_PROFILE_ON_AC = "performance";
-            PLATFORM_PROFILE_ON_BAT = "low-power";
-            CPU_HWP_DYN_BOOST_ON_AC = 1;
-            CPU_HWP_DYN_BOOST_ON_BAT = 0;
-
-            # Don't autosuspend USB devices (Dell Monitor -> Input Devices)
-            USB_AUTOSUSPEND = 0;
-            # USB_EXCLUDE_WWAN = 1;
-            # USB_DENYLIST = "3434:0820 046d:c548"; # Keychron Q2 Max + Logitech Bolt Receiver
+            battery = {
+              governor = "powersave";
+              turbo = "never";
+              energy_performance_preference = "power"; # Maximize battery life
+              platform_profile = "low-power";
+            };
           };
         };
       };
