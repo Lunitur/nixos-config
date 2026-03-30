@@ -77,7 +77,7 @@
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
-        performous
+        # performous
         ultrastardx
       ];
     };

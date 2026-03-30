@@ -183,26 +183,32 @@
     "lockScreenTint": 0,
     "keybinds": {
       "keyUp": [
-        "Up"
+        "Up",
+        "Ctrl+K"
       ],
       "keyDown": [
-        "Down"
+        "Down",
+        "Ctrl+J"
       ],
       "keyLeft": [
-        "Left"
+        "Left",
+        "Ctrl+H"
       ],
       "keyRight": [
-        "Right"
+        "Right",
+        "Ctrl+L"
       ],
       "keyEnter": [
         "Return",
         "Enter"
       ],
       "keyEscape": [
-        "Esc"
+        "Esc",
+        "Ctrl+C"
       ],
       "keyRemove": [
-        "Del"
+        "Del",
+        "Ctrl+X"
       ]
     },
     "reverseScroll": false
@@ -314,7 +320,7 @@
     "position": "center",
     "pinnedApps": [],
     "sortByMostUsed": true,
-    "terminalCommand": "kitty -e",
+    "terminalCommand": "footclient",
     "customLaunchPrefixEnabled": false,
     "customLaunchPrefix": "",
     "viewMode": "list",
@@ -447,7 +453,7 @@
     "bluetoothAutoConnect": true
   },
   "sessionMenu": {
-    "enableCountdown": true,
+    "enableCountdown": false,
     "countdownDuration": 10000,
     "position": "center",
     "showHeader": true,
@@ -496,6 +502,20 @@
         "countdownEnabled": true,
         "enabled": true,
         "keybind": "6"
+      },
+      {
+        "action": "userspaceReboot",
+        "command": "",
+        "countdownEnabled": true,
+        "enabled": false,
+        "keybind": ""
+      },
+      {
+        "action": "rebootToUefi",
+        "command": "",
+        "countdownEnabled": true,
+        "enabled": true,
+        "keybind": "7"
       }
     ]
   },
@@ -579,7 +599,7 @@
     "enabled": true,
     "forced": false,
     "autoSchedule": true,
-    "nightTemp": "3492",
+    "nightTemp": "3028",
     "dayTemp": "6500",
     "manualSunrise": "06:30",
     "manualSunset": "18:30"

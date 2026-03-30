@@ -28,8 +28,10 @@
           settings = {
             # sudo tlp-stat to see current and possbile values
 
-            # CPU_BOOST_ON_BAT = 0;
             CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+            EPP_PERF_POLICY_ON_AC = "balance_performance";
+            EPP_PERF_POLICY_ON_BAT = "balance_power";
+            CPU_BOOST_ON_BAT = 0;
             START_CHARGE_THRESH_BAT0 = 80;
             STOP_CHARGE_THRESH_BAT0 = 95;
             TLP_DEFAULT_MODE = "BAT";
@@ -38,8 +40,6 @@
 
             PLATFORM_PROFILE_ON_AC = "balanced";
             PLATFORM_PROFILE_ON_BAT = "low-power";
-            CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
-            CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
             CPU_HWP_DYN_BOOST_ON_AC = 1;
             CPU_HWP_DYN_BOOST_ON_BAT = 0;
 
@@ -201,9 +201,10 @@
         };
       };
 
-      boot.kernelPackages = pkgs.linuxPackages_xanmod;
+      boot.kernelPackages = pkgs.linuxPackages_zen;
       boot.kernelParams = [
         "amd_iommu=on"
+        "amd_pstate=active"
       ]; # "amd_pstate=disable"
 
       # Enable kernel debug mode

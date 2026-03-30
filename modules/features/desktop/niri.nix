@@ -16,6 +16,7 @@
           environment = {
             NIXOS_OZONE_WL = "1";
             ELECTRON_OZONE_PLATFORM_HINT = "auto";
+            WLR_DRM_DEVICES = "/dev/dri/card2:/dev/dri/card1";
           };
 
           input = {
@@ -253,7 +254,13 @@
               "footclient"
               "yazi"
             ];
-            "Mod+D".spawn = [ "fuzzel" ];
+            "Mod+D".spawn = [
+              "noctalia-shell"
+              "ipc"
+              "call"
+              "launcher"
+              "toggle"
+            ];
             "Mod+P".toggle-window-floating = null;
             "Mod+E".spawn = [
               "nu"
