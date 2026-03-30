@@ -201,11 +201,16 @@
 
 (setq evil-esc-delay 0)
 
-(setq projectile-switch-project-action #'magit-status)
+(after! projectile
+  (setq projectile-switch-project-action #'magit-status))
 
 (use-package! org-fragtog
   :after org
-  :hook (org-mode . org-fragtog-mode))
+  :hook (org-mode . org-fragtog-mode)
+  :config
+  (setq org-preview-latex-default-process 'dvisvgm)
+  ;; Make LaTeX fragments a bit larger
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0)))
 
 (use-package! citar
   :after org

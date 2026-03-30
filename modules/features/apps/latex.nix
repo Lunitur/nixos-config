@@ -43,6 +43,10 @@
             mathtools
             autonum
             url
+            dvipng
+            dvisvgm
+            wrapfig
+            capt-of
             ;
         }
       );
