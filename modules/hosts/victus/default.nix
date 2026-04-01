@@ -198,6 +198,8 @@
       boot.kernelParams = [
         "amd_iommu=on"
         "amd_pstate=active"
+        "pci=noaer"
+        "rtc_cmos.use_acpi_alarm=1"
       ]; # "amd_pstate=disable"
 
       # Enable kernel debug mode
