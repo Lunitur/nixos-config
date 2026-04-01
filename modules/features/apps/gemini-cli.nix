@@ -145,6 +145,7 @@
     {
       home.packages = [
         self.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli
+        self.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli-pro
       ];
     };
 }
