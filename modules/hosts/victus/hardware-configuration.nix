@@ -29,6 +29,9 @@
         device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
         fsType = "btrfs";
         options = [
+          "noatime"
+          "ssd"
+          "discard=async"
           "subvol=@nixos/root"
         ];
       };
@@ -37,6 +40,9 @@
         device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
         fsType = "btrfs";
         options = [
+          "noatime"
+          "ssd"
+          "discard=async"
           "subvol=@nixos/home"
           "compress=zstd"
         ];
@@ -46,8 +52,10 @@
         device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
         fsType = "btrfs";
         options = [
-          "subvol=@nixos/nix"
           "noatime"
+          "ssd"
+          "discard=async"
+          "subvol=@nixos/nix"
         ];
       };
 
@@ -64,8 +72,10 @@
         device = "/dev/disk/by-uuid/2e880979-0934-43c2-b1dd-5707e900cbf3";
         fsType = "btrfs";
         options = [
-          "subvol=@nixos/swap"
           "noatime"
+          "ssd"
+          "discard=async"
+          "subvol=@nixos/swap"
         ];
       };
 

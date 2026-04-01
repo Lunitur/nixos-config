@@ -27,13 +27,23 @@
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/c08242df-fced-418c-8bc6-b59890ad046e";
         fsType = "btrfs";
-        options = [ "subvol=root" ];
+        options = [
+          "noatime"
+          "ssd"
+          "discard=async"
+          "subvol=root"
+        ];
       };
 
       fileSystems."/home" = {
         device = "/dev/disk/by-uuid/c08242df-fced-418c-8bc6-b59890ad046e";
         fsType = "btrfs";
-        options = [ "subvol=home" ];
+        options = [
+          "noatime"
+          "ssd"
+          "discard=async"
+          "subvol=home"
+        ];
       };
 
       fileSystems."/nix" = {
@@ -41,6 +51,8 @@
         fsType = "btrfs";
         options = [
           "noatime"
+          "ssd"
+          "discard=async"
           "subvol=nix"
         ];
       };

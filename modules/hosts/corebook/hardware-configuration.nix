@@ -31,6 +31,8 @@
         fsType = "btrfs";
         options = [
           "noatime"
+          "ssd"
+          "discard=async"
           "subvol=@nixos/root"
         ];
       };
@@ -40,6 +42,8 @@
         fsType = "btrfs";
         options = [
           "noatime"
+          "ssd"
+          "discard=async"
           "compress=zstd"
           "subvol=@nixos/home"
         ];
@@ -50,6 +54,8 @@
         fsType = "btrfs";
         options = [
           "noatime"
+          "ssd"
+          "discard=async"
           "subvol=@nixos/nix"
         ];
       };
