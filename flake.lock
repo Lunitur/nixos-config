@@ -314,6 +314,23 @@
         "type": "github"
       }
     },
+    "gemini-cli-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775061607,
+        "narHash": "sha256-bkqKfCiOYrL5V1uYgAr6bycg+CD2F8vGl9WFYXnzzm0=",
+        "owner": "Lunitur",
+        "repo": "gemini-cli",
+        "rev": "24ecd7d91cb98bad2eadabca89dede1c55de5a71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lunitur",
+        "ref": "local",
+        "repo": "gemini-cli",
+        "type": "github"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [
@@ -751,6 +768,7 @@
         "arhivar": "arhivar",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-parts": "flake-parts",
+        "gemini-cli-src": "gemini-cli-src",
         "hashcards": "hashcards",
         "home-manager-stable": "home-manager-stable",
         "import-tree": "import-tree",
