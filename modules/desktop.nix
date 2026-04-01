@@ -32,6 +32,11 @@
       environment.systemPackages = with pkgs; [
         gvfs
       ];
+
+      boot.kernelParams = [
+        "mitigations=off"
+        "transparent_hugepage=always"
+      ];
     };
 
   flake.homeModules.desktop = {
