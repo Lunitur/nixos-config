@@ -37,7 +37,7 @@
             battery = {
               governor = "powersave";
               turbo = "never";
-              energy_performance_preference = "power"; # Maximize battery life
+              energy_performance_preference = "balance_power"; # Maximize battery life
               platform_profile = "low-power";
             };
           };
@@ -89,6 +89,10 @@
       environment.variables = {
         XCURSOR_THEME = "DMZ-Black"; # Match your theme's exact name
         XCURSOR_SIZE = "10";
+      };
+
+      environment.sessionVariables = {
+        WLR_DRM_DEVICES = "/dev/dri/by-path/pci-0000:06:00.0-card:/dev/dri/by-path/pci-0000:01:00.0-card";
       };
 
       programs.gamescope = {
@@ -209,11 +213,11 @@
 
       networking.hostName = "victus"; # Define your hostname.
 
-      systemd.sleep.extraConfig = ''
-        HibernateDelaySec=2h
-      '';
+      systemd.targets.sleep.enable = false;
+      systemd.targets.suspend.enable = false;
+      systemd.targets.hybrid-sleep.enable = false;
 
-      services.logind.settings.Login.HandleLidSwitch = "suspend";
+      services.logind.settings.Login.HandleLidSwitch = "ignore";
 
       system.stateVersion = "23.11";
 
