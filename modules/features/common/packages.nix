@@ -22,7 +22,24 @@
           };
         }))
         protonup-ng
-        heroic
+        (pkgs.symlinkJoin {
+          name = "heroic";
+          paths = [ pkgs-unstable.heroic ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/heroic \
+              --unset GIO_EXTRA_MODULES
+          '';
+        })
+        (pkgs.symlinkJoin {
+          name = "umu-launcher-wrapped";
+          paths = [ pkgs-unstable.umu-launcher ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/umu-run \
+              --unset GIO_EXTRA_MODULES
+          '';
+        })
       ])
       ++ (with pkgs; [
         nodejs

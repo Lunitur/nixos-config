@@ -57,7 +57,6 @@
         looking-glass-client
         bottles
         protonplus
-        heroic
         rpcs3
         vial
         vanilla-dmz
@@ -65,6 +64,10 @@
         argyllcms
         gpu-win
         gpu-linux
+      ];
+
+      systemd.tmpfiles.rules = [
+        "L+ /usr/bin/umu-run - - - - /run/current-system/sw/bin/umu-run"
       ];
 
       boot.initrd.systemd.enable = true;

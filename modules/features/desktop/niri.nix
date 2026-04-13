@@ -5,6 +5,7 @@
       config,
       lib,
       pkgs,
+      pkgs-unstable,
       ...
     }:
     let
@@ -88,6 +89,11 @@
           };
 
           spawn-at-startup = [
+            # [
+            #   "sh"
+            #   "-c"
+            #   "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XAUTHORITY"
+            # ]
             [ "footserver" ]
             [
               "signal-desktop"
@@ -492,6 +498,7 @@
         mission-center
         imv
         sunsetr
+        pkgs-unstable.runapp
       ];
     };
 }
