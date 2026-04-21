@@ -29,8 +29,6 @@
       services.upower.enable = true;
       services.upower.percentageAction = 5;
 
-      virtualisation.waydroid.enable = true;
-
       services.xserver.enable = true;
       services.displayManager.sddm = {
         enable = true;

@@ -99,8 +99,6 @@
 
       virtualisation.spiceUSBRedirection.enable = true;
 
-      virtualisation.waydroid.enable = true;
-
       services.xserver.enable = true;
       services.displayManager.sddm = {
         enable = true;
