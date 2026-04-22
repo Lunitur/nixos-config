@@ -20,7 +20,7 @@
         # inputs.self.nixosModules.kmonad
         inputs.self.nixosModules.moonlight
         inputs.self.nixosModules.network-base
-        # inputs.self.nixosModules.nix-ld
+        inputs.self.nixosModules.nix-ld
         inputs.self.nixosModules.polkit
         inputs.self.nixosModules.spotify
         inputs.self.nixosModules.syncthing

@@ -9,6 +9,7 @@
         extraPackages = epkgs: [
           pkgs.mu
           pkgs.mu.mu4e
+          epkgs.treesit-grammars.with-all-grammars
         ];
       };
       services.emacs = {

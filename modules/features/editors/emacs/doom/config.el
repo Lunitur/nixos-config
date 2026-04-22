@@ -218,3 +218,19 @@
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar))
+
+(setq ess-R-font-lock-keywords
+      '((ess-R-fl-keyword:modifiers . t)
+        (ess-R-fl-keyword:fun-defs . t)
+        (ess-R-fl-keyword:keywords . t)
+        (ess-R-fl-keyword:assign-ops . t)
+        (ess-R-fl-keyword:constants . t)
+        (ess-R-fl-keyword:fun-calls . t)
+        (ess-R-fl-keyword:numbers . t)
+        (ess-R-fl-keyword:operators . t)
+        (ess-R-fl-keyword:delimiters . t)
+        (ess-R-fl-keyword:= . t)
+        (ess-R-fl-keyword:F&T . t)))
+
+(map! :n "j" #'evil-next-visual-line
+      :n "k" #'evil-previous-visual-line)
