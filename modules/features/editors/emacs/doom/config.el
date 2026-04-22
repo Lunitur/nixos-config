@@ -133,12 +133,12 @@
 
 (require 'f)
 (after! gptel
-  (setq gptel-model 'gemini-3-flash-preview
+  (setq gptel-model 'gemma-4-31b-it
         gptel-backend
         (gptel-make-gemini "Gemini"
           :key (f-read-text "~/Nextcloud/gemini.key")
           :stream t
-          :models '(gemini-3-flash-preview)))
+          :models '(gemma-4-31b-it gemini-3-flash-preview)))
 
   (gptel-make-ollama "Ollama"
     :host "centaur:11434"
