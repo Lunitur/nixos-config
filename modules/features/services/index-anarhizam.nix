@@ -15,12 +15,6 @@
         ensureDatabases = [
           "comdex_prod"
         ];
-        ensureUsers = [
-          {
-            name = "comdex";
-            ensureDBOwnership = true;
-          }
-        ];
       };
       systemd.services.index-anarhizam-org = lib.mkIf isNano {
         description = "Index.anarhizam.org Phoenix Server (Comdex)";
@@ -29,7 +23,11 @@
           "postgresql.service"
         ];
         wantedBy = [ "multi-user.target" ];
-        path = [ pkgs.git ];
+        path = [
+          pkgs.git
+          pkgs.esbuild
+          pkgs.tailwindcss_4
+        ];
         environment = {
           MIX_ENV = "prod";
           PHX_SERVER = "true";
