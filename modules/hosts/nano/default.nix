@@ -26,6 +26,16 @@
       services.nginx = {
         enable = true;
         virtualHosts = {
+          "index.anarhizam.org" = {
+            addSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://localhost:3001";
+              recommendedProxySettings = true;
+              proxyWebsockets = true;
+            };
+          };
+
           "anarhizam.org" = {
             addSSL = true;
             enableACME = true;

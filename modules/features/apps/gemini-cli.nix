@@ -73,7 +73,6 @@
                 useRipgrep = true;
               };
               experimental = {
-                plan = true;
                 modelSteering = true;
                 skills = true;
                 jitContext = true;
@@ -129,7 +128,6 @@
                 useRipgrep = true;
               };
               experimental = {
-                plan = true;
                 modelSteering = true;
                 skills = true;
                 jitContext = true;

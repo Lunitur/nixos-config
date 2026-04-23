@@ -3,6 +3,7 @@
   flake.nixosModules.server = {
     imports = [
       inputs.self.nixosModules.anarhizam-org
+      inputs.self.nixosModules.index-anarhizam-org
       # inputs.self.nixosModules.common-fonts
       inputs.self.nixosModules.common-theme-stylix
       inputs.self.nixosModules.headscale
