@@ -12,8 +12,12 @@
     in
     {
       services.postgresql = {
-        ensureDatabases = [
-          "comdex_prod"
+        ensureDatabases = [ "comdex" ];
+        ensureUsers = [
+          {
+            name = "comdex";
+            ensureDBOwnership = true;
+          }
         ];
       };
       systemd.services.index-anarhizam-org = lib.mkIf isNano {
@@ -33,7 +37,7 @@
           PHX_SERVER = "true";
           PORT = "3001";
           PHX_HOST = "index.anarhizam.org";
-          DATABASE_URL = "ecto://comdex@localhost/comdex_prod";
+          DATABASE_URL = "ecto://comdex@localhost/comdex";
           MIX_HOME = "/home/carjin/comdex/.nix-mix";
           HEX_HOME = "/home/carjin/comdex/.nix-hex";
         };
