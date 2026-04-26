@@ -31,6 +31,8 @@
       programs.adb.enable = true;
       users.users.carjin.extraGroups = [ "adbusers" ];
 
+      services.upower.enable = true;
+
       services.postgresql = {
         enable = true;
         authentication = pkgs.lib.mkOverride 10 ''
