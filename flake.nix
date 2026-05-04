@@ -59,6 +59,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
+    };
+
     gemini-cli-src = {
       url = "github:Lunitur/gemini-cli/local";
       flake = false;

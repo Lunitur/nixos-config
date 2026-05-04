@@ -81,7 +81,7 @@
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       ;;vterm             ; the best terminal emulation in Emacs
+       vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -119,7 +119,7 @@
        ;;agda              ; types of types of types of types...
        ;;beancount         ; mind the GAAP
        (cc +lsp +tree-sitter)         ; C > C++ == 1
-       (clojure +lsp +tree-sitter)           ; java with a lisp
+       (clojure +lsp)           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c

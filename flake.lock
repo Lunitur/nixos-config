@@ -477,6 +477,24 @@
         "type": "github"
       }
     },
+    "mcp-servers-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1777555748,
+        "narHash": "sha256-RvKwvF868YY6HCfVC3K1kVrlUOnn4ynWxAi5PujhFXo=",
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "rev": "39253ce656ff86527a060148c40901bbbde6a4c2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -626,6 +644,22 @@
     },
     "nixpkgs_5": {
       "locked": {
+        "lastModified": 1772736753,
+        "narHash": "sha256-au/m3+EuBLoSzWUCb64a/MZq6QUtOV8oC0D9tY2scPQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "917fec990948658ef1ccd07cef2a1ef060786846",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_6": {
+      "locked": {
         "lastModified": 1773831496,
         "narHash": "sha256-JW2/QPyCVzmouqEp1H9kNa8JXd7xEhlam9sy3TYfhDY=",
         "owner": "NixOS",
@@ -640,7 +674,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1772956932,
         "narHash": "sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY=",
@@ -656,7 +690,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_7": {
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1774610258,
         "narHash": "sha256-HaThtroVD9wRdx7KQk0B75JmFcXlMUoEdDFNOMOlsOs=",
@@ -772,6 +806,7 @@
         "hashcards": "hashcards",
         "home-manager-stable": "home-manager-stable",
         "import-tree": "import-tree",
+        "mcp-servers-nix": "mcp-servers-nix",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": [
@@ -843,7 +878,7 @@
         "blobs": "blobs",
         "flake-compat": "flake-compat",
         "git-hooks": "git-hooks",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1773912645,
@@ -1075,7 +1110,7 @@
     },
     "umu": {
       "inputs": {
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_7"
       },
       "locked": {
         "dir": "packaging/nix",
@@ -1095,7 +1130,7 @@
     },
     "wrapper-modules": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1774879171,

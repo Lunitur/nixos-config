@@ -48,6 +48,7 @@
       inputs.self.homeModules.desktop-niri
       inputs.self.homeModules.desktop-packages
       inputs.self.homeModules.desktop-waybar
+      inputs.self.homeModules.mcp-servers
       # inputs.self.homeModules.distrobox
       inputs.self.homeModules.doom-emacs
       inputs.self.homeModules.firefox

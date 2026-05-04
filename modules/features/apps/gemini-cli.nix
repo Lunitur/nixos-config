@@ -17,6 +17,11 @@
           default = { };
           description = "Settings for gemini-cli, written to settings.json";
         };
+        mcpServers = mkOption {
+          type = types.attrs;
+          default = { };
+          description = "MCP servers to be added to settings.json";
+        };
       };
 
       config = {
@@ -24,8 +29,12 @@
         package = lib.mkDefault pkgs.gemini-cli;
 
         # These options are from makeWrapper module
-        env.GEMINI_CLI_SYSTEM_SETTINGS_PATH = lib.mkIf (config.gemini-cli.settings != { }) (
-          pkgs.writeText "gemini-settings.json" (builtins.toJSON config.gemini-cli.settings)
+        env.GEMINI_CLI_SYSTEM_SETTINGS_PATH = lib.mkIf (config.gemini-cli.settings != { } || config.gemini-cli.mcpServers != { }) (
+          pkgs.writeText "gemini-settings.json" (builtins.toJSON (
+            config.gemini-cli.settings // lib.optionalAttrs (config.gemini-cli.mcpServers != { }) {
+              mcpServers = config.gemini-cli.mcpServers;
+            }
+          ))
         );
       };
     };
@@ -43,7 +52,28 @@
           inputs.wrapper-modules.lib.modules.makeWrapper
           self.wrapperModules.gemini-cli
           {
+            package = pkgs-unstable.gemini-cli;
             # Default settings for the project
+            gemini-cli.mcpServers = {
+              nixos = {
+                command = "nix";
+                args = [
+                  "run"
+                  "github:utensils/mcp-nixos"
+                  "--"
+                ];
+              };
+              filesystem = {
+                command = "nix";
+                args = [
+                  "run"
+                  "github:natsukium/mcp-servers-nix#mcp-server-filesystem"
+                  "--"
+                  "/home/carjin/projects"
+                  "/home/carjin/nixos"
+                ];
+              };
+            };
             gemini-cli.settings = {
               general = {
                 enableNotifications = true;
@@ -96,9 +126,29 @@
               };
             });
 
-            binName = "gemini-pro";
+            binName = "gemini";
 
-            # Default settings for the project
+            gemini-cli.mcpServers = {
+              nixos = {
+                command = "nix";
+                args = [
+                  "run"
+                  "github:utensils/mcp-nixos"
+                  "--"
+                ];
+              };
+              filesystem = {
+                command = "nix";
+                args = [
+                  "run"
+                  "github:natsukium/mcp-servers-nix#mcp-server-filesystem"
+                  "--"
+                  "/home/carjin/projects"
+                  "/home/carjin/nixos"
+                ];
+              };
+            };
+
             gemini-cli.settings = {
               general = {
                 enableNotifications = true;
@@ -142,7 +192,7 @@
     { pkgs, ... }:
     {
       home.packages = [
-        self.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli
+        # self.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli
         self.packages.${pkgs.stdenv.hostPlatform.system}.gemini-cli-pro
       ];
     };

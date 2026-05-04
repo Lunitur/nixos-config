@@ -67,3 +67,6 @@
 
 (package! org-fragtog)
 (package! citar)
+
+(package! ai-code
+  :recipe (:host github :repo "tninja/ai-code-interface.el"))

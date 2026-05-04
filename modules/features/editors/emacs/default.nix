@@ -9,7 +9,7 @@
         extraPackages = epkgs: [
           pkgs.mu
           pkgs.mu.mu4e
-          epkgs.treesit-grammars.with-all-grammars
+          epkgs.vterm
         ];
       };
       services.emacs = {
@@ -18,10 +18,13 @@
       };
 
       # home.file.".config/doom".source = ./doom;
+      home.file.".config/emacs/.local/etc/tree-sitter".source =
+        "${pkgs.emacsPackages.treesit-grammars.with-all-grammars}/lib";
 
       home.sessionPath = [ "$HOME/.config/emacs/bin" ];
 
       home.packages = with pkgs; [
+        gcc
         ripgrep
         coreutils
         fd

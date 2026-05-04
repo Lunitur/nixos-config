@@ -166,20 +166,20 @@
   ;; Automatically preview files with a 0.2-second delay while scrolling
   (setq consult-preview-key '(:debounce 0.2 any)))
 
-;; (use-package! mcp
-;;   :after gptel
-;;   :init
-;;   (setq mcp-hub-servers
-;;         '(("filesystem" . (:command "nix" :args ("shell" "nixpkgs#nodejs" "-c" "npx" "-y" "@modelcontextprotocol/server-filesystem") :roots ("/home/carjin/nixos" "/home/carjin/projects")))))
-;;   :config
-;;   (require 'mcp-hub)
-;;   (require 'gptel-integrations)
+(use-package! mcp
+  :after gptel
+  :init
+  (setq mcp-hub-servers
+        '(("nixos" . (:command "nix" :args ("run" "github:utensils/mcp-nixos" "--")))))
+  :config
+  (require 'mcp-hub)
+  (require 'gptel-integrations)
 
-;;   ;; Start all defined servers automatically
-;;   (mcp-hub-start-all-server)
+  ;; Start all defined servers automatically
+  (mcp-hub-start-all-server)
 
-;;   ;; Automatically connect gptel to the MCP servers
-;;   (gptel-mcp-connect))
+  ;; Automatically connect gptel to the MCP servers
+  (gptel-mcp-connect))
 
 (use-package! nushell-mode)
 
@@ -234,3 +234,18 @@
 
 (map! :n "j" #'evil-next-visual-line
       :n "k" #'evil-previous-visual-line)
+
+(use-package! ai-code
+  :config
+  (ai-code-set-backend 'gemini)
+  (setq ai-code-mcp-agent-enabled-backends '(claude-code codex github-copilot-cli gemini))
+  (setq ai-code-mcp-debug-tools-enabled t)
+  (setq ai-code-mcp-debug-tools-enable-eval-elisp t)
+  (map! :leader
+        :desc "AI Code Interface" "c a" #'ai-code-menu)
+  (map! "C-c a" #'ai-code-menu))
+
+
+;; Stop Doom and clojure-ts-mode from trying to download and compile tree-sitter
+;; grammars, since we provide them via Nix and the target directory is read-only.
+(setq treesit-auto-install-grammar nil)
