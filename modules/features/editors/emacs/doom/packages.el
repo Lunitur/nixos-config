@@ -70,3 +70,6 @@
 
 (package! ai-code
   :recipe (:host github :repo "tninja/ai-code-interface.el"))
+
+(package! claude-code-ide
+  :recipe (:host github :repo "manzaltu/claude-code-ide.el"))

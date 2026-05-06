@@ -133,12 +133,19 @@
 
 (require 'f)
 (after! gptel
-  (setq gptel-model 'gemma-4-31b-it
+  (setq gptel-model 'deepseek-v4-flash
         gptel-backend
-        (gptel-make-gemini "Gemini"
-          :key (f-read-text "~/Nextcloud/gemini.key")
+        (gptel-make-openai "DeepSeek"
+          :host "api.deepseek.com"
+          :endpoint "/chat/completions"
           :stream t
-          :models '(gemma-4-31b-it gemini-3-flash-preview)))
+          :key (f-read-text "~/Nextcloud/deepseek.key")
+          :models '(deepseek-v4-flash deepseek-v4-pro)))
+
+  (gptel-make-gemini "Gemini"
+    :key (f-read-text "~/Nextcloud/gemini.key")
+    :stream t
+    :models '(gemma-4-31b-it gemini-3-flash-preview))
 
   (gptel-make-ollama "Ollama"
     :host "centaur:11434"
@@ -235,17 +242,22 @@
 (map! :n "j" #'evil-next-visual-line
       :n "k" #'evil-previous-visual-line)
 
-(use-package! ai-code
-  :config
-  (ai-code-set-backend 'gemini)
-  (setq ai-code-mcp-agent-enabled-backends '(claude-code codex github-copilot-cli gemini))
-  (setq ai-code-mcp-debug-tools-enabled t)
-  (setq ai-code-mcp-debug-tools-enable-eval-elisp t)
-  (map! :leader
-        :desc "AI Code Interface" "c a" #'ai-code-menu)
-  (map! "C-c a" #'ai-code-menu))
+;; (use-package! ai-code
+;;   :config
+;;   (ai-code-set-backend 'gemini)
+;;   (setq ai-code-mcp-agent-enabled-backends '(claude-code codex github-copilot-cli gemini))
+;;   (setq ai-code-mcp-debug-tools-enabled t)
+;;   (setq ai-code-mcp-debug-tools-enable-eval-elisp t)
+;;   (map! :leader
+;;         :desc "AI Code Interface" "c a" #'ai-code-menu)
+;;   (map! "C-c a" #'ai-code-menu))
 
 
 ;; Stop Doom and clojure-ts-mode from trying to download and compile tree-sitter
 ;; grammars, since we provide them via Nix and the target directory is read-only.
 (setq treesit-auto-install-grammar nil)
+
+(use-package! claude-code-ide
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools

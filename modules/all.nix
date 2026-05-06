@@ -116,6 +116,7 @@
       };
 
       environment.sessionVariables = {
+        DIRENV_LOG_FORMAT = "";
         FLAKE = "~/nixos";
         EDITOR = "hx";
         VISUAL = "hx";
