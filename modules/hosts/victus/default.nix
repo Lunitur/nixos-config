@@ -17,6 +17,7 @@
     {
       imports = [
         inputs.self.nixosModules.user-carjin
+        inputs.self.nixosModules.looking-glass-client
       ];
 
       programs.nix-index-database.comma.enable = true;
@@ -54,7 +55,6 @@
       environment.systemPackages = with pkgs; [
         multimonitor
         virtiofsd # libvirt folder sharing
-        looking-glass-client
         bottles
         protonplus
         rpcs3
