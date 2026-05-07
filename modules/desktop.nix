@@ -24,6 +24,7 @@
         inputs.self.nixosModules.polkit
         inputs.self.nixosModules.spotify
         inputs.self.nixosModules.syncthing
+        inputs.self.nixosModules.sane
         inputs.self.nixosModules.tailscale
       ];
       nixpkgs.overlays = [
