@@ -22,7 +22,6 @@
       gremlinServerConf = pkgs.writeText "gremlin-server.yaml" ''
         host: 127.0.0.1
         port: 8182
-        scriptEvaluationTimeout: 30000
         channelizer: org.apache.tinkerpop.gremlin.server.channel.WebSocketChannelizer
         graphs: {
           # Nix will replace this variable with the exact /nix/store/... path
@@ -56,7 +55,7 @@
 
         serviceConfig = {
           # Pass the generated /nix/store/ YAML file to the startup script
-          ExecStart = "${pkgs.janusgraph}/bin/gremlin-server.sh ${gremlinServerConf}";
+          ExecStart = "${pkgs.janusgraph}/bin/janusgraph-server ${gremlinServerConf}";
 
           DynamicUser = true;
           StateDirectory = "janusgraph";

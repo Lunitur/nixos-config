@@ -17,6 +17,7 @@
     {
       imports = [
         inputs.self.nixosModules.user-carjin
+        inputs.self.nixosModules.janusgraph
         inputs.self.nixosModules.looking-glass-client
       ];
 
