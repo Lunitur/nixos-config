@@ -120,8 +120,8 @@
                        "bash"))
 
 (setq-default vterm-shell
-              "/run/current-system/sw/bin/nu") (setq-default
-              explicit-shell-file-name "/run/current-system/sw/bin/nu")
+              "/run/current-system/sw/bin/nu") (setq-default)
+explicit-shell-file-name "/run/current-system/sw/bin/nu"
 
 ;; Show documentation in a popup
 (corfu-popupinfo-mode)
@@ -134,13 +134,11 @@
 (require 'f)
 (after! gptel
   (setq gptel-model 'deepseek-v4-flash
-        gptel-backend
-        (gptel-make-openai "DeepSeek"
-          :host "api.deepseek.com"
-          :endpoint "/chat/completions"
-          :stream t
-          :key (f-read-text "~/Nextcloud/deepseek.key")
-          :models '(deepseek-v4-flash deepseek-v4-pro)))
+
+        gptel-backend (gptel-make-deepseek "DeepSeek"
+                        :stream t
+                        :key (f-read-text "~/Nextcloud/deepseek.key")
+                        :stream t))
 
   (gptel-make-gemini "Gemini"
     :key (f-read-text "~/Nextcloud/gemini.key")
@@ -165,9 +163,9 @@
   ;; (add-to-list 'eglot-ignored-server-capabilities :semanticTokensProvider)
 
   ;; (setq eglot-events-buffer-size 0)
-  (setq eglot-sync-timeout 10)
-  ;; (setq eglot-send-changes-idle-time 1.0)
-  )
+  (setq eglot-sync-timeout 10))
+;; (setq eglot-send-changes-idle-time 1.0)
+
 
 (after! consult
   ;; Automatically preview files with a 0.2-second delay while scrolling
@@ -177,7 +175,11 @@
   :after gptel
   :init
   (setq mcp-hub-servers
-        '(("nixos" . (:command "nix" :args ("run" "github:utensils/mcp-nixos" "--")))))
+        '(("nixos" . (:command "nix" :args ("run" "github:utensils/mcp-nixos" "--")))
+          ("filesystem" . (:command "nix" :args ("run" "github:natsukium/mcp-servers-nix#mcp-server-filesystem" "--" "~/.config" "~/nixos"  "~/projects")))
+          ("shell" . (:command "npx" :args ("-y" "mcp-shell")))
+          ("emacs" . (:command "npx" :args ("-y" "@keegancsmith/emacs-mcp-server")))
+          ("web" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-brave-search")))))
   :config
   (require 'mcp-hub)
   (require 'gptel-integrations)

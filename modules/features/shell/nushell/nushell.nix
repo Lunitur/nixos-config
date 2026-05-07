@@ -26,19 +26,6 @@
                   enable: true
                 }
               }
-              hooks: {
-                pre_prompt: [{ ||
-                  if (which direnv | is-empty) {
-                    return
-                  }
-                  direnv export json | from json | default {} | load-env
-                }]
-                env_change: {
-                  PWD: [
-                    # {|before, after| if (($"($after)/shell.nix" | path exists) and ($env.IN_NIX_SHELL? | describe) == "nothing") { nix-shell --command nu } }
-                  ]
-                }
-              }
               keybindings: [
                 {
                   name: "run_in_bash"
@@ -95,6 +82,8 @@
             em = "emacsclient -t";
             gpro = "gemini -m gemini-3.1-pro-preview --include-directories ~/nixos";
             gflash = "gemini -m gemini-3-flash-preview --include-directories ~/nixos";
+            cpro = "claude --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-pro[1m]";
+            cflash = "claude --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-flash";
           };
         };
         carapace.enable = true;
