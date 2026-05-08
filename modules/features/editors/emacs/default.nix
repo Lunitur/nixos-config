@@ -16,6 +16,7 @@
         enable = true;
         startWithUserSession = "graphical";
       };
+      systemd.user.services.emacs.Service.EnvironmentFile = "%h/Nextcloud/env/emacs.env";
 
       # home.file.".config/doom".source = ./doom;
       home.file.".config/emacs/.local/etc/tree-sitter".source =

@@ -15,7 +15,6 @@
         inputs.self.nixosModules.hardware-usb-tethering
         inputs.self.nixosModules.performance
         # inputs.self.nixosModules.headscale
-        inputs.self.nixosModules.irc-anarhizam-org
         # inputs.self.nixosModules.jupyter
         # inputs.self.nixosModules.kmonad
         inputs.self.nixosModules.moonlight
@@ -26,6 +25,7 @@
         inputs.self.nixosModules.syncthing
         inputs.self.nixosModules.sane
         inputs.self.nixosModules.tailscale
+        inputs.self.nixosModules.claude
       ];
       nixpkgs.overlays = [
         inputs.self.overlays.brother

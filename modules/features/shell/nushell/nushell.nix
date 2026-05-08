@@ -63,6 +63,8 @@
               touch $init_path
             }
             source $init_path
+
+            open $"($nu.home-path)/Nextcloud/env/emacs.env" | lines | parse "{key}={value}" | transpose -r | into record | load-env
           '';
           shellAliases = {
             vi = "hx";
