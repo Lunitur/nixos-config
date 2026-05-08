@@ -11,6 +11,8 @@
       programs.yazi = {
         enable = true;
         enableNushellIntegration = true;
+        shellWrapperName = "y";
+
         plugins = with pkgs.yaziPlugins; {
           inherit
             nord

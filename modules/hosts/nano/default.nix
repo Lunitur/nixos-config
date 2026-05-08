@@ -46,6 +46,11 @@
             };
           };
 
+          "mail.anarhizam.org" = {
+            forceSSL = true;
+            enableACME = true;
+          };
+
           "nextcloud.anarhizam.org" = {
             forceSSL = true;
             enableACME = true;
@@ -68,7 +73,7 @@
         fqdn = "mail.anarhizam.org";
         domains = [ "anarhizam.org" ];
 
-        loginAccounts = {
+        accounts = {
           "admin@anarhizam.org" = {
             hashedPasswordFile = "/etc/mail/admin";
           };
@@ -91,7 +96,7 @@
             hashedPasswordFile = "/etc/mail/marko";
           };
         };
-        certificateScheme = "acme-nginx";
+        x509.useACMEHost = "mail.anarhizam.org";
       };
 
       services.discourse = {

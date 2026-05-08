@@ -56,15 +56,14 @@
       environment.systemPackages = with pkgs; [
         multimonitor
         virtiofsd # libvirt folder sharing
-        bottles
         protonplus
-        rpcs3
         vial
         vanilla-dmz
         usbutils
         argyllcms
         gpu-win
         gpu-linux
+        android-tools
       ];
 
       systemd.tmpfiles.rules = [
@@ -77,7 +76,6 @@
         127.0.0.1 irc.local
       '';
 
-      programs.adb.enable = true;
       users.users.carjin.extraGroups = [ "adbusers" ];
 
       services.printing.enable = true;
@@ -99,14 +97,14 @@
         WLR_DRM_DEVICES = "/dev/dri/by-path/pci-0000:06:00.0-card:/dev/dri/by-path/pci-0000:01:00.0-card";
       };
 
-      programs.gamescope = {
-        enable = true;
-        env = {
-          __NV_PRIME_RENDER_OFFLOAD = "1";
-          __VK_LAYER_NV_optimus = "NVIDIA_only";
-          __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-        };
-      };
+      # programs.gamescope = {
+      #   enable = true;
+      #   env = {
+      #     __NV_PRIME_RENDER_OFFLOAD = "1";
+      #     __VK_LAYER_NV_optimus = "NVIDIA_only";
+      #     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      #   };
+      # };
 
       virtualisation.docker = {
         storageDriver = "btrfs";

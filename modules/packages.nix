@@ -20,10 +20,7 @@
             mfcl3730cdn-driver = brother.driver;
             mfcl3730cdn-cupswrapper = brother.cupswrapper;
           }
-        ))
-        // {
-          nixpkgs = pkgs;
-        };
+        )) ;
 
       legacyPackages = pkgs;
     };

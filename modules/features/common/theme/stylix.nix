@@ -1,12 +1,12 @@
 { ... }:
 {
   flake.homeModules.common-theme-stylix =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
+      gtk.gtk4.theme = config.gtk.theme;
       stylix.targets = {
         firefox.profileNames = [ "default" ];
         waybar.enable = false;
-        vscode.enable = false;
       };
     };
 
@@ -21,6 +21,9 @@
       colors = import ./_green.nix;
     in
     {
+      programs.dconf.enable = true;
+      gtk.iconCache.enable = true;
+      programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
       stylix = {
         enable = true;
         polarity = "dark";
@@ -78,7 +81,9 @@
 
         image = ./wallpapers/desktop6.png;
 
-        iconTheme = {
+        targets.nixos-icons.enable = true;
+
+        icons = {
           enable = true;
           package = pkgs.papirus-icon-theme;
           dark = "Papirus-Dark";

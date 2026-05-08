@@ -58,13 +58,13 @@
             ${import ./_zoxide.nix}
             ${import ./_startup.nix}
 
-            const init_path = $"($nu.home-path)/.init.nu"
+            const init_path = $"($nu.home-dir)/.init.nu"
             if not ($init_path | path exists) {
               touch $init_path
             }
             source $init_path
 
-            open $"($nu.home-path)/Nextcloud/env/emacs.env" | lines | parse "{key}={value}" | transpose -r | into record | load-env
+            open $"($nu.home-dir)/Nextcloud/env/emacs.env" | lines | parse "{key}={value}" | transpose -r | into record | load-env
           '';
           shellAliases = {
             vi = "hx";

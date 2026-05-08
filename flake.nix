@@ -18,7 +18,7 @@
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
 
-    nixpkgs.follows = "nixpkgs-stable";
+    nixpkgs.follows = "nixpkgs-unstable";
 
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 
@@ -31,21 +31,34 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     stylix = {
+      url = "github:danth/stylix/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    stylix-stable = {
       url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Dendritic tools

@@ -12,7 +12,10 @@
 
       boot.kernelParams = [ "psi=1" ];
 
-      programs.adb.enable = true;
+      environment.systemPackages = with pkgs; [
+        android-tools
+      ];
+
       users.users.carjin.extraGroups = [ "adbusers" ];
     };
 }

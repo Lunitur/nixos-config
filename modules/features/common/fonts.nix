@@ -3,7 +3,7 @@
   flake.homeModules.common-fonts =
     { ... }:
     {
-      # fonts.fontconfig.enable = true;
+      fonts.fontconfig.enable = true;
     };
 
   flake.nixosModules.common-fonts =

@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "victus";
+  flake.nixosConfigurations = inputs.self.lib.mkNixosUnstable "x86_64-linux" "victus";
 
   flake.nixosModules.victus =
     {
@@ -24,7 +24,7 @@
         inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.nixos-hardware.nixosModules.common-hidpi
         inputs.nix-index-database.nixosModules.default
-        inputs.home-manager-stable.nixosModules.default
+        inputs.home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
         {
           home-manager = {

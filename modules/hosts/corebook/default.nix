@@ -24,11 +24,11 @@
         moonlight-qt
         tshark
         nikto
-        youtube-music
+        pear-desktop
         vanilla-dmz
+        android-tools
       ];
 
-      programs.adb.enable = true;
       users.users.carjin.extraGroups = [ "adbusers" ];
 
       services.upower.enable = true;

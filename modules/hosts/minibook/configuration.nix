@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "minibook";
+  flake.nixosConfigurations = inputs.self.lib.mkNixosUnstable "x86_64-linux" "minibook";
 
   flake.nixosModules.minibook =
     {
@@ -21,7 +21,7 @@
         inputs.nixos-hardware.nixosModules.common-pc-laptop
         inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
         inputs.nixos-hardware.nixosModules.common-hidpi
-        inputs.home-manager-stable.nixosModules.default
+        inputs.home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
         inputs.nix-index-database.nixosModules.default
         {
