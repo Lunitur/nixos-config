@@ -13,13 +13,17 @@
       ++ (with pkgs-unstable; [
         tlrc
         nmap
-        (ani-cli.overrideAttrs (_: {
+        (pkgs.ani-cli.overrideAttrs (old: {
           src = pkgs.fetchFromGitHub {
             owner = "pystardust";
             repo = "ani-cli";
-            tag = "v4.11";
-            hash = "sha256-gQprGtKXXpDm66dFWsrriL4G0NPav+nqm8T6wkdbgk8=";
+            tag = "v4.14";
+            hash = "sha256-OyCKDN89sBz59+3JncMDyNOq8UMqqjara+A0Owo3oko=";
           };
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+          postInstall = (old.postInstall or "") + ''
+            wrapProgram $out/bin/ani-cli --prefix PATH : ${pkgs.openssl}/bin
+          '';
         }))
         protonup-ng
         (pkgs.symlinkJoin {
