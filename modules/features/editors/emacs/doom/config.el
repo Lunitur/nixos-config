@@ -180,8 +180,8 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
         '(("nixos" . (:command "nix" :args ("run" "github:utensils/mcp-nixos" "--")))
           ("filesystem" . (:command "nix" :args ("run" "github:natsukium/mcp-servers-nix#mcp-server-filesystem" "--" "~/.config" "~/nixos"  "~/projects")))
           ("shell" . (:command "npx" :args ("-y" "mcp-shell")))
-          ("emacs" . (:command "npx" :args ("-y" "@keegancsmith/emacs-mcp-server")))
-          ("web" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-brave-search")))))
+          ("emacs" . (:command "npx" :args ("-y" "@keegancsmith/emacs-mcp-server")))))
+  ;; ("web" . (:command "npx" :args ("-y" "@modelcontextprotocol/server-brave-search")))))
   :config
   (require 'mcp-hub)
   (require 'gptel-integrations)
@@ -265,3 +265,15 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
   :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
   :config
   (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
+(setq-default tab-width 2
+              standard-indent 2
+              indent-tabs-mode nil)
+
+(after! cider
+  (setq cider-enable-nrepl-jvmti-agent t))
+
+(map! :leader
+      "SPC" nil
+      :desc "M-x" "SPC"
+      #'execute-extended-command)

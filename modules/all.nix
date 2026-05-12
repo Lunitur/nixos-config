@@ -141,6 +141,7 @@
     {
       imports = [
         inputs.self.homeModules.direnv
+        inputs.self.homeModules.tmux
       ];
       programs.nushell.environmentVariables = {
         NH_FLAKE = "${config.home.homeDirectory}/nixos";

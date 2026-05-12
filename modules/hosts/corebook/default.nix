@@ -13,6 +13,7 @@
     {
       imports = [
         inputs.self.nixosModules.user-carjin
+        inputs.self.nixosModules.janusgraph
       ];
 
       programs.nix-index-database.comma.enable = true;
