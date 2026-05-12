@@ -20,12 +20,16 @@
       };
 
       systemd.user.services.tmux = {
-        description = "Tmux Server";
-        wantedBy = [ "default.target" ];
-        serviceConfig = {
+        Unit = {
+          Description = "Tmux Server";
+        };
+        Service = {
           Type = "forking";
           ExecStart = "${pkgs.tmux}/bin/tmux new-session -s daemon -d";
           ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
         };
       };
     };

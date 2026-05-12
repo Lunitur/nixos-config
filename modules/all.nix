@@ -12,7 +12,7 @@
       ...
     }:
     {
-      imports = [ ];
+      imports = [ inputs.self.nixosModules.tmux ];
 
       nix = {
         settings = {
