@@ -18,5 +18,21 @@
           continuum # Automates resurrect
         ];
       };
+
+      systemd.user.services.tmux = {
+        description = "Tmux Server";
+        wantedBy = [ "default.target" ];
+        serviceConfig = {
+          Type = "forking";
+          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s daemon -d";
+          ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+        };
+      };
+    };
+
+  flake.nixosModules.tmux =
+    { pkgs, ... }:
+    {
+      users.users.carjin.linger = true;
     };
 }
