@@ -119,6 +119,8 @@
         secretKeyFile = "/etc/private/cache-priv-key.pem";
       };
 
+      nix.settings.extra-sandbox-paths = [ "/var/cache/ccache" ];
+
       services.nginx = {
         enable = true;
         recommendedProxySettings = true;
