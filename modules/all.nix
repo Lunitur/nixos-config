@@ -12,7 +12,10 @@
       ...
     }:
     {
-      imports = [ inputs.self.nixosModules.tmux ];
+      imports = [
+        inputs.nix-index-database.nixosModules.default
+        inputs.self.nixosModules.tmux
+      ];
 
       nix = {
         settings = {
@@ -133,6 +136,8 @@
       users.defaultUserShell = pkgs.nushell;
 
       programs.niri.package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+
+      programs.nix-index-database.comma.enable = true;
 
     };
 
