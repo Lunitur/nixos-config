@@ -76,6 +76,75 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
+;; Terminal tweaks: dimmer highlights + clipboard sync
+(unless (display-graphic-p)
+  (custom-set-faces!
+    '(isearch :background "#005f5f" :foreground "#ffffff")
+    '(lazy-highlight :background "#003f3f" :foreground "#cccccc")
+    '(isearch-fail :background "#5f0000" :foreground "#ffffff")
+    '(completions-highlight :background "#005f5f" :foreground "#ffffff")
+    '(completions-first-difference :background "#5f5f00" :foreground "#ffffff")
+    '(vertico-current :background "#003f5f" :foreground "#ffffff")
+    '(whitespace-trailing :background "#5f0000" :foreground "#ffafaf")
+    '(which-key-highlighted-command-face :foreground "#5fafd7")
+    '(tty-menu-selected-face :background "#005f5f" :foreground "#ffffff")
+    '(trailing-whitespace :background "#5f0000")
+    '(pulse-highlight-face :background "#3a3a00")
+    '(pulse-highlight-start-face :background "#3a3a00")
+    '(popup-scroll-bar-background-face :background "#333333")
+    '(popup-isearch-match :background "#005f5f")
+    '(org-mode-line-clock-overrun :foreground "#d75f5f")
+    ;; orderless match highlights (cycle of dim backgrounds)
+    '(orderless-match-face-0 :background "#005f5f")
+    '(orderless-match-face-1 :background "#5f005f")
+    '(orderless-match-face-2 :background "#005f00")
+    '(orderless-match-face-3 :background "#5f5f00")
+    ;; magit diff
+    '(magit-diff-added :background "#003300")
+    '(magit-diff-added-highlight :background "#005500")
+    '(magit-diff-base :background "#333300")
+    '(magit-diff-base-highlight :background "#555500")
+    '(magit-diff-hunk-heading-selection :background "#5f5f00")
+    ;; line-numbers
+    '(line-number-major-tick :foreground "#afafaf")
+    ;; dired
+    '(diredfl-deletion :foreground "#d75f5f")
+    '(diredfl-deletion-file-name :foreground "#d75f5f")
+    '(diredfl-flag-mark :foreground "#d7af00")
+    '(diredfl-flag-mark-line :background "#5f5f00")
+    ;; custom
+    '(custom-state :foreground "#5faf5f")
+    '(custom-saved :foreground "#afaf5f")
+    '(custom-modified :foreground "#5f5faf")
+    '(custom-invalid :foreground "#d75f5f")
+    ;; vterm: standard colors
+    '(vterm-color-yellow :foreground "#afaf00")
+    '(vterm-color-red :foreground "#af0000")
+    '(vterm-color-magenta :foreground "#af00af")
+    '(vterm-color-green :foreground "#00af00")
+    '(vterm-color-cyan :foreground "#00afaf")
+    '(vterm-color-blue :foreground "#5f5faf")
+    ;; vterm: bright variants
+    '(vterm-color-bright-yellow :foreground "#d7d700")
+    '(vterm-color-bright-white :foreground "#d0d0d0")
+    '(vterm-color-bright-red :foreground "#d70000")
+    '(vterm-color-bright-magenta :foreground "#d700d7")
+    '(vterm-color-bright-green :foreground "#00d700")
+    '(vterm-color-bright-cyan :foreground "#00d7d7")
+    '(vterm-color-bright-blue :foreground "#5f5fd7")
+    '(vterm-color-bright-black :foreground "#5f5f5f"))
+
+  ;; Clipboard sync via wl-clipboard (Wayland)
+  (setq select-enable-clipboard t
+        interprogram-cut-function
+        (lambda (text)
+          (with-temp-buffer
+            (insert text)
+            (call-process-region (point-min) (point-max) "wl-copy" nil nil nil)))
+        interprogram-paste-function
+        (lambda ()
+          (shell-command-to-string "wl-paste -n"))))
+
 (setq doom-font "Iosevka")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -273,7 +342,18 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
 (after! cider
   (setq cider-enable-nrepl-jvmti-agent t))
 
-(map! :leader
-      "SPC" nil
-      :desc "M-x" "SPC"
-      #'execute-extended-command)
+(after! julia-snail
+  (map! :localleader
+        :map julia-mode-map
+        :desc "Start REPL / flip to REPL"   "'" #'julia-snail
+        :desc "Activate project"             "p" #'julia-snail-package-activate
+        :desc "Doc lookup"                   "d" #'julia-snail-doc-lookup
+        :desc "Copy last eval result"        "y" #'julia-snail-copy-last-eval-result
+        :desc "Send line"                    "l" #'julia-snail-send-line
+        :desc "Send region"                  "r" #'julia-snail-send-region
+        :desc "Send DWIM"                    "e" #'julia-snail-send-dwim
+        :desc "Send top-level block"         "b" #'julia-snail-send-top-level-form
+        :desc "Send top-level block"         "x" #'julia-snail-send-top-level-form
+        :desc "Send buffer file"             "f" #'julia-snail-send-buffer-file
+        :desc "Update module cache"          "u" #'julia-snail-update-module-cache))
+
