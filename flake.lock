@@ -242,22 +242,6 @@
     "firefox-gnome-theme_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1776136500,
-        "narHash": "sha256-r0gN2brVWA351zwMV0Flmlcd6SGMvYqFbvC3DfKFM8Y=",
-        "owner": "rafaelmardojai",
-        "repo": "firefox-gnome-theme",
-        "rev": "0f8ba203d475587f477e7ae12661bd8459e225b7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rafaelmardojai",
-        "repo": "firefox-gnome-theme",
-        "type": "github"
-      }
-    },
-    "firefox-gnome-theme_3": {
-      "flake": false,
-      "locked": {
         "lastModified": 1764873433,
         "narHash": "sha256-1XPewtGMi+9wN9Ispoluxunw/RwozuTRVuuQOmxzt+A=",
         "owner": "rafaelmardojai",
@@ -968,7 +952,6 @@
     "root": {
       "inputs": {
         "arhivar": "arhivar",
-        "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-parts": "flake-parts",
         "gemini-cli-src": "gemini-cli-src",
         "hashcards": "hashcards",
@@ -1073,7 +1056,7 @@
         "base16-fish": "base16-fish",
         "base16-helix": "base16-helix",
         "base16-vim": "base16-vim",
-        "firefox-gnome-theme": "firefox-gnome-theme_2",
+        "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-parts": "flake-parts_3",
         "gnome-shell": "gnome-shell",
         "nixpkgs": [
@@ -1107,7 +1090,7 @@
         "base16-fish": "base16-fish_2",
         "base16-helix": "base16-helix_2",
         "base16-vim": "base16-vim_2",
-        "firefox-gnome-theme": "firefox-gnome-theme_3",
+        "firefox-gnome-theme": "firefox-gnome-theme_2",
         "flake-parts": "flake-parts_4",
         "gnome-shell": "gnome-shell_2",
         "nixpkgs": [

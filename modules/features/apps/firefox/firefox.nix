@@ -12,10 +12,10 @@
       home = {
         sessionVariables.BROWSER = "firefox";
 
-        file."firefox-gnome-theme" = {
-          target = ".mozilla/firefox/default/chrome/firefox-gnome-theme";
-          source = inputs.firefox-gnome-theme;
-        };
+        # file."firefox-gnome-theme" = {
+        #   target = ".mozilla/firefox/default/chrome/firefox-gnome-theme";
+        #   source = inputs.firefox-gnome-theme;
+        # };
       };
 
       programs.firefox = {
