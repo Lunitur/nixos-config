@@ -64,6 +64,7 @@
         gpu-win
         gpu-linux
         android-tools
+        beyond-all-reason
       ];
 
       systemd.tmpfiles.rules = [
@@ -201,6 +202,9 @@
           device = "nodev";
         };
       };
+
+      boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+      boot.binfmt.preferStaticEmulators = true;
 
       boot.kernelPackages = pkgs-unstable.linuxPackages_xanmod_stable;
       boot.kernelParams = [
