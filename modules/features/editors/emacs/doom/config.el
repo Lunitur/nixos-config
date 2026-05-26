@@ -80,9 +80,9 @@
 (unless (display-graphic-p)
   (custom-set-faces!
     '(isearch :background "#005f5f" :foreground "#ffffff")
-    '(lazy-highlight :background "#003f3f" :foreground "#cccccc")
+    ;; '(lazy-highlight :background "#003f3f" :foreground "#cccccc")
     '(isearch-fail :background "#5f0000" :foreground "#ffffff")
-    '(completions-highlight :background "#005f5f" :foreground "#ffffff")
+    ;; '(completions-highlight :background "#005f5f" :foreground "#ffffff")
     '(completions-first-difference :background "#5f5f00" :foreground "#ffffff")
     '(vertico-current :background "#003f5f" :foreground "#ffffff")
     '(whitespace-trailing :background "#5f0000" :foreground "#ffafaf")
