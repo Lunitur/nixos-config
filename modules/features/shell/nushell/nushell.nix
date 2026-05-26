@@ -28,6 +28,13 @@
               }
               keybindings: [
                 {
+                  name: "partial_accept_suggestion"
+                  modifier: "control"
+                  keycode: "char_l"
+                  mode: ["vi_insert"]
+                  event: { send: "HistoryHintWordComplete" }
+                }
+                {
                   name: "run_in_bash"
                   modifier: "control"
                   keycode: "char_b"
