@@ -30,6 +30,7 @@
       inputs.self.homeModules.starship
       inputs.self.homeModules.xdg-mime
       inputs.self.homeModules.yazi
+      inputs.self.homeModules.claude
     ];
   };
 }

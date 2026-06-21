@@ -18,7 +18,12 @@
         storage.directory=/var/lib/janusgraph/data
       '';
 
-      # 2. Create the server config, injecting the properties file from above
+      # 2. Define a global 'g' TraversalSource
+      janusgraphInit = pkgs.writeText "janusgraph-init.groovy" ''
+        g = graph.traversal()
+      '';
+
+      # 3. Create the server config, injecting the properties file from above
       gremlinServerConf = pkgs.writeText "gremlin-server.yaml" ''
         host: 127.0.0.1
         port: 8182
@@ -27,6 +32,10 @@
           # Nix will replace this variable with the exact /nix/store/... path
           graph: ${janusgraphProperties}
         }
+        processors:
+          - { className: org.apache.tinkerpop.gremlin.server.op.session.SessionOpProcessor, config: { sessionTimeout: 28800000 }}
+          - { className: org.apache.tinkerpop.gremlin.server.op.traversal.TraversalOpProcessor, config: { cacheExpirationTime: 600000, cacheMaxSize: 1000 }}
+        evaluationTimeout: 600000
         scriptEngines: {
           gremlin-groovy: {
             plugins: {
@@ -36,6 +45,9 @@
               org.apache.tinkerpop.gremlin.jsr223.ImportGremlinPlugin: {
                 classImports: [java.lang.Math],
                 methodImports: [java.lang.Math#*]
+              },
+              org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: {
+                files: [ ${janusgraphInit} ]
               }
             }
           }

@@ -65,6 +65,7 @@
         gpu-linux
         android-tools
         beyond-all-reason
+        picocom
       ];
 
       systemd.tmpfiles.rules = [

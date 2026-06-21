@@ -103,7 +103,7 @@
               "steam"
               "-silent"
             ]
-            [ "noctalia-shell" ]
+            [ "noctalia" ]
             [
               "wl-paste"
               "--type"
@@ -261,7 +261,7 @@
               "yazi"
             ];
             "Mod+D".spawn = [
-              "noctalia-shell"
+              "noctalia"
               "ipc"
               "call"
               "launcher"

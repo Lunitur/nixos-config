@@ -357,3 +357,4 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
         :desc "Send buffer file"             "f" #'julia-snail-send-buffer-file
         :desc "Update module cache"          "u" #'julia-snail-update-module-cache))
 
+(+global-word-wrap-mode +1)
