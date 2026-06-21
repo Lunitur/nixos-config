@@ -27,6 +27,7 @@
       gremlinServerConf = pkgs.writeText "gremlin-server.yaml" ''
         host: 127.0.0.1
         port: 8182
+        evaluationTimeout: 300000
         channelizer: org.apache.tinkerpop.gremlin.server.channel.WebSocketChannelizer
         graphs: {
           # Nix will replace this variable with the exact /nix/store/... path
