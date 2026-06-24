@@ -228,6 +228,9 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
   (add-to-list 'eglot-server-programs
                '((elixir-mode elixir-ts-mode heex-mode phoenix-heex-mode) . ("expert" "--stdio")))
 
+  (add-to-list 'eglot-server-programs
+               '((sql-mode sql-ts-mode) . ("sqls")))
+
   ;; Disable expensive features that might cause freezes in large templates
   ;; (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
   ;; (add-to-list 'eglot-ignored-server-capabilities :inlayHintProvider)
@@ -235,6 +238,48 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
 
   ;; (setq eglot-events-buffer-size 0)
   (setq eglot-sync-timeout 10))
+
+(add-hook 'sql-mode-hook #'eglot-ensure)
+(when (fboundp 'sql-ts-mode)
+  (add-hook 'sql-ts-mode-hook #'eglot-ensure))
+
+;; Run an sqls executeCommand and show its text result in a buffer.
+;; eglot's code-action path drops the command result; these surface it.
+(defun +sqls/run-command (command &optional arguments)
+  "Send sqls COMMAND (with ARGUMENTS) via workspace/executeCommand and pop result."
+  (let* ((server (eglot-current-server))
+         (res (eglot--request
+               server :workspace/executeCommand
+               `(:command ,command :arguments ,(or arguments []))
+               :timeout nil)))
+    (with-current-buffer (get-buffer-create "*sqls*")
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert (if (stringp res) res (format "%S" res)))
+        (goto-char (point-min))
+        (special-mode)))
+    (display-buffer "*sqls*")
+    res))
+
+(defun +sqls/show-databases ()   (interactive) (+sqls/run-command "showDatabases"))
+(defun +sqls/show-connections () (interactive) (+sqls/run-command "showConnections"))
+(defun +sqls/show-schemas ()     (interactive) (+sqls/run-command "showSchemas"))
+(defun +sqls/show-tables ()      (interactive) (+sqls/run-command "showTables"))
+(defun +sqls/switch-database (db) (interactive "sDatabase: ")
+       (+sqls/run-command "switchDatabase" (vector db)))
+(defun +sqls/switch-connection (n) (interactive "nConnection index: ")
+       (+sqls/run-command "switchConnections" (vector (number-to-string n))))
+
+;; sqls connections (eglot equivalent of lsp-sqls-connections).
+;; sqls reads the "sqls.connections" workspace config; switch active
+;; connection with M-x +sqls/switch-connection (index, 1-based).
+(setq-default eglot-workspace-configuration
+              '(:sqls
+                (:connections
+                 [(:driver "postgresql"
+                   :dataSourceName "host=/run/postgresql user=postgres dbname=postgres sslmode=disable")
+                  (:driver "mysql"
+                   :dataSourceName "root:root@tcp(127.0.0.1:3306)/world")])))
 ;; (setq eglot-send-changes-idle-time 1.0)
 
 

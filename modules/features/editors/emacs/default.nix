@@ -34,6 +34,7 @@
         isync
         msmtp
         gopass
+        sqls
       ];
     };
 }
