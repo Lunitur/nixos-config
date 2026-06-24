@@ -261,6 +261,29 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
     (display-buffer "*sqls*")
     res))
 
+(defun +sqls/execute-region (beg end)
+  "Execute only the selected SQL region via sqls.
+The Execute Query code action always runs the whole file because sqls drops
+the selection range; this sends executeQuery with an explicit :range."
+  (interactive "r")
+  (let* ((server (eglot-current-server))
+         (uri (eglot-path-to-uri (buffer-file-name)))
+         (res (eglot--request
+               server :workspace/executeCommand
+               (list :command "executeQuery"
+                     :arguments (vector uri)
+                     :range (list :start (eglot--pos-to-lsp-position beg)
+                                  :end (eglot--pos-to-lsp-position end)))
+               :timeout nil)))
+    (with-current-buffer (get-buffer-create "*sqls*")
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert (if (stringp res) res (format "%S" res)))
+        (goto-char (point-min))
+        (special-mode)))
+    (display-buffer "*sqls*")
+    res))
+
 (defun +sqls/show-databases ()   (interactive) (+sqls/run-command "showDatabases"))
 (defun +sqls/show-connections () (interactive) (+sqls/run-command "showConnections"))
 (defun +sqls/show-schemas ()     (interactive) (+sqls/run-command "showSchemas"))
@@ -269,6 +292,17 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
        (+sqls/run-command "switchDatabase" (vector db)))
 (defun +sqls/switch-connection (n) (interactive "nConnection index: ")
        (+sqls/run-command "switchConnections" (vector (number-to-string n))))
+
+(map! :after sql
+      :localleader
+      :map (sql-mode-map sql-ts-mode-map)
+      :desc "Execute region"   "e" #'+sqls/execute-region
+      :desc "Show databases"   "d" #'+sqls/show-databases
+      :desc "Show connections" "c" #'+sqls/show-connections
+      :desc "Show schemas"     "s" #'+sqls/show-schemas
+      :desc "Show tables"      "t" #'+sqls/show-tables
+      :desc "Switch database"   "D" #'+sqls/switch-database
+      :desc "Switch connection" "C" #'+sqls/switch-connection)
 
 ;; sqls connections (eglot equivalent of lsp-sqls-connections).
 ;; sqls reads the "sqls.connections" workspace config; switch active
