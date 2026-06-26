@@ -55,7 +55,6 @@
       inputs.self.homeModules.firefox
       inputs.self.homeModules.foot
       inputs.self.homeModules.fuzzel
-      inputs.self.homeModules.gemini-cli
       inputs.self.homeModules.claude
       inputs.self.homeModules.git
       inputs.self.homeModules.helix

@@ -10,7 +10,7 @@
     {
       imports = [
         inputs.self.nixosModules.all
-        inputs.simple-nixos-mailserver.nixosModule
+        inputs.simple-nixos-mailserver.nixosModules.default
         inputs.home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
         inputs.self.nixosModules.server

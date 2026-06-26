@@ -19,7 +19,6 @@
     imports = [
       inputs.self.homeModules.common-dotfiles
       inputs.self.homeModules.common-theme-stylix
-      inputs.self.homeModules.gemini-cli
       inputs.self.homeModules.git
       inputs.self.homeModules.helix
       inputs.self.homeModules.jujutsu

@@ -89,8 +89,6 @@
             nix-eval = "nix eval ~/nixos/#nixosConfigurations.${osConfig.networking.hostName}.config.system.build.toplevel.drvPath";
             nh-victus = "nh os switch ~/nixos -- --substituters \"http://cache.nixos.org http://victus\" ";
             em = "emacsclient -t";
-            gpro = "gemini -m gemini-3.1-pro-preview --include-directories ~/nixos";
-            gflash = "gemini -m gemini-3-flash-preview --include-directories ~/nixos";
             cpro = "claude-deepseek --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-pro[1m]";
             cflash = "claude-deepseek --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-flash";
             capro = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions";

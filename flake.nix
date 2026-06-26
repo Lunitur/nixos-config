@@ -76,10 +76,6 @@
       url = "github:natsukium/mcp-servers-nix";
     };
 
-    gemini-cli-src = {
-      url = "github:Lunitur/gemini-cli/local";
-      flake = false;
-    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
