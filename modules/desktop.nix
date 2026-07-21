@@ -33,6 +33,7 @@
 
       environment.systemPackages = with pkgs; [
         gvfs
+        codex
       ];
 
       boot.kernelParams = [
