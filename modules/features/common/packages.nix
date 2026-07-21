@@ -100,6 +100,8 @@
             xts
             tidyverse
             Bolstad
+            ISLR2
+            MASS
             languageserver
           ];
         })
