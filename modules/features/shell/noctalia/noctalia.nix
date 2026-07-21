@@ -1,12 +1,17 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
-  perSystem =
-    { pkgs, ... }:
+  flake.homeModules.noctalia =
+    { ... }:
     {
-      packages.noctalia = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
-        inherit pkgs;
-        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        settings = (builtins.fromJSON (builtins.readFile ./noctalia.json));
+      imports = [ inputs.noctalia.homeModules.default ];
+
+      # Keep the exported Noctalia theme; Stylix otherwise replaces it.
+      stylix.targets.noctalia.enable = false;
+
+      programs.noctalia = {
+        enable = true;
+        systemd.enable = true;
+        settings = builtins.fromTOML (builtins.readFile ./config.toml);
       };
     };
 }

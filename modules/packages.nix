@@ -13,7 +13,6 @@
             repl = pkgs.callPackage ./_packages/repl { };
             wl-ocr = pkgs.callPackage ./_packages/wl-ocr { };
             hashcards = pkgs.callPackage ./_packages/hashcards { };
-            moonshine = pkgs.callPackage ./_packages/moonshine { };
             ammonite = ammonites.ammonite_3_5;
           }
           // ammonites

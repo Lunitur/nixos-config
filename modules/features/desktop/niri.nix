@@ -103,7 +103,6 @@
               "steam"
               "-silent"
             ]
-            [ "noctalia" ]
             [
               "wl-paste"
               "--type"
@@ -262,10 +261,9 @@
             ];
             "Mod+D".spawn = [
               "noctalia"
-              "ipc"
-              "call"
+              "msg"
+              "panel-toggle"
               "launcher"
-              "toggle"
             ];
             "Mod+P".toggle-window-floating = _: { };
             "Mod+E".spawn = [
@@ -477,7 +475,6 @@
 
       home.packages = with pkgs; [
         inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.niri
-        inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia
         loupe
         swaybg
         networkmanagerapplet

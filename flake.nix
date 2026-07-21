@@ -16,7 +16,8 @@
     #   flake = false;
     # };
 
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "git+file:///home/carjin/nixpkgs";
 
     nixpkgs.follows = "nixpkgs-unstable";
 
@@ -67,10 +68,9 @@
 
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    # The cachix branch only advances after Noctalia's CI has uploaded binaries.
+    # Keep its nixpkgs input independent so the published derivations substitute.
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
     mcp-servers-nix = {
       url = "github:natsukium/mcp-servers-nix";

@@ -15,7 +15,6 @@
       imports = [
         inputs.nix-index-database.nixosModules.default
         inputs.self.nixosModules.tmux
-        inputs.self.nixosModules.moonshine
       ];
 
       nix = {
@@ -29,12 +28,14 @@
             "https://cache.nixos.org"
           ];
           extra-substituters = [
+            "https://noctalia.cachix.org"
             "https://victus.cachix.org"
           ];
           trusted-public-keys = [
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           ];
           extra-trusted-public-keys = [
+            "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
             "victus.cachix.org-1:VQvwDrGr4O3e1G64Xl97fl2QdHRxr3LieTYldF84jIY="
             "victus.akita-bleak.ts.net:kb/jFWfxfUVJfWlLeu+qEYO3zGkNHdfCvb61qSHRo3A="
           ];

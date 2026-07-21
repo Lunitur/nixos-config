@@ -194,7 +194,11 @@
 
       services.moonshine = {
         enable = true;
-        users = [ "carjin" ];
+        user = "carjin";
+        firewallInterfaces = [
+          "eno1"
+          "wlp4s0"
+        ];
         extraPackages = [
           config.programs.steam.package
           pkgs.coreutils
