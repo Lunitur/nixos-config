@@ -437,3 +437,7 @@ the selection range; this sends executeQuery with an explicit :range."
         :desc "Update module cache"          "u" #'julia-snail-update-module-cache))
 
 (+global-word-wrap-mode +1)
+
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
