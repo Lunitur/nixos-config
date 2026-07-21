@@ -15,6 +15,7 @@
       imports = [
         inputs.nix-index-database.nixosModules.default
         inputs.self.nixosModules.tmux
+        inputs.self.nixosModules.moonshine
       ];
 
       nix = {

@@ -192,6 +192,58 @@
         localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
       };
 
+      services.moonshine = {
+        enable = true;
+        users = [ "carjin" ];
+        extraPackages = [
+          config.programs.steam.package
+          pkgs.coreutils
+          pkgs-unstable.heroic
+        ];
+        environment = {
+          # Keep the compositor, Vulkan Video encoder, and games on the RTX
+          # 3050. The trailing `!` hides the AMD iGPU from Vulkan applications.
+          MESA_VK_DEVICE_SELECT = "10de:25a2!";
+          __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+          __NV_PRIME_RENDER_OFFLOAD = "1";
+        };
+        settings = {
+          name = "victus";
+          compositor.gpu = "10de:25a2";
+          application = [
+            {
+              title = "Steam";
+              command = [
+                "steam"
+                "steam://open/bigpicture"
+              ];
+            }
+            {
+              title = "Desktop";
+              command = [
+                "sleep"
+                "infinity"
+              ];
+            }
+            {
+              title = "Heroic";
+              command = [ "heroic" ];
+            }
+          ];
+          application_scanner = [
+            {
+              type = "steam";
+              library = "$HOME/.local/share/Steam";
+              command = [
+                "steam"
+                "-bigpicture"
+                "steam://rungameid/{game_id}"
+              ];
+            }
+          ];
+        };
+      };
+
       services.blueman.enable = true;
       hardware.bluetooth.enable = true;
 
