@@ -2,7 +2,6 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
-  fetchzip,
   pkg-config,
   openssl,
   sqlite,
@@ -10,16 +9,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "hashcards";
-  version = "0.3.0";
+  version = "0.4.0";
 
   src = fetchFromGitHub {
     owner = "eudoxia0";
     repo = "hashcards";
-    rev = "1513a749c6fd5ff05f0b2038002e08718cf1d4ce";
-    sha256 = "sha256-6ElKZ5/QJO6TYg9MQfLv2f4Gbj8yu4igERuHa+xGC4Q=";
+    rev = "2699292e45b69a12e8966a2cd359e2427aae2c79";
+    sha256 = "sha256-KkQwSoLvaiEckyBCryRevUq1HIVZNtBhctEBcfKKHw0=";
   };
 
-  cargoHash = "sha256-d41ThobHMEWoLCjYGybHP7FVmUmO+Hi6qkp30/R1baE=";
+  cargoHash = "sha256-qd0cmxiHilyMHSMrX58OMrFANDTT+OCBsCYDbf++BTM=";
 
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [
