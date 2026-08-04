@@ -6,6 +6,11 @@
       xdg.mimeApps = {
         enable = true;
 
+        associations.added = {
+          "application/x-bittorrent" = [ "transmission-gtk.desktop" ];
+          "x-scheme-handler/magnet" = [ "transmission-gtk.desktop" ];
+        };
+
         defaultApplications = {
           # --- Web & URLs ---
           "text/html" = [ "firefox.desktop" ];
@@ -14,6 +19,10 @@
           "x-scheme-handler/about" = [ "firefox.desktop" ];
           "x-scheme-handler/unknown" = [ "firefox.desktop" ];
           "x-scheme-handler/chrome" = [ "firefox.desktop" ];
+          "x-scheme-handler/magnet" = [ "transmission-gtk.desktop" ];
+
+          # --- Torrents ---
+          "application/x-bittorrent" = [ "transmission-gtk.desktop" ];
 
           # --- Documents ---
           "application/pdf" = [ "org.pwmt.zathura.desktop" ];

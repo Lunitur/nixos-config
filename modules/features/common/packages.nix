@@ -72,7 +72,8 @@
         '')
         nextcloud-client
         # lutris
-        deluge-gtk
+        # deluge-gtk
+        transmission_4-gtk
         dconf
         gedit
         (pkgs.symlinkJoin {
