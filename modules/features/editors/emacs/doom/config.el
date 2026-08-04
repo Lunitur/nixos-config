@@ -224,12 +224,26 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq gc-cons-threshold (* 100 1024 1024))
 
+;; Open .typ files in typst-ts-mode and start Eglot automatically.
+(use-package! typst-ts-mode
+  :mode "\\.typ\\'"
+  :hook (typst-ts-mode . eglot-ensure))
+
 (after! eglot
   (add-to-list 'eglot-server-programs
                '((elixir-mode elixir-ts-mode heex-mode phoenix-heex-mode) . ("expert" "--stdio")))
 
   (add-to-list 'eglot-server-programs
                '((sql-mode sql-ts-mode) . ("sqls")))
+
+  ;; Prefer typst-ts-mode's downloaded Tinymist, then fall back to PATH.
+  (after! typst-ts-mode
+    (add-to-list
+     'eglot-server-programs
+     `((typst-ts-mode) .
+       ,(eglot-alternatives
+         `(,typst-ts-lsp-download-path
+           "tinymist")))))
 
   ;; Disable expensive features that might cause freezes in large templates
   ;; (add-to-list 'eglot-ignored-server-capabilities :documentHighlightProvider)
@@ -304,11 +318,13 @@ the selection range; this sends executeQuery with an explicit :range."
       :desc "Switch database"   "D" #'+sqls/switch-database
       :desc "Switch connection" "C" #'+sqls/switch-connection)
 
-;; sqls connections (eglot equivalent of lsp-sqls-connections).
+;; Tinymist exports a PDF on save; sqls reads its connections from this plist.
+;; The sqls settings are the Eglot equivalent of lsp-sqls-connections.
 ;; sqls reads the "sqls.connections" workspace config; switch active
 ;; connection with M-x +sqls/switch-connection (index, 1-based).
 (setq-default eglot-workspace-configuration
-              '(:sqls
+              '(:tinymist (:exportPdf "onSave")
+                :sqls
                 (:connections
                  [(:driver "postgresql"
                    :dataSourceName "host=/run/postgresql user=postgres dbname=postgres sslmode=disable")

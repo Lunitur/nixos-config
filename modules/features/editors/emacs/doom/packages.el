@@ -75,3 +75,6 @@
   :recipe (:host github :repo "manzaltu/claude-code-ide.el"))
 
 (package! ghostel)
+
+;; Typst major mode; parsing uses Emacs's built-in treesit support.
+(package! typst-ts-mode)
