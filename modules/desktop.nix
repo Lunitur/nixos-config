@@ -7,6 +7,7 @@
         inputs.self.nixosModules.anarhizam-org
         inputs.self.nixosModules.avahi
         inputs.self.nixosModules.common-fonts
+        inputs.self.nixosModules.common-scripts
         inputs.self.nixosModules.common-theme-stylix
         # inputs.self.nixosModules.features-desktop-uwsm
         # inputs.self.nixosModules.features-desktop-wlr
