@@ -6,13 +6,22 @@ pkgs.writeShellScriptBin "centaur-sunshine" ''
   set -euo pipefail
 
   ssh -t lsimek@centaur '
-    set -e
-    echo "Stopping moonshine.service"
+    let uid = (id -u | str trim)
+
     sudo systemctl stop moonshine.service
-    echo "Starting sunshine.service"
-    XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user start sunshine.service
-    echo "--- status ---"
-    systemctl is-active moonshine.service || true
-    XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user is-active sunshine.service || true
+
+    print "Starting sunshine.service"
+    with-env { XDG_RUNTIME_DIR: $"/run/user/($uid)" } {
+        systemctl --user restart sunshine.service
+    }
+
+    print "--- status ---"
+    let moonshine_status = (systemctl is-active moonshine.service | complete)
+    print $moonshine_status.stdout
+
+    with-env { XDG_RUNTIME_DIR: $"/run/user/($uid)" } {
+        let sunshine_status = (systemctl --user is-active sunshine.service | complete)
+        print $sunshine_status.stdout
+    }
   '
 ''
