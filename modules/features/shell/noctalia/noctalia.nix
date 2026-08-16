@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   flake.homeModules.noctalia =
-    { ... }:
+    { pkgs, ... }:
     {
       imports = [ inputs.noctalia.homeModules.default ];
 
@@ -10,6 +10,7 @@
 
       programs.noctalia = {
         enable = true;
+        package = pkgs.noctalia;
         systemd.enable = true;
         settings = builtins.fromTOML (builtins.readFile ./config.toml);
       };
