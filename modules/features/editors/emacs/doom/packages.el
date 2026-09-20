@@ -77,4 +77,6 @@
 (package! ghostel)
 
 ;; Typst major mode; parsing uses Emacs's built-in treesit support.
-(package! typst-ts-mode)
+(package! typst-ts-mode
+  ;; Emacs 31 generates an unloadable autoload for `define-compilation-mode'.
+  :recipe (:build (:not autoloads)))

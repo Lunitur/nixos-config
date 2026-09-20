@@ -147,6 +147,7 @@
     { lib, config, ... }:
     {
       imports = [
+        inputs.self.homeModules.atuin
         inputs.self.homeModules.direnv
         inputs.self.homeModules.tmux
       ];

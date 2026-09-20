@@ -26,24 +26,6 @@
           '';
         }))
         protonup-ng
-        (pkgs.symlinkJoin {
-          name = "heroic";
-          paths = [ pkgs-unstable.heroic ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/heroic \
-              --unset GIO_EXTRA_MODULES
-          '';
-        })
-        (pkgs.symlinkJoin {
-          name = "umu-launcher-wrapped";
-          paths = [ pkgs-unstable.umu-launcher ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/umu-run \
-              --unset GIO_EXTRA_MODULES
-          '';
-        })
       ])
       ++ (with pkgs; [
         nodejs
@@ -62,7 +44,6 @@
         babashka
         leiningen
         xfce4-taskmanager
-        telegram-desktop
         vesktop
         signal-desktop
         element-desktop
@@ -104,6 +85,12 @@
             ISLR2
             MASS
             languageserver
+            gbm
+            mgcv
+            gamair
+            qgam
+            knitr
+            rmarkdown
           ];
         })
         julia-bin

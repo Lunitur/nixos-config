@@ -17,6 +17,7 @@
     # };
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     # nixpkgs-unstable.url = "git+file:///home/carjin/nixpkgs";
 
     nixpkgs.follows = "nixpkgs-unstable";

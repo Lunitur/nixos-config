@@ -34,7 +34,7 @@
 
       environment.systemPackages = with pkgs; [
         gvfs
-        codex
+        inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.codex
       ];
 
       boot.kernelParams = [
@@ -60,6 +60,7 @@
       inputs.self.homeModules.claude
       inputs.self.homeModules.git
       inputs.self.homeModules.helix
+      inputs.self.homeModules.heroic
       inputs.self.homeModules.jujutsu
       inputs.self.homeModules.kitty
       inputs.self.homeModules.latex
