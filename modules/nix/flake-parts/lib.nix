@@ -23,8 +23,10 @@
 
   config.flake.lib = {
 
+    # nixosSystem lives on the nixpkgs *flake*, not on a package set's `lib`,
+    # so a non-following revision has to come through multiverse's `flakeAt`.
     mkNixos = system: name: {
-      ${name} = inputs.nixpkgs-stable.lib.nixosSystem {
+      ${name} = (inputs.multiverse.multiverse.${system}.flakeAt "26.05").lib.nixosSystem {
         specialArgs = {
           inherit inputs;
           pkgs-unstable = import inputs.nixpkgs-unstable {
@@ -42,8 +44,6 @@
               })
             else
               null;
-          # other inputs that were in specialArgs
-          nixvim = inputs.nixvim;
         };
 
         modules = [
@@ -76,8 +76,6 @@
               })
             else
               null;
-          # other inputs that were in specialArgs
-          nixvim = inputs.nixvim;
         };
 
         modules = [

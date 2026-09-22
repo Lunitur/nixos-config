@@ -12,7 +12,6 @@
     }:
     {
       imports = [
-        inputs.self.nixosModules.arhivar
         # inputs.self.nixosModules.anarhizam-metrics
         inputs.self.nixosModules.user-carjin
         inputs.self.nixosModules.janusgraph
@@ -277,10 +276,10 @@
 
       networking.interfaces.enp1s0.useDHCP = true;
 
-      services.journald.extraConfig = ''
-        MaxRetentionSec=1month
-        SystemMaxUse=500M
-      '';
+      services.journald.settings.Journal = {
+        MaxRetentionSec = "1month";
+        SystemMaxUse = "500M";
+      };
 
       services.logrotate.enable = true;
       services.logrotate.settings.header = {

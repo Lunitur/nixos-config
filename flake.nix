@@ -2,13 +2,10 @@
   description = "Nixos config flake";
 
   inputs = {
-    arhivar = {
-      url = "gitlab:Lunitur/arhivar/main";
-    };
-
     hashcards = {
       url = "github:eudoxia0/hashcards/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.flake-utils.inputs.systems.follows = "systems";
     };
 
     # firefox-gnome-theme = {
@@ -17,20 +14,17 @@
     # };
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     # nixpkgs-unstable.url = "git+file:///home/carjin/nixpkgs";
 
     nixpkgs.follows = "nixpkgs-unstable";
 
-    umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
+    # Reaches every nixpkgs revision from this one input: mv.at "25.11",
+    # mv.tip, mv.fast.tip.<attr>, (mv.flakeAt "26.05").lib.nixosSystem.
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    home-manager-stable = {
-      url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     home-manager = {
@@ -41,20 +35,12 @@
     stylix = {
       url = "github:danth/stylix/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    stylix-stable = {
-      url = "github:danth/stylix/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.systems.follows = "systems";
     };
 
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -66,15 +52,16 @@
     # Dendritic tools
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+    systems.url = "github:nix-systems/default";
 
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
-
-    # The cachix branch only advances after Noctalia's CI has uploaded binaries.
-    # Keep its nixpkgs input independent so the published derivations substitute.
-    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+    wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     mcp-servers-nix = {
       url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
   };

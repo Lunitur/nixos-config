@@ -34,7 +34,9 @@
 
       environment.systemPackages = with pkgs; [
         gvfs
-        inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.codex
+        # fast path: a store path Hydra already built, substituted straight from
+        # cache.nixos.org — no nixpkgs tree to evaluate, nothing to compile.
+        inputs.multiverse.multiverse.${pkgs.stdenv.hostPlatform.system}.fast.tip.codex
       ];
 
       boot.kernelParams = [
@@ -68,7 +70,6 @@
       inputs.self.homeModules.mail
       inputs.self.homeModules.mpv
 
-      # inputs.self.homeModules.nixvim
       inputs.self.homeModules.nushell
       inputs.self.homeModules.noctalia
       inputs.self.homeModules.pueue
