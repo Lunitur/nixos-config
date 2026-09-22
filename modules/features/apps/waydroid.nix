@@ -1,11 +1,11 @@
 { ... }:
 {
   flake.nixosModules.waydroid =
-    { pkgs, pkgs-unstable, ... }:
+    { pkgs, ... }:
     {
       virtualisation.waydroid = {
         enable = true;
-        package = pkgs-unstable.waydroid;
+        package = pkgs.waydroid;
       };
 
       networking.firewall.trustedInterfaces = [ "waydroid0" ];

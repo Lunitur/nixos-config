@@ -27,10 +27,6 @@
         inherit system;
         config.allowUnfree = true;
       };
-      _module.args.pkgs-unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
       # Every nixpkgs revision, one flake input. Selectors cost nothing until
       # forced: multiverse.tip.hello, multiverse.at "25.11", multiverse.fast.tip.hello.
       _module.args.multiverse = inputs.multiverse.multiverse.${system};

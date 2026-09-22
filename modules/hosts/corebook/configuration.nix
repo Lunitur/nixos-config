@@ -9,7 +9,6 @@
     {
       config,
       pkgs,
-      pkgs-unstable,
       ...
     }:
     {
@@ -28,7 +27,6 @@
             extraSpecialArgs = {
               inherit inputs;
               inherit (inputs) self;
-              inherit pkgs-unstable;
             };
             users = {
               carjin = {

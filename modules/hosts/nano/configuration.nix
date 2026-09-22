@@ -6,7 +6,7 @@
   flake.nixosConfigurations = inputs.self.lib.mkNixosUnstable "aarch64-linux" "nano";
 
   flake.nixosModules.nano =
-    { pkgs-unstable, ... }:
+    { ... }:
     {
       imports = [
         inputs.self.nixosModules.all
@@ -19,7 +19,6 @@
             extraSpecialArgs = {
               inherit inputs;
               inherit (inputs) self;
-              inherit pkgs-unstable;
             };
             users = {
               carjin = {

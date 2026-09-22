@@ -53,7 +53,7 @@
           User = "carjin";
           Group = "users";
           WorkingDirectory = "/home/carjin/blog-anarhizam-org";
-          ExecStart = "${pkgs.elixir_1_19}/bin/mix phx.server";
+          ExecStart = "${pkgs.beamPackages.elixir_1_19}/bin/mix phx.server";
           Restart = "on-failure";
           RestartSec = "10s";
           EnvironmentFile = "/etc/anarhizam-org/secrets.env";

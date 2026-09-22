@@ -1,7 +1,11 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  ...
+}:
 {
   flake.nixosModules.desktop =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = [
         inputs.self.nixosModules.anarhizam-org
@@ -34,9 +38,7 @@
 
       environment.systemPackages = with pkgs; [
         gvfs
-        # fast path: a store path Hydra already built, substituted straight from
-        # cache.nixos.org — no nixpkgs tree to evaluate, nothing to compile.
-        inputs.multiverse.multiverse.${pkgs.stdenv.hostPlatform.system}.fast.tip.codex
+        config.multiverse.instance.fast.tip.codex
       ];
 
       boot.kernelParams = [

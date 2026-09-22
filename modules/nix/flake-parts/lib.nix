@@ -29,21 +29,6 @@
       ${name} = (inputs.multiverse.multiverse.${system}.flakeAt "26.05").lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          pkgs-unstable = import inputs.nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-            config.allowUnfreePredicate = (_: true);
-          };
-          # for arm
-          pkgs-unstable-arm =
-            if system == "aarch64-linux" then
-              (import inputs.nixpkgs-unstable {
-                system = "aarch64-linux";
-                config.allowUnfree = true;
-                config.allowUnfreePredicate = (_: true);
-              })
-            else
-              null;
         };
 
         modules = [
@@ -61,21 +46,6 @@
       ${name} = inputs.nixpkgs-unstable.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          pkgs-unstable = import inputs.nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-            config.allowUnfreePredicate = (_: true);
-          };
-          # for arm
-          pkgs-unstable-arm =
-            if system == "aarch64-linux" then
-              (import inputs.nixpkgs-unstable {
-                system = "aarch64-linux";
-                config.allowUnfree = true;
-                config.allowUnfreePredicate = (_: true);
-              })
-            else
-              null;
         };
 
         modules = [

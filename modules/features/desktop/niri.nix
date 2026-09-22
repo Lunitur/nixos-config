@@ -5,7 +5,6 @@
       config,
       lib,
       pkgs,
-      pkgs-unstable,
       ...
     }:
     let
@@ -414,7 +413,6 @@
       osConfig,
       lib,
       inputs,
-      pkgs-unstable,
       ...
     }:
     {
@@ -474,7 +472,7 @@
       };
 
       home.packages = with pkgs; [
-        inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.niri
+        niri
         loupe
         swaybg
         networkmanagerapplet
@@ -489,7 +487,7 @@
         mission-center
         imv
         sunsetr
-        pkgs-unstable.runapp
+        runapp
       ];
     };
 }

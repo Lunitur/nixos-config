@@ -3,14 +3,13 @@
   flake.homeModules.desktop-packages =
     {
       pkgs,
-      pkgs-unstable,
       ...
     }:
     {
       home.packages = [
         pkgs.hashcards
       ]
-      ++ (with pkgs-unstable; [
+      ++ (with pkgs; [
         tlrc
         nmap
         (pkgs.ani-cli.overrideAttrs (old: {
@@ -26,8 +25,6 @@
           '';
         }))
         protonup-ng
-      ])
-      ++ (with pkgs; [
         nodejs
         discord
         prismlauncher

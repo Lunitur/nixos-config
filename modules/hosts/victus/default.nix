@@ -8,7 +8,6 @@
       config,
       lib,
       pkgs,
-      pkgs-unstable,
       ...
     }:
     let
@@ -202,7 +201,7 @@
         extraPackages = [
           config.programs.steam.package
           pkgs.coreutils
-          pkgs-unstable.heroic
+          pkgs.heroic
         ];
         environment = {
           # Keep the compositor, Vulkan Video encoder, and games on the RTX
@@ -271,7 +270,7 @@
       boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
       boot.binfmt.preferStaticEmulators = true;
 
-      boot.kernelPackages = pkgs-unstable.linuxPackages_xanmod_stable;
+      boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
       boot.kernelParams = [
         "amd_iommu=on"
         "amd_pstate=active"

@@ -6,6 +6,9 @@
       # gtk.gtk4.theme = config.gtk.theme;
       stylix.targets = {
         firefox.profileNames = [ "default" ];
+        # Unused in this profile (rofi.nix is not imported); stylix still sets
+        # the renamed `programs.rofi.font` option, which warns on every eval.
+        rofi.enable = false;
         waybar.enable = false;
       };
     };

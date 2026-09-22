@@ -8,7 +8,6 @@
       config,
       lib,
       pkgs,
-      pkgs-unstable,
       ...
     }:
     {
@@ -19,12 +18,6 @@
       programs.niri.enable = true;
 
       programs.nix-index-database.comma.enable = true;
-
-      environment.systemPackages =
-        (with pkgs-unstable; [
-        ])
-        ++ (with pkgs; [
-        ]);
 
       services.upower.enable = true;
       services.upower.percentageAction = 5;

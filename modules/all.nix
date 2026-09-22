@@ -8,11 +8,11 @@
       config,
       lib,
       pkgs,
-      pkgs-unstable,
       ...
     }:
     {
       imports = [
+        inputs.multiverse.nixosModules.default
         inputs.nix-index-database.nixosModules.default
         inputs.self.nixosModules.tmux
       ];
@@ -42,6 +42,11 @@
             "carjin"
           ];
         };
+      };
+
+      multiverse = {
+        enable = true;
+        config.allowunFree = true;
       };
 
       nixpkgs.overlays = [
@@ -134,8 +139,6 @@
       };
 
       users.defaultUserShell = pkgs.nushell;
-
-      programs.niri.package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
 
       programs.nix-index-database.comma.enable = true;
 
