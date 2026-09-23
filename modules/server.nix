@@ -8,6 +8,7 @@
       inputs.self.nixosModules.common-theme-stylix
       inputs.self.nixosModules.headscale
       inputs.self.nixosModules.irc-anarhizam-org
+      inputs.self.nixosModules.matrix-server
       inputs.self.nixosModules.network-base
       inputs.self.nixosModules.polkit
       inputs.self.nixosModules.syncthing
