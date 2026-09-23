@@ -10,8 +10,25 @@
     let
       isNano = config.networking.hostName == "nano";
 
-      serverName = if isNano then "matrix.anarhizam.org" else "matrix.localhost";
-      clientUrl = "${if isNano then "https" else "http"}://${serverName}";
+      # Homeserver name: the domain in user IDs (@you:<serverName>).
+      serverName = if isNano then "anarhizam.org" else "matrix.localhost";
+
+      # Host that actually serves the API, and the delegation target for
+      # serverName. Clients and federating servers resolve serverName, read
+      # /.well-known/matrix/* there, and get pointed back here.
+      matrixHost = if isNano then "matrix.anarhizam.org" else "matrix.localhost";
+
+      clientUrl = "${if isNano then "https" else "http"}://${matrixHost}";
+
+      wellKnownClient = ''
+        default_type application/json;
+        return 200 '{"m.homeserver":{"base_url":"${clientUrl}"}}';
+      '';
+
+      wellKnownServer = ''
+        default_type application/json;
+        return 200 '{"m.server":"${matrixHost}:443"}';
+      '';
     in
     {
       services.matrix-tuwunel = {
@@ -37,32 +54,36 @@
 
       services.nginx = {
         enable = true;
-        virtualHosts.${serverName} = {
-          forceSSL = isNano;
-          enableACME = isNano;
-          extraConfig = ''
-            client_max_body_size 20m;
-          '';
-          locations = {
-            "/_matrix" = {
-              proxyPass = "http://127.0.0.1:8008";
-              proxyWebsockets = true;
-              recommendedProxySettings = true;
+        virtualHosts = {
+          ${matrixHost} = {
+            forceSSL = isNano;
+            enableACME = isNano;
+            extraConfig = ''
+              client_max_body_size 20m;
+            '';
+            locations = {
+              "/_matrix" = {
+                proxyPass = "http://127.0.0.1:8008";
+                proxyWebsockets = true;
+                recommendedProxySettings = true;
+              };
+              "= /.well-known/matrix/client" = {
+                extraConfig = wellKnownClient;
+              };
             };
+          };
+        }
+        // lib.optionalAttrs (isNano && serverName != matrixHost) {
+          # Delegation: serverName is served by matrixHost. The vhost itself
+          # (and its cert) is declared in the host config; only the two
+          # well-known files are added here. No 8448 listener, so federation
+          # is delegated to 443.
+          ${serverName}.locations = {
             "= /.well-known/matrix/client" = {
-              extraConfig = ''
-                default_type application/json;
-                return 200 '{"m.homeserver":{"base_url":"${clientUrl}"}}';
-              '';
+              extraConfig = wellKnownClient;
             };
-          }
-          // lib.optionalAttrs isNano {
-            # No 8448 listener here, so delegate federation to 443.
             "= /.well-known/matrix/server" = {
-              extraConfig = ''
-                default_type application/json;
-                return 200 '{"m.server":"matrix.anarhizam.org:443"}';
-              '';
+              extraConfig = wellKnownServer;
             };
           };
         };
