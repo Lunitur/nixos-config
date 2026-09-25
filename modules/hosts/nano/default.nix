@@ -95,6 +95,9 @@
           "marko@anarhizam.org" = {
             hashedPasswordFile = "/etc/mail/marko";
           };
+          "sus@anarhizam.org" = {
+            hashedPasswordFile = "/etc/mail/sus";
+          };
         };
         x509.useACMEHost = "mail.anarhizam.org";
       };
