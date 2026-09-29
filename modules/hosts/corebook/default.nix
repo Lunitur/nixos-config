@@ -127,7 +127,14 @@
       boot.resumeDevice = "/dev/disk/by-uuid/ef200b06-21a4-4383-b8fb-6bb845714809";
       boot.kernelParams = [ "resume_offset=1933233" ];
 
-      services.logind.settings.Login.HandleLidSwitch = "hibernate";
+      services.logind.settings.Login = {
+        HandleLidSwitch = "suspend-then-hibernate";
+        HandleLidSwitchExternalPower = "suspend-then-hibernate";
+      };
+
+      systemd.sleep.settings.Sleep = {
+        HibernateDelaySec = "2h";
+      };
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
