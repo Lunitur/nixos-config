@@ -75,6 +75,7 @@
 
       inputs.self.homeModules.nushell
       inputs.self.homeModules.noctalia
+      inputs.self.homeModules.octave
       inputs.self.homeModules.pueue
       inputs.self.homeModules.services-udiskie
       inputs.self.homeModules.shell-scripts
