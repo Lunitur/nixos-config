@@ -29,7 +29,7 @@
     in
     {
       home.packages = with pkgs; [
-        octaveEnv
+        # octaveEnv
         gnuplot
       ];
     };
