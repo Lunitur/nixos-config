@@ -80,3 +80,8 @@
 (package! typst-ts-mode
   ;; Emacs 31 generates an unloadable autoload for `define-compilation-mode'.
   :recipe (:build (:not autoloads)))
+
+;; Julia Workbench development checkout, including runtime/server helpers.
+(package! julia-workbench
+  :recipe (:type nil :local-repo "/home/carjin/projects/julia-mode"
+           :files ("julia-workbench*.el" "julia")))

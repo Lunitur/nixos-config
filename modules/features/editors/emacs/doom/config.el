@@ -437,20 +437,78 @@ the selection range; this sends executeQuery with an explicit :range."
 (after! cider
   (setq cider-enable-nrepl-jvmti-agent t))
 
-(after! julia-snail
+(use-package! julia-workbench
+  ;; ESS also claims Julia files when :lang julia is disabled.  Register its
+  ;; case-insensitive extension here, after module config, to retain priority.
+  :mode ("\\.[jJ][lL]\\'" . julia-workbench-mode)
+  :interpreter ("julia" . julia-workbench-mode)
+  :config
+  (require 'julia-workbench-repl)
+
+  (defun +julia-workbench-open-repl ()
+    "Open the project REPL and return its buffer for Doom's eval commands."
+    (interactive)
+    (julia-workbench-repl)
+    (current-buffer))
+
+  (defun +julia-workbench-lookup-h ()
+    "Keep persistent Julia documentation first after Eglot connects."
+    (when (derived-mode-p 'julia-workbench-mode)
+      ;; `add-hook' leaves an existing entry in place, so move it explicitly.
+      (remove-hook '+lookup-documentation-functions
+                   #'julia-workbench-documentation-at-point t)
+      (add-hook '+lookup-documentation-functions
+                #'julia-workbench-documentation-at-point nil t)))
+
+  (when (modulep! :tools lookup)
+    (set-lookup-handlers! 'julia-workbench-mode
+      :documentation '(julia-workbench-documentation-at-point :async t))
+    ;; Eglot adds its own minor-mode handler after the major-mode hook.
+    (add-hook 'eglot-managed-mode-hook #'+julia-workbench-lookup-h t))
+
+  (when (modulep! :tools eval)
+    (set-repl-handler! 'julia-workbench-mode #'+julia-workbench-open-repl
+      :persist t
+      :send-region #'julia-workbench-send-region
+      :send-buffer #'julia-workbench-send-buffer)
+    (set-eval-handler! 'julia-workbench-mode #'julia-workbench-send-region))
+
+  (set-popup-rule! "^\\*Julia \\(?:Runtime \\)?Documentation\\*$"
+    :size 0.35 :select t :quit t :ttl nil)
+  (set-popup-rule! "^\\*Julia REPL "
+    :size 0.35 :select t :quit nil :ttl nil)
+
   (map! :localleader
-        :map julia-mode-map
-        :desc "Start REPL / flip to REPL"   "'" #'julia-snail
-        :desc "Activate project"             "p" #'julia-snail-package-activate
-        :desc "Doc lookup"                   "d" #'julia-snail-doc-lookup
-        :desc "Copy last eval result"        "y" #'julia-snail-copy-last-eval-result
-        :desc "Send line"                    "l" #'julia-snail-send-line
-        :desc "Send region"                  "r" #'julia-snail-send-region
-        :desc "Send DWIM"                    "e" #'julia-snail-send-dwim
-        :desc "Send top-level block"         "b" #'julia-snail-send-top-level-form
-        :desc "Send top-level block"         "x" #'julia-snail-send-top-level-form
-        :desc "Send buffer file"             "f" #'julia-snail-send-buffer-file
-        :desc "Update module cache"          "u" #'julia-snail-update-module-cache))
+        :map julia-workbench-mode-map
+        :desc "Start REPL / flip to REPL" "'" #'julia-workbench-repl
+        :desc "Activate project"          "p" #'julia-workbench-repl-activate-project
+        :desc "Doc lookup at point"        "d" #'julia-workbench-documentation-at-point
+        :desc "Named documentation"        "D" #'julia-workbench-documentation
+        :desc "Search documentation"       "s" #'julia-workbench-documentation-search
+        :desc "Select documentation scope" "P" #'julia-workbench-documentation-select-packages
+        :desc "Copy last eval result"      "y" #'julia-workbench-copy-last-eval-result
+        :desc "Send line"                  "l" #'julia-workbench-send-line
+        :desc "Send region"                "r" #'julia-workbench-send-region
+        :desc "Send DWIM"                  "e" #'julia-workbench-send-dwim
+        :desc "Send top-level block"       "b" #'julia-workbench-send-top-level-form
+        :desc "Send top-level block"       "x" #'julia-workbench-send-top-level-form
+        :desc "Send buffer file"           "f" #'julia-workbench-send-buffer-file
+        :desc "Send buffer"                "F" #'julia-workbench-send-buffer
+        :desc "Runtime completion"         "u" #'julia-workbench-repl-complete
+        :desc "Runtime documentation"      "R" #'julia-workbench-repl-documentation
+        :desc "Connect language server"    "c" #'julia-workbench-connect
+        :desc "Reconnect language server"  "C" #'julia-workbench-reconnect
+        :desc "Shutdown language server"   "k" #'julia-workbench-shutdown
+        :desc "Julia doctor"               "h" #'julia-workbench-doctor)
+  (map! :localleader
+        :map julia-workbench-repl-mode-map
+        :desc "Back to source"  "'" #'julia-workbench-repl
+        :desc "Interrupt"       "i" #'julia-workbench-repl-interrupt
+        :desc "Restart"         "r" #'julia-workbench-repl-restart
+        :desc "Activate project" "p" #'julia-workbench-repl-activate-project
+        :desc "Documentation"   "d" #'julia-workbench-repl-documentation
+        :desc "Copy last result" "y" #'julia-workbench-copy-last-eval-result))
+
 
 (+global-word-wrap-mode +1)
 
