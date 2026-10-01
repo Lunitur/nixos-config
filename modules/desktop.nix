@@ -18,7 +18,6 @@
         inputs.self.nixosModules.hardware-audio
         inputs.self.nixosModules.hardware-ram
         inputs.self.nixosModules.hardware-usb-tethering
-        inputs.self.nixosModules.matrix-server
         inputs.self.nixosModules.performance
         # inputs.self.nixosModules.headscale
         # inputs.self.nixosModules.jupyter
