@@ -14,7 +14,6 @@
       imports = [
         # inputs.self.nixosModules.anarhizam-metrics
         inputs.self.nixosModules.user-carjin
-        inputs.self.nixosModules.janusgraph
       ];
 
       environment.systemPackages = with pkgs; [
