@@ -34,6 +34,15 @@
         };
       };
 
+      services.nginx.vitualhosts."headscale.anarhizam.org" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:8080";
+          proxyWebsockets = true;
+        };
+      };
+
       environment.systemPackages = [ config.services.headscale.package ];
     };
 }

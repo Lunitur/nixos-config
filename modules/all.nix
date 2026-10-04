@@ -15,6 +15,7 @@
         inputs.multiverse.nixosModules.default
         inputs.nix-index-database.nixosModules.default
         inputs.self.nixosModules.tmux
+        inputs.self.nixosModules.netbird
       ];
 
       nix = {
