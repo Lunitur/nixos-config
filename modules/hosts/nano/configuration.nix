@@ -14,6 +14,7 @@
         inputs.home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
         inputs.self.nixosModules.server
+        inputs.self.nixosModules.netbird-server
         {
           home-manager = {
             extraSpecialArgs = {
