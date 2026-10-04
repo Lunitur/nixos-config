@@ -56,14 +56,6 @@
             enableACME = true;
           };
 
-          "headscale.anarhizam.org" = {
-            forceSSL = true;
-            enableACME = true;
-            locations."/" = {
-              proxyPass = "http://localhost:8080";
-              proxyWebsockets = true;
-            };
-          };
         };
       };
 

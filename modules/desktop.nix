@@ -19,7 +19,6 @@
         inputs.self.nixosModules.hardware-ram
         inputs.self.nixosModules.hardware-usb-tethering
         inputs.self.nixosModules.performance
-        # inputs.self.nixosModules.headscale
         # inputs.self.nixosModules.jupyter
         # inputs.self.nixosModules.kmonad
         inputs.self.nixosModules.moonlight
@@ -30,7 +29,6 @@
         inputs.self.nixosModules.syncthing
         inputs.self.nixosModules.sane
         inputs.self.nixosModules.services-udiskie
-        inputs.self.nixosModules.tailscale
         inputs.self.nixosModules.claude
       ];
       nixpkgs.overlays = [
