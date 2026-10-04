@@ -247,7 +247,7 @@
         };
       };
 
-      services.blueman.enable = true;
+      services.blueman.enable = false;
       hardware.bluetooth.enable = true;
 
       hardware.graphics = {

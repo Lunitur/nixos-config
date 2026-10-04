@@ -74,6 +74,7 @@
             open $"($nu.home-dir)/Nextcloud/env/emacs.env" | lines | parse "{key}={value}" | transpose -r | into record | load-env
           '';
           shellAliases = {
+            cd = "z";
             vi = "hx";
             vim = "hx";
             nano = "hx";

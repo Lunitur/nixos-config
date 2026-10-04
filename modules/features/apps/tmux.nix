@@ -19,13 +19,21 @@
         ];
       };
 
-      systemd.user.services.tmux = {
+      # Named tmux-daemon, not tmux: the continuum plugin hardcodes
+      # `systemctl --user disable tmux.service` on every server start, which
+      # removes both this unit's link and its default.target.wants entry.
+      systemd.user.services.tmux-daemon = {
         Unit = {
           Description = "Tmux Server";
         };
         Service = {
-          Type = "forking";
-          ExecStart = "${pkgs.tmux}/bin/tmux new-session -s daemon -d";
+          # oneshot + RemainAfterExit: unit is "up" as soon as the detached
+          # session exists. Type=forking made systemd wait on the tmux client
+          # and time out. The has-session guard keeps restarts idempotent
+          # (plain `new-session -s daemon` exits 1 with "duplicate session").
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.tmux}/bin/tmux has-session -t daemon 2>/dev/null || ${pkgs.tmux}/bin/tmux new-session -s daemon -d'";
           ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
         };
         Install = {

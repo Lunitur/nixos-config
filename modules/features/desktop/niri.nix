@@ -475,7 +475,6 @@
         niri
         loupe
         swaybg
-        networkmanagerapplet
         wlr-randr
         pavucontrol
         brightnessctl

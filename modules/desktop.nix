@@ -29,6 +29,7 @@
         inputs.self.nixosModules.spotify
         inputs.self.nixosModules.syncthing
         inputs.self.nixosModules.sane
+        inputs.self.nixosModules.services-udiskie
         inputs.self.nixosModules.tailscale
         inputs.self.nixosModules.claude
       ];
@@ -38,7 +39,8 @@
 
       environment.systemPackages = with pkgs; [
         gvfs
-        config.multiverse.instance.fast.tip.codex
+        # config.multiverse.instance.fast.tip.codex
+        codex
       ];
 
       boot.kernelParams = [
@@ -62,6 +64,7 @@
       inputs.self.homeModules.foot
       inputs.self.homeModules.fuzzel
       inputs.self.homeModules.claude
+      inputs.self.homeModules.codex
       inputs.self.homeModules.git
       inputs.self.homeModules.helix
       inputs.self.homeModules.heroic
@@ -75,7 +78,7 @@
       inputs.self.homeModules.nushell
       inputs.self.homeModules.noctalia
       inputs.self.homeModules.octave
-      inputs.self.homeModules.pueue
+      # inputs.self.homeModules.pueue
       inputs.self.homeModules.services-udiskie
       inputs.self.homeModules.shell-scripts
       inputs.self.homeModules.ssh
