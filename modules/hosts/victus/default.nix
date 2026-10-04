@@ -192,7 +192,7 @@
       };
 
       services.moonshine = {
-        enable = true;
+        enable = false;
         user = "carjin";
         firewallInterfaces = [
           "eno1"

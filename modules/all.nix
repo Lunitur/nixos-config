@@ -18,6 +18,9 @@
         inputs.self.nixosModules.netbird
       ];
 
+      # Keep Home Manager packages in system generations so system GC handles them.
+      home-manager.useUserPackages = true;
+
       nix = {
         settings = {
           experimental-features = [
