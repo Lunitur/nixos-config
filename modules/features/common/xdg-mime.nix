@@ -48,6 +48,7 @@
 
           # --- Audio & Video ---
           "video/mp4" = [ "mpv.desktop" ];
+          "video/matroska" = [ "mpv.desktop" ];
           "video/x-matroska" = [ "mpv.desktop" ];
           "video/webm" = [ "mpv.desktop" ];
           "video/quicktime" = [ "mpv.desktop" ];
