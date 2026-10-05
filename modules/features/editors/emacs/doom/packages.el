@@ -81,7 +81,8 @@
   ;; Emacs 31 generates an unloadable autoload for `define-compilation-mode'.
   :recipe (:build (:not autoloads)))
 
-;; Julia Workbench development checkout, including runtime/server helpers.
+;; Julia Workbench release, including runtime/server helpers on every host.
 (package! julia-workbench
-  :recipe (:type nil :local-repo "/home/carjin/projects/julia-mode"
-           :files ("julia-workbench*.el" "julia")))
+  :recipe (:host github :repo "Lunitur/julia-workbench"
+           :files ("julia-workbench*.el" "julia"))
+  :pin "e6f3bf2e44ec2ce6ce2485ab971d4fd51fe7a93e")
