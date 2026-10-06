@@ -84,5 +84,17 @@
 ;; Julia Workbench release, including runtime/server helpers on every host.
 (package! julia-workbench
   :recipe (:host github :repo "Lunitur/julia-workbench"
-           :files ("julia-workbench*.el" "julia"))
+           :files ("julia-workbench*.el" "julia")
+           ;; Julia's setup preserves template symlinks when copying them to
+           ;; its cache.  Build these two assets as files so setup is repeatable.
+           :post-build
+           (let ((templates (expand-file-name
+                             "julia/server-environment/"
+                             (straight--build-dir "julia-workbench"))))
+             (dolist (name '("Project.toml" "Manifest.toml"))
+               (let ((file (expand-file-name name templates)))
+                 (when (file-symlink-p file)
+                   (let ((copy (make-temp-file (concat file "."))))
+                     (copy-file (file-truename file) copy t)
+                     (rename-file copy file t)))))))
   :pin "e6f3bf2e44ec2ce6ce2485ab971d4fd51fe7a93e")
