@@ -1,0 +1,9 @@
+:root { font-family: system-ui, sans-serif; color-scheme: light dark; }
+body { margin: 0; padding: 1.5rem; }
+main { max-width: 26rem; margin: 2rem auto; }
+form { display: grid; gap: 0.65rem; }
+form[hidden] { display: none; }
+input, button { box-sizing: border-box; width: 100%; font: inherit; padding: 0.75rem; border: 1px solid #888; border-radius: 0.4rem; }
+button { margin-top: 0.75rem; cursor: pointer; }
+button:disabled { cursor: wait; }
+#status { overflow-wrap: anywhere; }

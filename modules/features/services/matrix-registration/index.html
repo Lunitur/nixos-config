@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Matrix account</title>
+    <link rel="stylesheet" href="/_matrix/static/client/register/register.css">
+    <script defer src="/_matrix/static/client/register/register.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Create your account</h1>
+      <p>Enter the invitation token provided by your server administrator.</p>
+      <form id="registration">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" required>
+        <label for="confirm-password">Confirm password</label>
+        <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required>
+        <label for="registration-token">Invitation token</label>
+        <input id="registration-token" name="registration-token" type="password" autocomplete="off" required>
+        <button type="submit">Create account</button>
+      </form>
+      <p id="status" role="status" aria-live="polite"></p>
+      <noscript>Enable JavaScript to create your account.</noscript>
+    </main>
+  </body>
+</html>
