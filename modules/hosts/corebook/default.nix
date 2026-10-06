@@ -27,6 +27,8 @@
         pear-desktop
         vanilla-dmz
         android-tools
+        pciutils
+        powertop # Diagnostics only; TLP owns power tuning.
       ];
 
       users.users.carjin.extraGroups = [ "adbusers" ];
@@ -56,20 +58,27 @@
         tlp = {
           enable = true;
           settings = {
-            CPU_SCALING_GOVERNOR_ON_AC = "performance";
-            CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+            # intel_pstate's powersave governor still scales up under load.
+            CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+            CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
             START_CHARGE_THRESH_BAT0 = 80;
             STOP_CHARGE_THRESH_BAT0 = 95;
-            TLP_DEFAULT_MODE = "BAT";
+            # Always follow the power source, including after suspend/resume.
+            TLP_AUTO_SWITCH = 1;
+            TLP_PROFILE_DEFAULT = "BAL";
 
             PLATFORM_PROFILE_ON_AC = "performance";
             PLATFORM_PROFILE_ON_BAT = "low-power";
-            CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-            CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+            CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+            CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+            CPU_BOOST_ON_AC = 1;
+            CPU_BOOST_ON_BAT = 0;
             CPU_HWP_DYN_BOOST_ON_AC = 1;
             CPU_HWP_DYN_BOOST_ON_BAT = 0;
 
-            USB_AUTOSUSPEND = 0;
+            PCIE_ASPM_ON_BAT = "powersave";
+            USB_AUTOSUSPEND = 1;
+            # TLP excludes keyboards, mice, audio devices and printers by default.
           };
         };
       };
@@ -147,8 +156,27 @@
 
       powerManagement = {
         enable = true;
-        powertop.enable = true;
+        cpuFreqGovernor = "powersave";
+        # Boot-time auto-tune races with TLP and ignores its device exclusions.
+        powertop.enable = false;
       };
+
+      home-manager.users.carjin.services.swayidle.timeouts = lib.mkForce [
+        {
+          timeout = 120;
+          command = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10%";
+          resumeCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r";
+        }
+        {
+          timeout = 300;
+          command = "${pkgs.systemd}/bin/loginctl lock-session";
+        }
+        {
+          timeout = 330;
+          command = "${lib.getExe pkgs.niri} msg action power-off-monitors";
+          resumeCommand = "${lib.getExe pkgs.niri} msg action power-on-monitors";
+        }
+      ];
 
       hardware = {
         enableAllFirmware = true;
