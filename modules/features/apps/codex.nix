@@ -9,14 +9,14 @@
     }:
     {
       programs.codex = {
-        enable = true;
+        enable = false;
         # The desktop NixOS module already installs Codex.
         package = null;
         settings = {
           approvals_reviewer = "user";
           model = "gpt-6.1-sol";
           model_reasoning_effort = "high";
-          features.memories = true;
+          features.memories = false;
           notice.hide_full_access_warning = true;
           tui = {
             screen_reader_detection_done = true;
@@ -39,9 +39,12 @@
                 "${config.home.homeDirectory}/Games/Heroic/Prefixes/default/FTL AE"
                 "${config.home.homeDirectory}/projects/sts2-analysis"
                 "${config.home.homeDirectory}/Nextcloud/skripte"
+                "${config.home.homeDirectory}/Nextcloud/skripte"
                 "${config.home.homeDirectory}/projects"
                 "${config.home.homeDirectory}/projects/julia-mode"
                 "${config.home.homeDirectory}/projects/zadaca-strojno"
+                "${config.home.homeDirectory}/projects/nixos-seminar"
+
                 "/tmp/luka-typst"
               ]
               (_: {
