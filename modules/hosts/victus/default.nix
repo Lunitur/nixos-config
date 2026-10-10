@@ -32,6 +32,8 @@
       services = {
         upower.enable = true;
 
+        tlp.enable = lib.mkForce false;
+
         auto-cpufreq = {
           enable = true;
           settings = {
@@ -50,6 +52,25 @@
             };
           };
         };
+      };
+
+      # Keep logical CPU1 offline on AC and battery to avoid the hard freezes.
+      systemd.services.disable-cpu1 = {
+        description = "Disable CPU1 to prevent Victus freezes";
+        wantedBy = [ "sysinit.target" ];
+        after = [ "local-fs.target" ];
+        before = [
+          "sysinit.target"
+          "auto-cpufreq.service"
+        ];
+        unitConfig.DefaultDependencies = false;
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        script = ''
+          echo 0 > /sys/devices/system/cpu/cpu1/online
+        '';
       };
 
       services.udev.extraRules = ''
@@ -166,11 +187,32 @@
 
       virtualisation.spiceUSBRedirection.enable = true;
 
-      specialisation = {
-        vfio.configuration = {
-          vfio.enable = lib.mkForce true;
+      specialisation =
+        let
+          pstateTest = mode: {
+            # nixos-hardware also adds amd_pstate=active. Replace every mode
+            # argument while preserving the other inherited kernel parameters.
+            boot.kernelParams = lib.mkForce (
+              lib.filter (param: !(lib.hasPrefix "amd_pstate=" param)) config.boot.kernelParams
+              ++ [ "amd_pstate=${mode}" ]
+            );
+
+            # With a generic governor, powersave holds the CPU at its minimum;
+            # schedutil scales with load. auto-cpufreq skips EPP when unavailable.
+            services.auto-cpufreq.settings.battery.governor = lib.mkForce "schedutil";
+          };
+        in
+        {
+          vfio.configuration = {
+            vfio.enable = lib.mkForce true;
+          };
+
+          # Test without active EPP, retaining the normal performance-EPP entry.
+          pstate-passive.configuration = pstateTest "passive";
+
+          # If passive CPPC also freezes, test the legacy acpi-cpufreq driver.
+          pstate-acpi.configuration = pstateTest "disable";
         };
-      };
 
       vfio.enable = false;
 
