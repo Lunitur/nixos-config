@@ -42,7 +42,7 @@
                   event: [
                     {
                       send: "executehostcommand"
-                      cmd: 'let cmd = (commandline); if not ($cmd | is-empty) { bash -c $cmd; commandline edit --replace "" }'
+                      cmd: 'let cmd = (commandline); if not ($cmd | is-empty) { print ""; bash -c $cmd; commandline edit --replace "" }'
                     }
                   ]
                 }
