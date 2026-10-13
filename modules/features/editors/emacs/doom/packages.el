@@ -97,4 +97,4 @@
                    (let ((copy (make-temp-file (concat file "."))))
                      (copy-file (file-truename file) copy t)
                      (rename-file copy file t)))))))
-  :pin "e6f3bf2e44ec2ce6ce2485ab971d4fd51fe7a93e")
+  )

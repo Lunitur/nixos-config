@@ -253,6 +253,14 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
   ;; (setq eglot-events-buffer-size 0)
   (setq eglot-sync-timeout 10))
 
+;; Let nil archive flake inputs when it needs them for completion.
+(defun +nix/configure-nil-auto-archive ()
+  (setq-local lsp-workspace-configuration
+              '(:nil (:nix (:flake (:autoArchive t))))))
+
+(add-hook 'nix-mode-hook #'+nix/configure-nil-auto-archive)
+(add-hook 'nix-ts-mode-hook #'+nix/configure-nil-auto-archive)
+
 (add-hook 'sql-mode-hook #'eglot-ensure)
 (when (fboundp 'sql-ts-mode)
   (add-hook 'sql-ts-mode-hook #'eglot-ensure))
@@ -424,6 +432,17 @@ the selection range; this sends executeQuery with an explicit :range."
 ;; Stop Doom and clojure-ts-mode from trying to download and compile tree-sitter
 ;; grammars, since we provide them via Nix and the target directory is read-only.
 (setq treesit-auto-install-grammar nil)
+
+(after! haskell-ts-mode
+  ;; haskell-ts-mode 1.3.5 uses the old spelling; Nix's 0.24.1 grammar corrected it.
+  (dolist (setting haskell-ts-font-lock)
+    (when (eq (treesit-font-lock-setting-feature setting) 'constructors)
+      (setcar setting
+              (treesit-query-compile
+               'haskell
+               (cl-subst 'type_synonym 'type_synomym
+                         (treesit-query-source
+                          (treesit-font-lock-setting-query setting))))))))
 
 (use-package! claude-code-ide
   :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
