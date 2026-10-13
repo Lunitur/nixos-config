@@ -63,13 +63,21 @@
           "sysinit.target"
           "auto-cpufreq.service"
         ];
-        unitConfig.DefaultDependencies = false;
+        unitConfig = {
+          DefaultDependencies = false;
+          StartLimitIntervalSec = 60;
+          StartLimitBurst = 30;
+        };
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
+          Restart = "on-failure";
+          RestartSec = "1s";
+          TimeoutStartSec = "35s";
         };
         script = ''
           echo 0 > /sys/devices/system/cpu/cpu1/online
+          test "$(cat /sys/devices/system/cpu/cpu1/online)" = 0
         '';
       };
 
@@ -187,34 +195,9 @@
 
       virtualisation.spiceUSBRedirection.enable = true;
 
-      specialisation =
-        let
-          pstateTest = mode: {
-            # nixos-hardware also adds amd_pstate=active. Replace every mode
-            # argument while preserving the other inherited kernel parameters.
-            boot.kernelParams = lib.mkForce (
-              lib.filter (param: !(lib.hasPrefix "amd_pstate=" param)) config.boot.kernelParams
-              ++ [ "amd_pstate=${mode}" ]
-            );
-
-            # With a generic governor, powersave holds the CPU at its minimum;
-            # schedutil scales with load. auto-cpufreq skips EPP when unavailable.
-            services.auto-cpufreq.settings.battery.governor = lib.mkForce "schedutil";
-          };
-        in
-        {
-          vfio.configuration = {
-            vfio.enable = lib.mkForce true;
-          };
-
-          # Test without active EPP, retaining the normal performance-EPP entry.
-          pstate-passive.configuration = pstateTest "passive";
-
-          # If passive CPPC also freezes, test the legacy acpi-cpufreq driver.
-          pstate-acpi.configuration = pstateTest "disable";
-        };
-
-      vfio.enable = false;
+      specialisation.vfio.configuration = {
+        vfio.enable = true;
+      };
 
       boot.supportedFilesystems = [ "ntfs" ];
 
@@ -326,11 +309,12 @@
 
       networking.hostName = "victus"; # Define your hostname.
 
-      systemd.targets.sleep.enable = false;
-      systemd.targets.suspend.enable = false;
       systemd.targets.hybrid-sleep.enable = false;
 
-      services.logind.settings.Login.HandleLidSwitch = "ignore";
+      services.logind.settings.Login = {
+        HandleLidSwitch = "suspend";
+        HandleLidSwitchExternalPower = "ignore";
+      };
 
       system.stateVersion = "23.11";
 
