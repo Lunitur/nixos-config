@@ -8,6 +8,15 @@
       ...
     }:
     {
+      home.file.".codex/AGENTS.md".text = ''
+        # Coding preferences
+
+        - Write concise, readable code. Avoid unnecessary boilerplate, wrappers, and abstractions.
+        - Prefer functional style: small pure functions, immutable data, and composition. Keep side effects at the boundaries.
+        - Keep comments minimal. Explain only non-obvious intent, constraints, or tradeoffs; avoid narrating the code.
+        - Use idiomatic constructs and clear names. Favor readability over clever one-liners.
+      '';
+
       programs.codex = {
         enable = false;
         # The desktop NixOS module already installs Codex.
