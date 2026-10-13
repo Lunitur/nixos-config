@@ -123,7 +123,7 @@
               "-m"
               "fill"
               "-i"
-              "${../common/theme/wallpapers/desktop6.png}"
+              "${../common/theme/wallpapers/desktop7.png}"
             ]
             [
               "sh"

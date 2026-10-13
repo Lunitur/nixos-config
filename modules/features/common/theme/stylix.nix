@@ -82,7 +82,7 @@
           };
         };
 
-        image = ./wallpapers/desktop6.png;
+        image = ./wallpapers/desktop7.png;
 
         targets.nixos-icons.enable = true;
 
