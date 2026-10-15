@@ -32,8 +32,8 @@
           enable = true;
           defaultFonts = {
             monospace = [ "Iosevka" ];
-            sansSerif = [ "Noto Sans" ];
-            serif = [ "Noto Serif" ];
+            sansSerif = [ "Iosevka" ];
+            serif = [ "Iosevka" ];
           };
         };
       };

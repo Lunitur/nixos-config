@@ -65,15 +65,15 @@
           };
           monospace = {
             name = "Iosevka";
-            package = pkgs.nerd-fonts.iosevka;
+            package = pkgs.iosevka;
           };
           sansSerif = {
-            name = "Noto Sans";
-            package = pkgs.noto-fonts;
+            name = "Iosevka";
+            package = pkgs.iosevka;
           };
           serif = {
-            name = "Noto Serif";
-            package = pkgs.noto-fonts;
+            name = "Iosevka";
+            package = pkgs.iosevka;
           };
 
           sizes = {

@@ -3,10 +3,10 @@
   flake.nixosModules.looking-glass-client =
     { pkgs, ... }:
     let
-      fontPath = "${pkgs.dejavu_fonts}/share/fonts/truetype/DejaVuSansMono.ttf";
+      fontPath = "${pkgs.iosevka}/share/fonts/truetype/Iosevka-Regular.ttf";
 
       pathed-lg = pkgs.looking-glass-client.overrideAttrs (oldAttrs: {
-        buildInputs = oldAttrs.buildInputs ++ [ pkgs.dejavu_fonts ];
+        buildInputs = oldAttrs.buildInputs ++ [ pkgs.iosevka ];
 
         postPatch = (oldAttrs.postPatch or "") + ''
           # Replace the fontconfig-based font lookup with a direct path.
@@ -26,7 +26,7 @@
 
         postInstall = (oldAttrs.postInstall or "") + ''
           if ! test -f "${fontPath}"; then
-            echo "ERROR: DejaVuSansMono.ttf not found at ${fontPath}!" >&2
+            echo "ERROR: Iosevka-Regular.ttf not found at ${fontPath}!" >&2
             exit 1
           fi
         '';

@@ -45,6 +45,7 @@ force = true
 temperature_night = 3000
 
 [shell]
+font_family = "Iosevka"
 niri_overview_type_to_launch_enabled = true
 settings_show_advanced = true
 

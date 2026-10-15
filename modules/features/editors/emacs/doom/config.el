@@ -145,7 +145,9 @@
         (lambda ()
           (shell-command-to-string "wl-paste -n"))))
 
-(setq doom-font "Iosevka")
+(setq doom-font "Iosevka"
+      doom-variable-pitch-font "Iosevka"
+      doom-serif-font "Iosevka")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.

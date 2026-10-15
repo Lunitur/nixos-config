@@ -35,8 +35,8 @@
             "gnomeTheme.useSystemFonts" = true;
             "browser.fullscreen.autohide" = false;
             "font.name.monospace.x-western" = "Iosevka";
-            "font.name.sans-serif.x-western" = "Noto Sans";
-            "font.name.serif.x-western" = "Noto Serif";
+            "font.name.sans-serif.x-western" = "Iosevka";
+            "font.name.serif.x-western" = "Iosevka";
           };
           userChrome = lib.mkAfter ''
             @import "firefox-gnome-theme/userChrome.css";
