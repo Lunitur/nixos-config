@@ -65,15 +65,15 @@
           };
           monospace = {
             name = "Iosevka";
-            package = pkgs.iosevka;
+            package = pkgs.iosevka-bin;
           };
           sansSerif = {
             name = "Iosevka";
-            package = pkgs.iosevka;
+            package = pkgs.iosevka-bin;
           };
           serif = {
             name = "Iosevka";
-            package = pkgs.iosevka;
+            package = pkgs.iosevka-bin;
           };
 
           sizes = {

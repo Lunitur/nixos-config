@@ -21,7 +21,7 @@
           noto-fonts
           noto-fonts-color-emoji
           fira-code
-          iosevka
+          iosevka-bin
           source-code-pro
           nanum-gothic-coding
           nerd-fonts.symbols-only
