@@ -129,6 +129,7 @@
       };
 
       environment.sessionVariables = {
+        NIXPKGS_ALLOW_UNFREE = "1";
         DIRENV_LOG_FORMAT = "";
         FLAKE = "~/nixos";
         EDITOR = "hx";
