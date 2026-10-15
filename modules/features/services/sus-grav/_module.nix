@@ -89,7 +89,7 @@ let
 
       ${config.security.wrapperDir}/sudo -u sus-grav ${pkgs.coreutils}/bin/env \
         GRAV_ROOT=${lib.escapeShellArg root} GRAV_ENVIRONMENT=production \
-        ${php}/bin/php ${lib.escapeShellArg "${root}/bin/grav"} clear-cache
+        ${php}/bin/php ${lib.escapeShellArg "${root}/bin/grav"} clearcache
     '';
   };
 in
