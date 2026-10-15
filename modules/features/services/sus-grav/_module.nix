@@ -35,6 +35,63 @@ let
       exec php bin/plugin login new-user --admin-type api "$@"
     '';
   };
+  pushSite = pkgs.writeShellApplication {
+    name = "sus-grav-push";
+    runtimeInputs = [ pkgs.git ];
+    text = ''
+      repository=/home/carjin/sus-glavna
+      if [[ ! -O "$repository" ]] || [[ "$(git -C "$repository" rev-parse --is-bare-repository)" != true ]]; then
+        echo "Run as carjin with a bare repository at $repository." >&2
+        exit 1
+      fi
+
+      site_git() {
+        ${config.security.wrapperDir}/sudo -u sus-grav ${pkgs.git}/bin/git -C ${lib.escapeShellArg root} "$@"
+      }
+
+      branch="$(site_git symbolic-ref --short HEAD)"
+      site_git add --all
+      if ! site_git diff --cached --quiet; then
+        site_git diff --cached --stat
+        site_git commit -m "''${1:-Update site content}"
+      fi
+
+      git -C "$repository" fetch --no-tags \
+        --upload-pack="${config.security.wrapperDir}/sudo -u sus-grav ${pkgs.git}/bin/git-upload-pack" \
+        ${lib.escapeShellArg root} "$branch:refs/heads/$branch"
+    '';
+  };
+  pullSite = pkgs.writeShellApplication {
+    name = "sus-grav-pull";
+    runtimeInputs = [ pkgs.git ];
+    text = ''
+      umask 0027
+      repository=/home/carjin/sus-glavna
+      if [[ ! -O "$repository" ]] || [[ "$(git -C "$repository" rev-parse --is-bare-repository)" != true ]]; then
+        echo "Run as carjin with a bare repository at $repository." >&2
+        exit 1
+      fi
+
+      site_git() {
+        ${config.security.wrapperDir}/sudo -u sus-grav ${pkgs.git}/bin/git -C ${lib.escapeShellArg root} "$@"
+      }
+
+      branch="$(site_git symbolic-ref --short HEAD)"
+      if [[ -n "$(site_git status --porcelain)" ]]; then
+        echo "The live site has uncommitted changes. Run sus-grav-push first." >&2
+        exit 1
+      fi
+
+      git -C "$repository" push \
+        --receive-pack="${config.security.wrapperDir}/sudo -u sus-grav ${pkgs.git}/bin/git-receive-pack" \
+        ${lib.escapeShellArg root} "$branch:refs/remotes/sus-local/$branch"
+      site_git merge --ff-only "refs/remotes/sus-local/$branch"
+
+      ${config.security.wrapperDir}/sudo -u sus-grav ${pkgs.coreutils}/bin/env \
+        GRAV_ROOT=${lib.escapeShellArg root} GRAV_ENVIRONMENT=production \
+        ${php}/bin/php ${lib.escapeShellArg "${root}/bin/grav"} clear-cache
+    '';
+  };
 in
 {
   options.services.sus-grav = {
@@ -57,7 +114,11 @@ in
     };
     users.groups.sus-grav = { };
     users.users.nginx.extraGroups = [ "sus-grav" ];
-    environment.systemPackages = [ adminUser ];
+    environment.systemPackages = [
+      adminUser
+      pushSite
+      pullSite
+    ];
     systemd.tmpfiles.rules = [
       "d ${root} 0750 sus-grav sus-grav -"
       "d /var/backup/sus-grav 0700 sus-grav sus-grav -"
