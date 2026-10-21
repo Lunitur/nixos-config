@@ -153,6 +153,7 @@
     { lib, config, ... }:
     {
       imports = [
+        inputs.nix-index-database.homeModules.default
         inputs.self.homeModules.atuin
         inputs.self.homeModules.direnv
         inputs.self.homeModules.tmux

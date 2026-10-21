@@ -8,50 +8,46 @@
     }:
     {
       programs = {
+        nix-index.enableNushellIntegration = true;
         nushell = {
           enable = true;
           settings = {
             edit_mode = "vi";
+            show_banner = false;
+            completions = {
+              case_sensitive = false;
+              quick = true;
+              partial = true;
+              algorithm = "fuzzy";
+              external.enable = true;
+            };
+            keybindings = [
+              {
+                name = "partial_accept_suggestion";
+                modifier = "control";
+                keycode = "char_l";
+                mode = [ "vi_insert" ];
+                event.send = "HistoryHintWordComplete";
+              }
+              {
+                name = "run_in_bash";
+                modifier = "control";
+                keycode = "char_b";
+                mode = [
+                  "emacs"
+                  "vi_insert"
+                  "vi_normal"
+                ];
+                event = [
+                  {
+                    send = "executehostcommand";
+                    cmd = ''let cmd = (commandline); if not ($cmd | is-empty) { print ""; bash -c $cmd; commandline edit --replace "" }'';
+                  }
+                ];
+              }
+            ];
           };
           extraConfig = ''
-
-            $env.config = {
-              show_banner: false
-              completions: {
-                case_sensitive: false
-                quick: true
-                partial: true
-                algorithm: "fuzzy"
-                external: {
-                  enable: true
-                }
-              }
-              keybindings: [
-                {
-                  name: "partial_accept_suggestion"
-                  modifier: "control"
-                  keycode: "char_l"
-                  mode: ["vi_insert"]
-                  event: { send: "HistoryHintWordComplete" }
-                }
-                {
-                  name: "run_in_bash"
-                  modifier: "control"
-                  keycode: "char_b"
-                  mode: ["emacs", "vi_insert", "vi_normal"]
-                  event: [
-                    {
-                      send: "executehostcommand"
-                      cmd: 'let cmd = (commandline); if not ($cmd | is-empty) { print ""; bash -c $cmd; commandline edit --replace "" }'
-                    }
-                  ]
-                }
-              ]
-            }
-
-            # $env.config.hooks.command_not_found =  source ${pkgs.nix-index}/etc/profile.d/command-not-found.nu
-            source ${pkgs.comma}/share/comma/command-not-found.nu
-
             $env.PATH = (
               $env.PATH
               | split row (char esep)
@@ -94,7 +90,9 @@
             cflash = "claude-deepseek --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-flash";
             capro = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions";
             caflash = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model sonnet";
-
+            dsh = "nix run github:numtide/llm-agents.nix#dsh --";
+            codex = "nix run github:numtide/llm-agents.nix#codex --";
+            agy = "nix run github:numtide/llm-agents.nix#antigravity-cli --";
           };
         };
         carapace.enable = true;
