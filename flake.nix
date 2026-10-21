@@ -27,6 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    vayu = {
+      url = "path:/home/carjin/projects/nixos-hardware-vayu";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
