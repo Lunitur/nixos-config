@@ -19,6 +19,9 @@
       clientUrl = "https://${matrixHost}";
       statePath = "/var/lib/${config.services.matrix-tuwunel.stateDirectory}";
       registrationTokenFile = "${statePath}/registration-token";
+      turnSecretFile = "/var/lib/matrix-turn/secret";
+      turnAddress = "168.119.182.35";
+      certificatePath = config.security.acme.certs.${matrixHost}.directory;
 
       wellKnownClient = ''
         default_type application/json;
@@ -47,17 +50,102 @@
           allow_federation = true;
           allow_registration = true;
           registration_token_file = registrationTokenFile;
+          turn_uris = [
+            "turn:${matrixHost}:3478?transport=udp"
+            "turn:${matrixHost}:3478?transport=tcp"
+            "turns:${matrixHost}:5349?transport=tcp"
+          ];
+          turn_secret_file = "/run/credentials/tuwunel.service/turn-secret";
         };
+      };
+
+      systemd.services.matrix-turn-secret = {
+        description = "Generate the shared Matrix TURN secret";
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          StateDirectory = "matrix-turn";
+          StateDirectoryMode = "0700";
+          UMask = "0077";
+        };
+        script = ''
+          if [ ! -s ${turnSecretFile} ]; then
+            ${lib.getExe pkgs.openssl} rand -hex 32 > ${turnSecretFile}.tmp
+            mv ${turnSecretFile}.tmp ${turnSecretFile}
+          fi
+        '';
       };
 
       # Invite token, generated once and kept out of the nix store.
       # First account to register becomes the server admin.
-      systemd.services.tuwunel.preStart = ''
-        if [ ! -s ${lib.escapeShellArg registrationTokenFile} ]; then
-          umask 077
-          ${lib.getExe pkgs.openssl} rand -hex 32 > ${lib.escapeShellArg registrationTokenFile}
-        fi
-      '';
+      systemd.services.tuwunel = {
+        requires = [ "matrix-turn-secret.service" ];
+        after = [ "matrix-turn-secret.service" ];
+        serviceConfig.LoadCredential = [ "turn-secret:${turnSecretFile}" ];
+        preStart = ''
+          if [ ! -s ${lib.escapeShellArg registrationTokenFile} ]; then
+            umask 077
+            ${lib.getExe pkgs.openssl} rand -hex 32 > ${lib.escapeShellArg registrationTokenFile}
+          fi
+        '';
+      };
+
+      services.coturn = {
+        enable = true;
+        realm = serverName;
+        use-auth-secret = true;
+        static-auth-secret-file = "/run/credentials/coturn.service/turn-secret";
+        listening-ips = [ turnAddress ];
+        relay-ips = [ turnAddress ];
+        min-port = 49152;
+        max-port = 49999;
+        cert = "/run/credentials/coturn.service/tls-cert";
+        pkey = "/run/credentials/coturn.service/tls-key";
+        no-tcp-relay = true;
+        extraConfig = ''
+          no-multicast-peers
+          denied-peer-ip=0.0.0.0-0.255.255.255
+          denied-peer-ip=10.0.0.0-10.255.255.255
+          denied-peer-ip=100.64.0.0-100.127.255.255
+          denied-peer-ip=127.0.0.0-127.255.255.255
+          denied-peer-ip=169.254.0.0-169.254.255.255
+          denied-peer-ip=172.16.0.0-172.31.255.255
+          denied-peer-ip=192.168.0.0-192.168.255.255
+          denied-peer-ip=::1
+          denied-peer-ip=fc00::-fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+          denied-peer-ip=fe80::-febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+        '';
+      };
+
+      systemd.services.coturn = {
+        requires = [ "matrix-turn-secret.service" ];
+        wants = [ "acme-${matrixHost}.service" ];
+        after = [
+          "matrix-turn-secret.service"
+          "acme-${matrixHost}.service"
+        ];
+        serviceConfig.LoadCredential = [
+          "turn-secret:${turnSecretFile}"
+          "tls-cert:${certificatePath}/fullchain.pem"
+          "tls-key:${certificatePath}/key.pem"
+        ];
+      };
+
+      security.acme.certs.${matrixHost}.reloadServices = [ "coturn.service" ];
+
+      networking.firewall = {
+        allowedTCPPorts = [
+          3478
+          5349
+        ];
+        allowedUDPPorts = [ 3478 ];
+        allowedUDPPortRanges = [
+          {
+            from = config.services.coturn.min-port;
+            to = config.services.coturn.max-port;
+          }
+        ];
+      };
 
       services.nginx = {
         enable = true;
