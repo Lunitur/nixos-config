@@ -1,8 +1,25 @@
 {
   flake.nixosModules.kvmfr =
-    { config, pkgs, ... }:
+    { config, ... }:
+    let
+      kernel = config.boot.kernelPackages.kernel;
+    in
     {
-      boot.extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
+      boot.extraModulePackages = [
+        (config.boot.kernelPackages.kvmfr.overrideAttrs (_: {
+          # Kbuild installation also generates the module signing certificate.
+          installPhase = null;
+          installTargets = [ "modules_install" ];
+          installFlags = [
+            "-C"
+            "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+            "M=$(PWD)"
+            "INSTALL_MOD_PATH=${placeholder "out"}"
+            "INSTALL_MOD_DIR=kernel/drivers/misc"
+            "DEPMOD=true"
+          ];
+        }))
+      ];
       boot.kernelModules = [ "kvmfr" ];
 
       services.udev.extraRules = ''
