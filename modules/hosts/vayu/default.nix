@@ -9,7 +9,12 @@
       ...
     }:
     {
-      imports = [ inputs.self.nixosModules.user-carjin ];
+      imports = [
+        inputs.self.nixosModules.user-carjin
+      ];
+
+      # Keep cached GNOME/Phosh packages instead of rebuilding them for theme changes.
+      stylix.overlays.enable = false;
 
       users.users.root.openssh.authorizedKeys.keys =
         config.users.users.carjin.openssh.authorizedKeys.keys;

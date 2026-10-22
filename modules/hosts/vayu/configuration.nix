@@ -14,6 +14,10 @@
       inputs.vayu.nixosModules.renegade
       inputs.vayu.nixosModules.phosh
       inputs.vayu.nixosModules.stay-awake
+      inputs.self.nixosModules.common-fonts
+      inputs.stylix.nixosModules.stylix
+      inputs.self.nixosModules.common-theme-stylix
+
     ];
 
     home-manager = {
@@ -26,7 +30,15 @@
       users.carjin = {
         imports = [
           inputs.self.homeModules.all
+          inputs.self.homeModules.common-dotfiles
+          inputs.self.homeModules.git
           inputs.self.homeModules.helix
+          inputs.self.homeModules.jujutsu
+          inputs.self.homeModules.nushell
+          inputs.self.homeModules.shell-scripts
+          inputs.self.homeModules.ssh
+          inputs.self.homeModules.starship
+          inputs.self.homeModules.yazi
         ];
         home.username = "carjin";
         home.homeDirectory = "/home/carjin";
