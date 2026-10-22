@@ -588,8 +588,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1792582899,
-        "narHash": "sha256-IJZ7X2v8Y5KaliZzLx9l214HTvWXxrjt4+3s1SzhlQI=",
+        "lastModified": 1792700696,
+        "narHash": "sha256-o/Y14EijURJXauIWi5IR9RBrSxmLtLD35hE/aD0LdWs=",
         "path": "/home/carjin/projects/nixos-hardware-vayu",
         "type": "path"
       },
