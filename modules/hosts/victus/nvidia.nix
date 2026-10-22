@@ -9,6 +9,12 @@
       # Load nvidia driver for Xorg and Wayland
       services.xserver.videoDrivers = [ "nvidia" ];
 
+      # Finish GPU/VT restoration before logind can start another sleep cycle.
+      systemd.services.nvidia-resume.before = [
+        "suspend.target"
+        "hibernate.target"
+      ];
+
       hardware.nvidia = {
 
         forceFullCompositionPipeline = true;
