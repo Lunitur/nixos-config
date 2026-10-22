@@ -18,7 +18,7 @@ let
     ]
   );
   archive = pkgs.fetchurl {
-    url = "https://getgrav.org/download/core/grav-admin/2.2.8";
+    url = "https://github.com/getgrav/grav/releases/download/2.2.8/grav-admin-v2.2.8.zip";
     hash = "sha256-6c0Q7zTQgodbw6TpChFHLzHDElxIUCP9+pRJglBJ+Ik=";
   };
   grav = pkgs.runCommand "grav-admin-2.2.8" { nativeBuildInputs = [ pkgs.unzip ]; } ''
