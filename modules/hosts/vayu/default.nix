@@ -50,6 +50,32 @@
         gnome-clocks
         gnome-weather
         gnome-calendar
+        fractal
+        warp
+        gnome-secrets
+        authenticator
+        amberol
+        gnome-podcasts
+        geary
+        gnome-maps
+        foliate
+        planify
+        shortwave
+        newsflash
+        dialect
+        clapper
+        tuba
+        valent
+        (pipeline.overrideAttrs (old: {
+          # Backport the feed-loading fix until Nixpkgs ships Pipeline 4.1.1.
+          patches =
+            (old.patches or [ ])
+            ++ lib.optional (lib.versionOlder old.version "4.1.1") (fetchurl {
+              url = "https://gitlab.com/schmiddi-on-mobile/pipeline/-/commit/3d72f421194bedaa66bc78bd4a45cc91ea07a4dd.patch";
+              hash = "sha256-Ua0aHciuHEXLA3tIBY6ToFsA9ea1GCDq4KGueV02Suk=";
+            });
+        }))
+        monophony
       ];
 
       system.stateVersion = "26.05";
