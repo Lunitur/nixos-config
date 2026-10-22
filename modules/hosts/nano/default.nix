@@ -141,8 +141,6 @@
         hostName = "nextcloud.anarhizam.org";
         https = true;
         config = {
-          adminpassFile = "/etc/private/nextcloud-admin-pass";
-          adminuser = "root";
           dbtype = "sqlite";
         };
         extraApps = {
