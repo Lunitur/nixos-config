@@ -2,11 +2,19 @@
 {
   flake.homeModules.nushell =
     {
+      lib,
       osConfig,
       pkgs,
       ...
     }:
     {
+      # Nushell resolves sourced files while parsing, before startup commands run.
+      home.activation.nushellInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ ! -e "$HOME/.init.nu" ]; then
+          run touch "$HOME/.init.nu"
+        fi
+      '';
+
       programs = {
         nix-index.enableNushellIntegration = true;
         nushell = {
@@ -62,12 +70,12 @@
             ${import ./_startup.nix}
 
             const init_path = $"($nu.home-dir)/.init.nu"
-            if not ($init_path | path exists) {
-              touch $init_path
-            }
             source $init_path
 
-            open $"($nu.home-dir)/Nextcloud/env/emacs.env" | lines | parse "{key}={value}" | transpose -r | into record | load-env
+            let emacs_env = $"($nu.home-dir)/Nextcloud/env/emacs.env"
+            if ($emacs_env | path exists) {
+              open $emacs_env | lines | parse "{key}={value}" | transpose -r | into record | load-env
+            }
           '';
           shellAliases = {
             cd = "z";
