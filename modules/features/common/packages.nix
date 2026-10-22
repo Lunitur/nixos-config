@@ -7,7 +7,7 @@
     }:
     {
       home.packages = [
-        pkgs.hashcards
+        # pkgs.hashcards
       ]
       ++ (with pkgs; [
         tlrc
@@ -31,23 +31,19 @@
         ytfzf
         pandoc
         moonlight-qt
-        pgcli
         ytmdl
-        clojure
-        clojure-lsp
-        cljfmt
-        cljstyle
-        clj-kondo
-        babashka
+        # clojure
+        # clojure-lsp
+        # cljfmt
+        # cljstyle
+        # clj-kondo
+        # babashka
         leiningen
         xfce4-taskmanager
         vesktop
         signal-desktop
         element-desktop
         mupdf
-        (pkgs.writeShellScriptBin "gemini-webapp" ''
-          exec ${pkgs.chromium}/bin/chromium --app="https://gemini.google.com" "$@"
-        '')
         nextcloud-client
         # lutris
         # deluge-gtk
