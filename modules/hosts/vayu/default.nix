@@ -23,24 +23,31 @@
       networking.firewall = {
         trustedInterfaces = [ "wt0" ];
         checkReversePath = "loose";
+        interfaces.wld0 = {
+          allowedUDPPorts = [ 53 ];
+          allowedTCPPorts = [ 53 ];
+        };
       };
 
-      services = lib.setAttrByPath (
-        if options.services ? desktopManager.phosh then
-          [
-            "desktopManager"
-            "phosh"
-          ]
-        else
-          [
-            "xserver"
-            "desktopManager"
-            "phosh"
-          ]
-      ) {
-        user = "carjin";
-        group = "users";
-      };
+      services =
+        lib.setAttrByPath
+          (
+            if options.services ? desktopManager.phosh then
+              [
+                "desktopManager"
+                "phosh"
+              ]
+            else
+              [
+                "xserver"
+                "desktopManager"
+                "phosh"
+              ]
+          )
+          {
+            user = "carjin";
+            group = "users";
+          };
 
       environment.systemPackages = with pkgs; [
         btrfs-progs
@@ -137,6 +144,8 @@
         bemoji
         jq
       ];
+
+      boot.loader.systemd-boot.configurationLimit = 10;
 
       system.stateVersion = "26.05";
     };
