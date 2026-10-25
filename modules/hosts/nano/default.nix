@@ -32,6 +32,11 @@
       services.nginx = {
         enable = true;
         virtualHosts = {
+          "discourse.anarhizam.org" = {
+            rejectSSL = true;
+            extraConfig = "return 410;";
+          };
+
           "index.anarhizam.org" = {
             addSSL = true;
             enableACME = true;
@@ -108,43 +113,16 @@
         x509.useACMEHost = "mail.anarhizam.org";
       };
 
-      services.discourse = {
-        enable = false;
-        database.ignorePostgresqlVersion = true;
-        admin = {
-          username = "carjin";
-          email = "carjin@anarhizam.org";
-          fullName = "Carjin";
-          passwordFile = "/etc/discourse/adminpass";
-
-        };
-        mail.outgoing = {
-          username = "discourse@anarhizam.org";
-          passwordFile = "/etc/discourse/mailpass";
-          domain = "anarhizam.org";
-          authentication = "plain";
-          serverAddress = "mail.anarhizam.org";
-        };
-        secretKeyBaseFile = "/etc/discourse/secretKeyBase";
-        hostname = "discourse.anarhizam.org";
-
-      };
+      services.discourse.enable = false;
 
       services.postgresql = {
         enable = true;
-        ensureDatabases = [ "discourse" ];
         authentication = pkgs.lib.mkOverride 10 ''
           #type database  DBuser  auth-method
           local all       all     trust
           host  all       all     127.0.0.1/32   trust
           host  all       all     ::1/128        trust
         '';
-        ensureUsers = [
-          {
-            name = "discourse";
-            ensureDBOwnership = true;
-          }
-        ];
       };
 
       services.nextcloud = {
