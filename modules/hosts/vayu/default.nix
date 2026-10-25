@@ -20,6 +20,25 @@
         config.users.users.carjin.openssh.authorizedKeys.keys;
 
       networking.hostName = "vayu";
+
+      # Prefer compressed RAM swap before falling back to the swapfile.
+      zramSwap = {
+        enable = true;
+        algorithm = "zstd";
+        memoryPercent = 100;
+        priority = 100;
+      };
+
+      boot.kernel.sysctl = {
+        "vm.swappiness" = 100;
+        "vm.page-cluster" = 0;
+      };
+
+      nix.settings = {
+        max-jobs = 1;
+        cores = 2;
+      };
+
       networking.firewall = {
         trustedInterfaces = [ "wt0" ];
         checkReversePath = "loose";
@@ -47,7 +66,35 @@
           {
             user = "carjin";
             group = "users";
+          }
+        // {
+          earlyoom = {
+            enable = true;
+            freeMemThreshold = 10;
+            freeMemKillThreshold = 5;
+            # Zram can exhaust physical RAM before its logical swap space fills up.
+            freeSwapThreshold = 100;
+            freeSwapKillThreshold = 100;
+            extraArgs = [
+              "--avoid"
+              "^([.]?(phosh|phoc)(-.*)?|squeekboard|sshd.*|systemd.*)$"
+            ];
           };
+        };
+
+      home-manager.users.carjin.systemd.user.services.signal-desktop = {
+        Unit = {
+          Description = "Signal background messaging";
+          After = [ "graphical-session.target" ];
+          PartOf = [ "graphical-session.target" ];
+        };
+        Service = {
+          ExecStart = "${pkgs.signal-desktop}/bin/signal-desktop --ozone-platform=wayland --start-in-tray";
+          Restart = "always";
+          RestartSec = 5;
+        };
+        Install.WantedBy = [ "graphical-session.target" ];
+      };
 
       environment.systemPackages = with pkgs; [
         btrfs-progs

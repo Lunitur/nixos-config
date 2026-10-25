@@ -29,6 +29,12 @@
       };
     };
 
-    swapDevices = [ ];
+    # Created and validated with Btrfs tools; all extents are on /dev/sda32.
+    swapDevices = [
+      {
+        device = "/swap/swapfile";
+        priority = 10;
+      }
+    ];
   };
 }
