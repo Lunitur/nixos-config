@@ -15,9 +15,11 @@
         # inputs.self.nixosModules.anarhizam-metrics
         inputs.self.nixosModules.user-carjin
         inputs.self.nixosModules.sus-grav
+        inputs.self.nixosModules.sus-membership
       ];
 
       services.sus-grav.enable = true;
+      services.sus-membership.enable = true;
 
       environment.systemPackages = with pkgs; [
         helix

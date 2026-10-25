@@ -1,0 +1,8 @@
+maubot: 0.1.0
+id: net.autonomija.sus.membership
+version: 1.0.0
+license: AGPL-3.0-or-later
+modules:
+  - membership
+main_class: MembershipBot
+webapp: true
