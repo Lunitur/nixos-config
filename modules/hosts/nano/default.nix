@@ -67,7 +67,10 @@
         enable = true;
         stateVersion = 3;
         fqdn = "mail.anarhizam.org";
-        domains = [ "anarhizam.org" ];
+        domains = [
+          "anarhizam.org"
+          "sus.autonomija.net"
+        ];
 
         accounts = {
           "admin@anarhizam.org" = {
@@ -93,6 +96,11 @@
           };
           "sus@anarhizam.org" = {
             hashedPasswordFile = "/etc/mail/sus";
+            aliases = [
+              "kontakt@sus.autonomija.net"
+              "postmaster@sus.autonomija.net"
+              "abuse@sus.autonomija.net"
+            ];
           };
         };
         x509.useACMEHost = "mail.anarhizam.org";
