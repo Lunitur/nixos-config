@@ -16,10 +16,12 @@
         inputs.self.nixosModules.user-carjin
         inputs.self.nixosModules.sus-grav
         inputs.self.nixosModules.sus-membership
+        inputs.self.nixosModules.sus-mail
       ];
 
       services.sus-grav.enable = true;
       services.sus-membership.enable = true;
+      services.sus-mail.enable = true;
 
       environment.systemPackages = with pkgs; [
         helix
