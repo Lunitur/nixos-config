@@ -95,7 +95,7 @@
             nh-victus = "nh os switch ~/nixos -- --substituters \"http://cache.nixos.org http://victus\" ";
             em = "emacsclient -t";
             cpro = "claude-deepseek --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-pro[1m]";
-            cflash = "claude-deepseek --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-flash";
+            cflash = "claude-deepseek --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model deepseek-v4-flash[1m]";
             capro = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions";
             caflash = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model sonnet";
             dsh = "nix run github:numtide/llm-agents.nix#dsh --";

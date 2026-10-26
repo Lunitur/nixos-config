@@ -8,6 +8,70 @@
       ...
     }:
     {
+      home.packages = [
+        (pkgs.writeShellApplication {
+          name = "deepseek-agent";
+          runtimeInputs = [
+            pkgs.claude-code
+            pkgs.gnugrep
+          ];
+          text = ''
+            if [[ "''${1:-}" == --help || "''${1:-}" == -h ]]; then
+              cat <<'EOF'
+            Usage: deepseek-agent [TASK]
+
+            Run a DeepSeek Flash helper in the current directory with Read, Glob, and Grep.
+            Pass one task argument or pipe a task on stdin. Helpers cannot edit files or run
+            shell commands, and do not load Claude hooks, plugins, or MCP servers.
+
+            Credentials: DEEPSEEK_API_KEY, then ANTHROPIC_AUTH_TOKEN, then the raw key in
+            ''${XDG_CONFIG_HOME:-$HOME/.config}/deepseek/api-key (keep this file private).
+            EOF
+              exit 0
+            fi
+
+            if [[ $# -gt 1 || ( $# -eq 0 && -t 0 ) ]]; then
+              echo 'Usage: deepseek-agent [TASK] (or pipe a task on stdin)' >&2
+              exit 2
+            fi
+
+            deepseek_key="''${DEEPSEEK_API_KEY:-''${ANTHROPIC_AUTH_TOKEN:-}}"
+            deepseek_key_file="''${XDG_CONFIG_HOME:-$HOME/.config}/deepseek/api-key"
+            if [[ -z "$deepseek_key" && -r "$deepseek_key_file" ]]; then
+              deepseek_key=$(< "$deepseek_key_file")
+            fi
+            if [[ -z "$deepseek_key" ]]; then
+              echo "DeepSeek API key missing: set DEEPSEEK_API_KEY or save it in $deepseek_key_file." >&2
+              exit 1
+            fi
+
+            export ANTHROPIC_API_KEY="$deepseek_key"
+            export ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
+            export ANTHROPIC_MODEL="deepseek-flash[1m]"
+            export ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"
+            export ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"
+            export ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash[1m]"
+            export CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash[1m]"
+            export CLAUDE_CODE_EFFORT_LEVEL="high"
+            unset ANTHROPIC_AUTH_TOKEN CLAUDE_CODE_OAUTH_TOKEN
+            unset CLAUDE_CODE_USE_BEDROCK CLAUDE_CODE_USE_VERTEX CLAUDE_CODE_USE_FOUNDRY
+
+            exec claude --bare --print \
+              --model deepseek-flash[1m] \
+              --effort high \
+              --output-format text \
+              --no-session-persistence \
+              --permission-mode dontAsk \
+              --tools Read,Glob,Grep \
+              --allowedTools Read,Glob,Grep \
+              --strict-mcp-config \
+              --disable-slash-commands \
+              --append-system-prompt 'You are a DeepSeek helper working for Codex. Complete only the supplied task. Read applicable AGENTS.md instructions before exploring code. You can read and search files but cannot edit them or run commands. Return concise findings with file paths and line numbers. Distinguish verified facts from suggestions and report any limitations.' \
+              -- "$@" 2> >(grep --line-buffered -v '^\[claude-code:unrecognized_model\]' >&2)
+          '';
+        })
+      ];
+
       home.file.".codex/AGENTS.md".text = ''
         # Coding preferences
 
@@ -17,6 +81,14 @@
         - Use idiomatic constructs and clear names. Favor readability over clever one-liners.
         - Default shell on all hosts is Nushell.
         - If you need extra tools use nix to run them.
+
+        # DeepSeek helpers
+
+        - Use `deepseek-agent 'TASK'` for bounded code exploration, analysis, and review when it helps the task. Run it in the relevant project directory.
+        - Give each helper a self-contained task with relevant paths, constraints, and the expected result. Helpers have no conversation history and can only read and search files.
+        - Independent helper tasks can run concurrently. Keep tasks small and avoid delegating trivial work.
+        - Review helper findings yourself; keep edits, tests, and final decisions in Codex.
+        - If a helper fails, report the failure and continue directly. Do not retry repeatedly or silently switch providers.
       '';
 
       programs.codex = {
