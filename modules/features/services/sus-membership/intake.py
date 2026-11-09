@@ -23,7 +23,7 @@ def validate_submission(data):
         if not isinstance(value, str) or not re.fullmatch(r"[a-f0-9]{64}", value):
             raise IntakeError(400, "Neispravna prijava.")
         result[key] = value
-    for key, limit in {"name": 120, "email": 254, "city": 120, "institution": 180, "message": 2000}.items():
+    for key, limit in {"name": 120, "email": 254, "phone": 40, "city": 120, "institution": 180, "message": 2000}.items():
         value = data.get(key, "")
         if value is None and key in {"institution", "message"}:
             value = ""
@@ -33,8 +33,8 @@ def validate_submission(data):
         if len(value) > limit or any(unicodedata.category(c).startswith("C") and not (key == "message" and c in "\n\t") for c in value):
             raise IntakeError(400, "Provjeri duljinu i sadržaj unosa.")
         result[key] = value
-    if not all(result[key] for key in ("name", "email", "city")):
-        raise IntakeError(400, "Ispuni ime, e-mail i mjesto.")
+    if not all(result[key] for key in ("name", "email", "phone", "city")):
+        raise IntakeError(400, "Ispuni ime, e-mail, broj mobitela i mjesto.")
     if not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", result["email"]):
         raise IntakeError(400, "Provjeri e-mail adresu.")
     if data.get("consent") is not True or data.get("website"):
@@ -46,8 +46,11 @@ def format_message(data, created):
     date = datetime.fromtimestamp(created, ZoneInfo("Europe/Zagreb")).strftime("%d.%m.%Y. %H:%M %Z")
     lines = [
         f"Nova prijava za članstvo · {data['id'][:12]}", date, "",
-        f"Ime: {data['name']}", f"E-mail: {data['email']}", f"Mjesto: {data['city']}",
+        f"Ime: {data['name']}", f"E-mail: {data['email']}",
     ]
+    if data.get("phone"):
+        lines.append(f"Broj mobitela: {data['phone']}")
+    lines.append(f"Mjesto: {data['city']}")
     if data["institution"]:
         lines.append(f"Škola / fakultet: {data['institution']}")
     if data["message"]:

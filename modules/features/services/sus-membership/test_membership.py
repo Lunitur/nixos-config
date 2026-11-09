@@ -21,7 +21,7 @@ import setup
 
 
 def submission(number=1, **overrides):
-    return {"id": f"{number:064x}", "client": "a" * 64, "name": "Test prijava", "email": "test@example.invalid", "city": "Zagreb", "institution": "", "message": "", "consent": True, **overrides}
+    return {"id": f"{number:064x}", "client": "a" * 64, "name": "Test prijava", "email": "test@example.invalid", "phone": "+385 91 000 0000", "city": "Zagreb", "institution": "", "message": "", "consent": True, **overrides}
 
 
 class SetupTests(unittest.TestCase):
@@ -104,6 +104,20 @@ class OutboxTests(unittest.TestCase):
         data = validate_submission(submission(institution=None, message=None))
         self.assertEqual((data["institution"], data["message"]), ("", ""))
 
+    def test_phone_is_required_and_bounded(self):
+        missing = submission()
+        del missing["phone"]
+        for data in [missing, *(submission(phone=value) for value in (None, "", "   ", 910000000, "1" * 41, "091\n0000000"))]:
+            with self.subTest(data=data), self.assertRaises(IntakeError) as error:
+                validate_submission(data)
+            self.assertEqual(error.exception.status, 400)
+
+    def test_phone_survives_queue_restart(self):
+        self.outbox.enqueue(validate_submission(submission(phone="  +385 91 000 0000  ")))
+        self.outbox.close()
+        self.outbox = Outbox(self.path)
+        self.assertEqual(json.loads(self.outbox.pending()["payload"])["phone"], "+385 91 000 0000")
+
 
 class BotTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
@@ -171,7 +185,16 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         args, kwargs = self.bot.client.send_message_event.call_args
         self.assertEqual(args[1], EventType.ROOM_MESSAGE)
         self.assertEqual(args[2]["m.mentions"], {})
+        self.assertIn("Broj mobitela: +385 91 000 0000", args[2]["body"])
         self.assertEqual(kwargs["txn_id"], "sus-" + submission()["id"])
+
+    async def test_queued_legacy_submission_still_delivers(self):
+        data = validate_submission(submission())
+        del data["phone"]
+        self.bot.outbox.enqueue(data)
+        await self.run_worker()
+        self.bot.client.send_message_event.assert_awaited_once()
+        self.assertNotIn("Broj mobitela:", self.bot.client.send_message_event.call_args.args[2]["body"])
 
     async def test_size_limit_and_not_ready(self):
         self.assertEqual((await self.post(submission(message="x" * 17000))).status, 413)
