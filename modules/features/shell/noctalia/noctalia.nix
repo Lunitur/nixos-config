@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.homeModules.noctalia =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       # `programs.noctalia` is an upstream home-manager option (and `pkgs.noctalia`
       # an upstream nixpkgs package), so no noctalia flake input is needed.
@@ -13,7 +13,9 @@
         enable = true;
         package = pkgs.noctalia;
         systemd.enable = true;
-        settings = builtins.fromTOML (builtins.readFile ./config.toml);
+        settings = builtins.fromTOML (builtins.readFile ./config.toml) // {
+          wallpaper.default.path = toString config.stylix.image;
+        };
       };
     };
 }

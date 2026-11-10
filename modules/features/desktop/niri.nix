@@ -119,13 +119,6 @@
               "store"
             ]
             [
-              "swaybg"
-              "-m"
-              "fill"
-              "-i"
-              "${../common/theme/wallpapers/desktop7.png}"
-            ]
-            [
               "sh"
               "-c"
               "if [ \\\"$(hostname)\\\" = \\\"victus\\\" ]; then dispwin /etc/color-profile.icm; else dispwin -L; fi"
@@ -487,7 +480,6 @@
       home.packages = with pkgs; [
         niri
         loupe
-        swaybg
         wlr-randr
         pavucontrol
         brightnessctl
