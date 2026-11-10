@@ -1,0 +1,51 @@
+The PX13 DSPs select left/right from a shared stereo stream. Keep both
+channels on each SoundWire port instead of splitting them in hw_params.
+
+The firmware's SDCA init tables are not parsed, so the fallback initializes
+both amps with DSP posture 1 (left). Select posture 4 for the right amp after
+every fallback initialization, including SoundWire reattach on resume.
+Leave firmware-provided init tables alone when available.
+
+Posture/address mapping verified on the same HN7306EAC hardware:
+https://github.com/Salamandsome/ASUS-ProArt-PX13-Audio-Fix/blob/main/docs/analysis.md
+
+--- a/tas2783-sdw.c
++++ b/tas2783-sdw.c
+@@ -15,6 +15,7 @@
+ #include <linux/cleanup.h>
+ #include <linux/unaligned.h>
+ #include <linux/crc32.h>
++#include <linux/dmi.h>
+ #include <linux/efi.h>
+ #include <linux/err.h>
+ #include <linux/firmware.h>
+@@ -1017,8 +1018,10 @@
+ 	 * from the amp's position in the codec order of the DAI link, which
+ 	 * on these boards matches the prefix numbering.
+ 	 */
++	/* The PX13 DSPs select their channels from a shared stereo stream. */
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
+-	    params_channels(params) == 2 && component->name_prefix) {
++	    params_channels(params) == 2 && component->name_prefix &&
++	    !dmi_match(DMI_BOARD_NAME, "HN7306EAC")) {
+ 		const char *idx_str = strrchr(component->name_prefix, '-');
+ 		unsigned long idx;
+ 
+@@ -1270,9 +1273,16 @@
+ 		if (tas_dev->sa_func_data)
+ 			ret = sdca_regmap_write_init(dev, tas_dev->regmap,
+ 						     tas_dev->sa_func_data);
+-		else
++		else {
+ 			ret = regmap_multi_reg_write(tas_dev->regmap, tas2783_init_seq,
+ 						     ARRAY_SIZE(tas2783_init_seq));
++			/* The PX13's second amp renders the right channel in posture 4. */
++			if (!ret && dmi_match(DMI_BOARD_NAME, "HN7306EAC") &&
++			    slave->id.unique_id == 0xb)
++				ret = regmap_write(tas_dev->regmap,
++					SDW_SDCA_CTL(1, TAS2783_SDCA_ENT_PPU21,
++						     0x10, 0), 4);
++		}
+ 
+ 		if (ret)
+ 			dev_err(tas_dev->dev,
