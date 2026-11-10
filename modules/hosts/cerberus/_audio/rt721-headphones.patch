@@ -1,0 +1,24 @@
+--- a/ucm2/sof-soundwire/rt721.conf
++++ b/ucm2/sof-soundwire/rt721.conf
+@@ -61,7 +61,14 @@
+-	EnableSequence [
+-		cset "name='Headphone Switch' on"
+-	]
+-
+-	DisableSequence [
+-		cset "name='Headphone Switch' off"
+-	]
++	If.headphone_switch {
++		Condition {
++			Type ControlExists
++			Control "name='Headphone Switch'"
++		}
++		True {
++			EnableSequence [
++				cset "name='Headphone Switch' on"
++			]
++			DisableSequence [
++				cset "name='Headphone Switch' off"
++			]
++		}
++	}
