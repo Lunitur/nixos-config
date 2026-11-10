@@ -389,15 +389,14 @@
   perSystem =
     { pkgs, ... }:
     let
-      wrappedNiri = inputs.wrapper-modules.wrappers.niri.wrap {
-        inherit pkgs;
-        imports = [ self.wrapperModules.niri ];
-      };
-    in
-    {
-      packages.niri = pkgs.symlinkJoin {
+      mkNiri = extraModules: pkgs.symlinkJoin {
         name = "niri-wrapped";
-        paths = [ wrappedNiri ];
+        paths = [
+          (inputs.wrapper-modules.wrappers.niri.wrap {
+            inherit pkgs;
+            imports = [ self.wrapperModules.niri ] ++ extraModules;
+          })
+        ];
         passthru = {
           cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures or false;
           cargoBuildFeatures = pkgs.niri.cargoBuildFeatures or [ ];
@@ -405,6 +404,20 @@
         };
         meta.mainProgram = "niri";
       };
+    in
+    {
+      packages.niri = mkNiri [ ];
+      packages.niri-cerberus = mkNiri [
+        (
+          { lib, ... }:
+          {
+            settings.outputs."eDP-1" = {
+              scale = lib.mkForce 2.0;
+              mode = lib.mkForce "2880x1800@60.001";
+            };
+          }
+        )
+      ];
     };
 
   flake.homeModules.desktop-niri =
