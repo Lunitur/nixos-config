@@ -412,7 +412,7 @@
           { lib, ... }:
           {
             settings.outputs."eDP-1" = {
-              scale = lib.mkForce 2.0;
+              scale = lib.mkForce 1.5;
               mode = lib.mkForce "2880x1800@60.001";
             };
           }
