@@ -19,6 +19,10 @@
         inputs.self.nixosModules.looking-glass-client
       ];
 
+      users.users.carjin.openssh.authorizedKeys.keys = [
+        ''restrict,from="100.116.106.22,fd27:e52a:4696:f40:b312:e96e:2543:aaa0",command="internal-sftp -d /home/carjin/Downloads" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILRw8mlKrM/inYIe5hHjo9bIafWh6oDdfLsavnvYhI47 cerberus-victus-downloads''
+      ];
+
       programs.nix-index-database.comma.enable = true;
 
       services.postgresql = {
