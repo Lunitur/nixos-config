@@ -86,6 +86,18 @@
         powertop.enable = true;
       };
 
+      services.logind.settings.Login = {
+        HandleLidSwitch = "suspend";
+        HandleLidSwitchExternalPower = "suspend";
+      };
+
+      systemd.sleep.settings.Sleep = {
+        AllowSuspend = true;
+        AllowHibernation = false;
+        AllowHybridSleep = false;
+        AllowSuspendThenHibernate = false;
+      };
+
       hardware.bluetooth.enable = true;
       services.blueman.enable = true;
 
