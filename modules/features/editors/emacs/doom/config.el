@@ -255,14 +255,6 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
   ;; (setq eglot-events-buffer-size 0)
   (setq eglot-sync-timeout 10))
 
-;; Let nil archive flake inputs when it needs them for completion.
-(defun +nix/configure-nil-auto-archive ()
-  (setq-local lsp-workspace-configuration
-              '(:nil (:nix (:flake (:autoArchive t))))))
-
-(add-hook 'nix-mode-hook #'+nix/configure-nil-auto-archive)
-(add-hook 'nix-ts-mode-hook #'+nix/configure-nil-auto-archive)
-
 (add-hook 'sql-mode-hook #'eglot-ensure)
 (when (fboundp 'sql-ts-mode)
   (add-hook 'sql-ts-mode-hook #'eglot-ensure))
@@ -334,6 +326,7 @@ the selection range; this sends executeQuery with an explicit :range."
 ;; connection with M-x +sqls/switch-connection (index, 1-based).
 (setq-default eglot-workspace-configuration
               '(:tinymist (:exportPdf "onSave")
+                :nil (:nix (:flake (:autoArchive t)))
                 :sqls
                 (:connections
                  [(:driver "postgresql"
