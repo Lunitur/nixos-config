@@ -273,6 +273,13 @@
               "-t"
             ];
             "Mod+O".spawn = [ "firefox" ];
+            "Mod+Shift+O".spawn = [
+              "firefox"
+              "-P"
+              "Clean"
+              "--new-window"
+              "about:blank"
+            ];
             "Mod+Alt+O".spawn = [
               "firefox"
               "https://search.nixos.org/options"

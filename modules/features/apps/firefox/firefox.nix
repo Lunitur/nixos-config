@@ -23,6 +23,7 @@
         configPath = ".mozilla/firefox";
         profiles.default = {
           name = "Default";
+          isDefault = true;
           settings = {
             "browser.tabs.loadInBackground" = true;
             "widget.gtk.rounded-bottom-corners.enabled" = true;
@@ -44,6 +45,12 @@
           userContent = lib.mkAfter ''
             @import "firefox-gnome-theme/userContent.css";
           '';
+        };
+        profiles.clean = {
+          id = 1;
+          name = "Clean";
+          isDefault = false;
+          settings."places.history.enabled" = true;
         };
       };
     };
