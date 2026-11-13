@@ -145,9 +145,11 @@
         (lambda ()
           (shell-command-to-string "wl-paste -n"))))
 
-(setq doom-font "Iosevka"
-      doom-variable-pitch-font "Iosevka"
-      doom-serif-font "Iosevka")
+;; Explicit sizes prevent GUI frames from inheriting a terminal's tiny font height.
+;; Float sizes are points; integer sizes are pixels.
+(setq doom-font (font-spec :family "Iosevka" :size 13.0)
+      doom-variable-pitch-font (font-spec :family "Iosevka" :size 13.0)
+      doom-serif-font (font-spec :family "Iosevka" :size 13.0))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
