@@ -37,6 +37,7 @@
 
       environment.systemPackages = with pkgs; [
         gvfs
+        madbfs
         # config.multiverse.instance.fast.tip.codex
         codex
       ];

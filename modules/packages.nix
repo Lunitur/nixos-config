@@ -18,6 +18,7 @@
           }
           // ammonites
           // lib.optionalAttrs pkgs.stdenv.hostPlatform.isx86 {
+            madbfs = pkgs.callPackage ./_packages/madbfs { };
             mfcl3730cdn-driver = brother.driver;
             mfcl3730cdn-cupswrapper = brother.cupswrapper;
           }

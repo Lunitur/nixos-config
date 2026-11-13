@@ -18,6 +18,8 @@
 
     nixpkgs.follows = "nixpkgs-unstable";
 
+    nix-flatpak.url = "github:gmodena/nix-flatpak/v0.8.0";
+
     # Reaches every nixpkgs revision from this one input: mv.at "25.11",
     # mv.tip, mv.fast.tip.<attr>, (mv.flakeAt "26.05").lib.nixosSystem.
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";

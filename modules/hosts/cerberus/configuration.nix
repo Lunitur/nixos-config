@@ -14,6 +14,7 @@
       inputs.nixos-hardware.nixosModules.common-hidpi
       inputs.home-manager.nixosModules.default
       inputs.stylix.nixosModules.stylix
+      inputs.nix-flatpak.nixosModules.nix-flatpak
       {
         home-manager = {
           extraSpecialArgs = {
@@ -36,5 +37,11 @@
         };
       }
     ];
+
+    services.flatpak = {
+      enable = true;
+      packages = [ "io.github.chidiwilliams.Buzz" ];
+      update.onActivation = true;
+    };
   };
 }
