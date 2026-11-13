@@ -1,0 +1,11 @@
+--- a/sfh1_1/amd_sfh_init.c
++++ b/sfh1_1/amd_sfh_init.c
+@@ -30,7 +30,7 @@ static int amd_sfh_get_sensor_num(struct amd_mp2_dev *mp2, u8 *sensor_id)
+ 		case ACCEL_IDX:
+ 		case GYRO_IDX:
+ 		case MAG_IDX:
+-		case SRA_IDX:
++		/* SRA firmware posture policy can disable the PX13 keyboard/touchpad. */
+ 		case ALS_IDX:
+ 		case HPD_IDX:
+ 			if (BIT(i) & slist->sl.sensors)

@@ -1,7 +1,12 @@
 { inputs, ... }:
 {
   flake.nixosModules.cerberus =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = [
         inputs.self.nixosModules.user-carjin
@@ -101,12 +106,11 @@
       hardware.bluetooth.enable = true;
       services.blueman.enable = true;
 
-      # Claim the sensor hub early to prevent input cutoffs while keeping PMF and the NPU available.
-      boot.initrd.kernelModules = [ "pci_stub" ];
-      boot.kernelParams = [
-        "pci_stub.ids=1022:164a"
-        "module_blacklist=amd_sfh_tabletmode"
+      # Keep SFH power management, but do not activate firmware posture sensing.
+      boot.extraModulePackages = [
+        (config.boot.kernelPackages.callPackage ./_tablet-mode/amd-sfh.nix { })
       ];
+      boot.kernelParams = [ "module_blacklist=amd_sfh_tabletmode" ];
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
