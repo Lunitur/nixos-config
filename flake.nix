@@ -18,6 +18,8 @@
 
     nixpkgs.follows = "nixpkgs-unstable";
 
+    gufo.url = "github:gufo-org/gufo/v0.34.0";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/v0.8.0";
 
     # Reaches every nixpkgs revision from this one input: mv.at "25.11",
