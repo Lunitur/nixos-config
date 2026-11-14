@@ -4,19 +4,19 @@
     { pkgs, ... }:
     let
       gufo = inputs.gufo.packages.${pkgs.stdenv.hostPlatform.system}.release;
-      models = "/var/lib/gufo/models";
+      modelDir = "/var/lib/gufo/models/flash-next-q4";
       gpuMemoryLimit = "ttm.pages_limit=29360128";
       serve = inputs.gufo.lib.mkGufoServe {
         inherit gufo;
         provider = "flash-next-q4";
-        model = "flash-next-q4";
+        model = "${modelDir}/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf";
         servedModelName = "qwen3.8-flash-next";
         host = "127.0.0.1";
         port = 8080;
         sessions = 1;
-        context = 32768;
+        context = 262144;
         speculative = "mtp";
-        mtpModel = "${models}/flash-next-q4/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf";
+        mtpModel = "${modelDir}/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf";
         reasoningEffort = "medium";
         temperature = 1.0;
         topP = 0.95;
@@ -44,21 +44,23 @@
 
       systemd.services.gufo = {
         description = "Qwen3.8 Flash-Next with MTP";
-        wantedBy = [ "multi-user.target" ];
         wants = [ "network-online.target" ];
         after = [ "network-online.target" ];
         unitConfig.ConditionKernelCommandLine = gpuMemoryLimit;
 
         environment = {
           HOME = "/var/lib/gufo";
-          GUFO_MODELS_DIR = models;
           XDG_CACHE_HOME = "/var/cache/gufo";
           XDG_DATA_HOME = "/var/lib/gufo";
         };
 
         # Download in the running service so the first boot need not wait for weights.
         script = ''
-          ${gufo}/bin/gufo model install flash-next-q4
+          ${pkgs.python3Packages.huggingface-hub}/bin/hf download unsloth/Qwen3.8-Flash-Next-GGUF \
+            --revision d96201194f103c906994f283f504209dc8d2a10c \
+            --include "UD-Q4_K_XL/*" \
+            --include "MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf" \
+            --local-dir ${modelDir}
           exec ${serve}
         '';
 
