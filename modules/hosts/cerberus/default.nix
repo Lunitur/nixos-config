@@ -84,16 +84,26 @@
         enable = true;
         percentageAction = 5;
       };
+      services.tlp.settings = {
+        TLP_AUTO_SWITCH = 1;
+        TLP_PROFILE_AC = "PRF";
+        TLP_PROFILE_BAT = "BAL";
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+        USB_DENYLIST = "046d:c246"; # Logitech G300
+      };
       services.libinput.enable = true;
 
       powerManagement = {
         enable = true;
-        powertop.enable = true;
+        powertop.enable = false; # Let TLP own power tuning.
       };
 
       services.logind.settings.Login = {
         HandleLidSwitch = "suspend";
-        HandleLidSwitchExternalPower = "suspend";
+        HandleLidSwitchExternalPower = "ignore";
       };
 
       systemd.sleep.settings.Sleep = {
