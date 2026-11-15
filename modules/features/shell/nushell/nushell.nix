@@ -99,7 +99,7 @@
             capro = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions";
             caflash = "claude-anthropic --allow-dangerously-skip-permissions --permission-mode bypassPermissions --model sonnet";
             dsh = "nix run github:numtide/llm-agents.nix#dsh --";
-            codex = "nix run github:numtide/llm-agents.nix#codex --";
+            codex = "nix run github:numtide/llm-agents.nix#codex -- --yolo --profile lean";
             agy = "nix run github:numtide/llm-agents.nix#antigravity-cli --";
           };
         };

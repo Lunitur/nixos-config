@@ -98,6 +98,7 @@
               "signal-desktop"
               "--start-in-tray"
             ]
+            [ "element-desktop" ]
             [
               "steam"
               "-silent"
