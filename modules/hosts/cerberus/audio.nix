@@ -23,6 +23,18 @@
         ACTION=="add", SUBSYSTEM=="soundwire", KERNEL=="sdw:*:025d:0721:*", ATTR{power/control}="on"
       '';
 
+      # Pro Audio probing opens the unsupported TAS2783 IV-sense capture PCM.
+      services.pipewire.wireplumber.extraConfig."51-px13-audio" = {
+        "monitor.alsa.rules" = [
+          {
+            matches = [
+              { "device.name" = "alsa_card.pci-0000_c4_00.5-platform-amd_sdw"; }
+            ];
+            actions.update-props."api.acp.disable-pro-audio" = true;
+          }
+        ];
+      };
+
       systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM2 = ucmPath;
       systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM2 = ucmPath;
       environment.sessionVariables.ALSA_CONFIG_UCM2 = ucmPath;
