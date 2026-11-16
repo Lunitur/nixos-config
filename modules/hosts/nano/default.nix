@@ -141,6 +141,7 @@
             calendar
             tasks
             tables
+            registration
             richdocuments
             groupfolders
             deck
@@ -160,6 +161,14 @@
             overwrite.cli.url = "${prot}://${host}${dir}";
             htaccess.RewriteBase = dir;
             trashbin_retention_obligation = "auto, 30";
+            mail_smtpmode = "smtp";
+            mail_smtphost = "mail.anarhizam.org";
+            mail_smtpport = 465;
+            mail_smtpsecure = "ssl";
+            mail_smtpauth = true;
+            mail_smtpname = "sus@anarhizam.org";
+            mail_from_address = "kontakt";
+            mail_domain = "sus.autonomija.net";
             trusted_domains = [
               "nano"
               "nano.akita-bleak.ts.net"
