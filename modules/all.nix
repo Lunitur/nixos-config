@@ -14,6 +14,7 @@
       imports = [
         inputs.multiverse.nixosModules.default
         inputs.nix-index-database.nixosModules.default
+        inputs.self.nixosModules.nix-unfree
         inputs.self.nixosModules.tmux
         inputs.self.nixosModules.netbird
       ];
@@ -50,7 +51,7 @@
 
       multiverse = {
         enable = true;
-        config.allowunFree = true;
+        config.allowUnfree = true;
       };
 
       nixpkgs.overlays = [
