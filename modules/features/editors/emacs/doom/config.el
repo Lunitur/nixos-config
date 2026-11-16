@@ -9,6 +9,10 @@
 (setq user-full-name "Karlo Pušelj"
       user-mail-address "karlo.puselj@gmail.com")
 
+(after! recentf
+  ;; File checks can block while mounts or networking disappear during shutdown.
+  (remove-hook 'kill-emacs-hook #'recentf-cleanup))
+
 (after! mu4e
   (setq mu4e-change-filenames-when-moving t
         mu4e-update-interval (* 5 60)
