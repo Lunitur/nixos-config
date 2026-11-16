@@ -21,6 +21,7 @@
 
       services.sus-grav.enable = true;
       services.sus-membership.enable = true;
+      services.sus-membership.tables.enable = true;
       services.sus-mail.enable = true;
 
       environment.systemPackages = with pkgs; [
@@ -65,6 +66,7 @@
           "nextcloud.anarhizam.org" = {
             forceSSL = true;
             enableACME = true;
+            serverAliases = [ "nextcloud.autonomija.net" ];
           };
 
         };
@@ -138,6 +140,7 @@
             contacts
             calendar
             tasks
+            tables
             richdocuments
             groupfolders
             deck
@@ -152,9 +155,9 @@
           in
           {
             overwriteprotocol = prot;
-            overwritehost = host;
+            overwritehost = "";
             overwritewebroot = dir;
-            overwrite.cli.url = "${prot}://${host}${dir}/";
+            overwrite.cli.url = "${prot}://${host}${dir}";
             htaccess.RewriteBase = dir;
             trashbin_retention_obligation = "auto, 30";
             trusted_domains = [
@@ -162,6 +165,7 @@
               "nano.akita-bleak.ts.net"
               "localhost"
               "nextcloud.anarhizam.org"
+              "nextcloud.autonomija.net"
             ];
             log_type = "file";
           };
@@ -172,7 +176,7 @@
         ports = [ "9980:9980/tcp" ];
         environment = {
           server_name = "office.anarhizam.org";
-          aliasgroup1 = "https://nextcloud.anarhizam.org:443";
+          aliasgroup1 = "https://nextcloud.anarhizam.org:443,https://nextcloud\\.autonomija\\.net:443";
           dictionaries = "en_US hr_HR";
           username = "username";
           password = "password";

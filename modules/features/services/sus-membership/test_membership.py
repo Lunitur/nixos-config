@@ -4,6 +4,7 @@ import io
 import json
 import logging
 import os
+import sqlite3
 import tempfile
 import time
 import unittest
@@ -118,6 +119,46 @@ class OutboxTests(unittest.TestCase):
         self.outbox = Outbox(self.path)
         self.assertEqual(json.loads(self.outbox.pending()["payload"])["phone"], "+385 91 000 0000")
 
+    def test_destinations_retry_independently_and_erase_only_after_both(self):
+        self.outbox.close()
+        self.outbox = Outbox(self.path, tables_enabled=True)
+        data = validate_submission(submission(message="Privatna prijava"))
+        self.outbox.enqueue(data)
+        self.outbox.retry(self.outbox.pending(destination="tables"), "tables")
+        self.assertIsNone(self.outbox.pending(destination="tables"))
+        self.assertIsNotNone(self.outbox.pending())
+        self.outbox.delivered(data["id"])
+        self.outbox.close()
+        self.outbox = Outbox(self.path, tables_enabled=True)
+        self.assertIsNone(self.outbox.pending())
+        row = self.outbox.pending(time.time() + 100, "tables")
+        self.assertEqual(json.loads(row["payload"])["message"], "Privatna prijava")
+        self.assertEqual(row["tables_attempts"], 1)
+        self.outbox.delivered(data["id"], "tables")
+        self.assertIsNone(self.outbox.pending(destination="tables"))
+        self.assertNotIn(b"Privatna prijava", self.path.read_bytes())
+
+    def test_upgrade_adopts_pending_applications_without_replaying_delivered_ones(self):
+        self.outbox.close()
+        self.path.unlink()
+        with contextlib.closing(sqlite3.connect(self.path)) as db:
+            db.execute("""CREATE TABLE submissions (
+                id TEXT PRIMARY KEY, client TEXT NOT NULL, digest TEXT NOT NULL,
+                payload TEXT, created REAL NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
+                next_try REAL NOT NULL DEFAULT 0, delivered REAL
+            )""")
+            db.execute("INSERT INTO submissions VALUES (?, ?, ?, ?, 1, 2, 0, NULL)",
+                       (submission()["id"], "client", "digest", json.dumps(submission())))
+            db.execute("INSERT INTO submissions VALUES (?, ?, ?, NULL, 1, 0, 0, 2)",
+                       (submission(2)["id"], "client", "digest"))
+            db.commit()
+        self.outbox = Outbox(self.path, tables_enabled=True)
+        self.assertEqual(self.outbox.pending()["attempts"], 2)
+        self.assertEqual(self.outbox.pending(destination="tables")["id"], submission()["id"])
+        self.outbox.delivered(submission()["id"], "tables")
+        self.assertIsNone(self.outbox.pending(destination="tables"))
+        self.assertIsNotNone(self.outbox.pending())
+
 
 class BotTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
@@ -129,6 +170,7 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         self.bot.room = RoomID("!test:example.invalid")
         self.bot.require_encryption = False
         self.bot.ready = True
+        self.bot.tables = None
         self.bot.outbox = Outbox("outbox.sqlite")
         self.bot.wakeup = asyncio.Event()
         self.bot.log = logging.getLogger("test")
@@ -166,7 +208,7 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         worker = asyncio.create_task(self.bot.deliver())
         try:
             for _ in range(100):
-                if self.bot.outbox.pending() is None:
+                if all(self.bot.outbox.pending(destination=destination) is None for destination in ("matrix", "tables")):
                     return
                 await asyncio.sleep(0.01)
             self.fail("Worker nije obradio prijavu.")
@@ -233,6 +275,35 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(row["payload"])
         self.assertEqual(row["attempts"], 1)
         self.assertIsNone(row["delivered"])
+
+    async def test_matrix_success_is_not_repeated_when_tables_fails(self):
+        self.bot.tables = Mock(deliver=AsyncMock(side_effect=TimeoutError()))
+        self.bot.outbox.tables_enabled = True
+        await self.post(submission())
+        await self.run_worker()
+        self.bot.client.send_message_event.assert_awaited_once()
+        self.assertIsNone(self.bot.outbox.pending())
+        self.assertIsNotNone(self.bot.outbox.pending(time.time() + 100, "tables"))
+        self.bot.tables.deliver.side_effect = None
+        self.bot.outbox.db.execute("UPDATE submissions SET tables_next_try = 0")
+        await self.run_worker()
+        self.bot.client.send_message_event.assert_awaited_once()
+        self.assertIsNone(self.bot.outbox.db.execute("SELECT payload FROM submissions").fetchone()[0])
+
+    async def test_tables_still_delivers_when_matrix_fails(self):
+        self.bot.tables = Mock(deliver=AsyncMock())
+        self.bot.outbox.tables_enabled = True
+        self.bot.client.send_message_event.side_effect = TimeoutError()
+        await self.post(submission())
+        await self.run_worker()
+        self.bot.tables.deliver.assert_awaited_once()
+        self.assertIsNone(self.bot.outbox.pending(destination="tables"))
+        self.assertIsNotNone(self.bot.outbox.pending(time.time() + 100))
+        self.bot.client.send_message_event.side_effect = None
+        self.bot.outbox.db.execute("UPDATE submissions SET next_try = 0")
+        await self.run_worker()
+        self.bot.tables.deliver.assert_awaited_once()
+        self.assertIsNone(self.bot.outbox.db.execute("SELECT payload FROM submissions").fetchone()[0])
 
 
 if __name__ == "__main__":

@@ -24,6 +24,16 @@ let
       exec python3 ${./setup.py} "$@"
     '';
   };
+  tablesSetup = pkgs.writeShellApplication {
+    name = "sus-membership-tables-setup";
+    runtimeInputs = [
+      pkgs.python3
+      config.services.nextcloud.occ
+    ];
+    text = ''
+      exec python3 ${./setup_tables.py} "$@"
+    '';
+  };
 in
 {
   options.services.sus-membership = {
@@ -45,6 +55,7 @@ in
       default = false;
       description = "Zahtijevaj E2EE i instaliraj kriptografske ovisnosti maubota. Trenutačni libolm Nixpkgs blokira kao nesiguran.";
     };
+    tables.enable = lib.mkEnableOption "dostavu SUS prijava u Nextcloud Tables";
     registrationTokenFile = lib.mkOption {
       type = lib.types.str;
       default = "/var/lib/tuwunel-autonomija/registration-token";
@@ -60,6 +71,7 @@ in
     ];
     environment.systemPackages = [ setup ];
     system.build.sus-membership-setup = setup;
+    system.build.sus-membership-tables-setup = tablesSetup;
     users.users.sus-membership = {
       isSystemUser = true;
       group = "sus-membership";
@@ -115,6 +127,7 @@ in
       environment = {
         SUS_MEMBERSHIP_PORT = toString cfg.port;
         SUS_MEMBERSHIP_REQUIRE_ENCRYPTION = if cfg.requireEncryption then "1" else "0";
+        SUS_MEMBERSHIP_TABLES = if cfg.tables.enable then "1" else "0";
         PYTHONTZPATH = "${pkgs.tzdata}/share/zoneinfo";
       };
       preStart = ''
@@ -129,10 +142,12 @@ in
         StateDirectoryMode = "0700";
         RuntimeDirectory = "sus-membership";
         RuntimeDirectoryMode = "0700";
-        LoadCredential = [
-          "bot.json:${secretDir}/bot.json"
-          "webhook-token:${authDir}/token"
-        ];
+        LoadCredential =
+          [
+            "bot.json:${secretDir}/bot.json"
+            "webhook-token:${authDir}/token"
+          ]
+          ++ lib.optional cfg.tables.enable "nextcloud.json:${secretDir}/nextcloud.json";
         UMask = "0077";
         Restart = "on-failure";
         RestartSec = "10s";

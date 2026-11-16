@@ -12,6 +12,7 @@ from mautrix.errors import MNotFound
 from mautrix.types import EventType, MessageType, RoomID, TextMessageEventContent
 
 from intake import IntakeError, Outbox, format_message, validate_submission
+from tables import Tables
 
 
 class MembershipBot(Plugin):
@@ -19,7 +20,8 @@ class MembershipBot(Plugin):
         credentials = Path(os.environ["CREDENTIALS_DIRECTORY"])
         self.secret = (credentials / "webhook-token").read_text().strip()
         self.room = RoomID(json.loads((credentials / "bot.json").read_text())["room_id"])
-        self.outbox = Outbox("outbox.sqlite")
+        self.tables = Tables(json.loads((credentials / "nextcloud.json").read_text())) if os.environ.get("SUS_MEMBERSHIP_TABLES") == "1" else None
+        self.outbox = Outbox("outbox.sqlite", tables_enabled=self.tables is not None)
         self.require_encryption = os.environ.get("SUS_MEMBERSHIP_REQUIRE_ENCRYPTION") == "1" or Path("encryption-required").exists()
         self.ready = False
         self.wakeup = asyncio.Event()
@@ -29,6 +31,8 @@ class MembershipBot(Plugin):
         self.worker.cancel()
         with suppress(asyncio.CancelledError):
             await self.worker
+        if self.tables:
+            await self.tables.close()
         self.outbox.close()
 
     def authorized(self, request):
@@ -82,30 +86,42 @@ class MembershipBot(Plugin):
             raise RuntimeError("Šifrirana soba zahtijeva kriptografsku podršku maubota.")
         return True
 
+    async def deliver_matrix(self, row):
+        encrypted_room = await self.check_room()
+        content = TextMessageEventContent(msgtype=MessageType.NOTICE, body=format_message(json.loads(row["payload"]), row["created"]))
+        content["m.mentions"] = {}
+        event_type = EventType.ROOM_MESSAGE
+        if encrypted_room:
+            content = await self.client.encrypt(self.room, event_type, content)
+            event_type = EventType.ROOM_ENCRYPTED
+        await self.client.send_message_event(self.room, event_type, content, txn_id=f"sus-{row['id']}")
+
     async def deliver(self):
         while True:
-            row = None
             self.wakeup.clear()
-            try:
-                if not self.ready:
-                    await self.check_room()
-                    self.ready = True
-                row = self.outbox.pending()
-                if row:
-                    encrypted_room = await self.check_room()
-                    content = TextMessageEventContent(msgtype=MessageType.NOTICE, body=format_message(json.loads(row["payload"]), row["created"]))
-                    content["m.mentions"] = {}
-                    event_type = EventType.ROOM_MESSAGE
-                    if encrypted_room:
-                        content = await self.client.encrypt(self.room, event_type, content)
-                        event_type = EventType.ROOM_ENCRYPTED
-                    await self.client.send_message_event(self.room, event_type, content, txn_id=f"sus-{row['id']}")
-                    self.outbox.delivered(row["id"])
+            progress = False
+            for destination in ("matrix", "tables"):
+                if destination == "tables" and self.tables is None:
                     continue
-            except Exception as error:
-                if row:
-                    self.outbox.retry(row)
-                reason = str(error) if type(error) is RuntimeError else type(error).__name__
-                self.log.warning("Dostava prijave čeka ponovni pokušaj (%s).", reason)
+                row = None
+                try:
+                    if destination == "matrix" and not self.ready:
+                        await self.check_room()
+                        self.ready = True
+                    row = self.outbox.pending(destination=destination)
+                    if row:
+                        if destination == "matrix":
+                            await self.deliver_matrix(row)
+                        else:
+                            await self.tables.deliver(json.loads(row["payload"]), row["created"])
+                        self.outbox.delivered(row["id"], destination)
+                        progress = True
+                except Exception as error:
+                    if row:
+                        self.outbox.retry(row, destination)
+                    reason = str(error) if type(error) is RuntimeError else type(error).__name__
+                    self.log.warning("Dostava prijave (%s) čeka ponovni pokušaj (%s).", destination, reason)
+            if progress:
+                continue
             with suppress(TimeoutError):
                 await asyncio.wait_for(self.wakeup.wait(), timeout=10)

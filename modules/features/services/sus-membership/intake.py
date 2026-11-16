@@ -60,7 +60,8 @@ def format_message(data, created):
 
 
 class Outbox:
-    def __init__(self, path):
+    def __init__(self, path, tables_enabled=False):
+        self.tables_enabled = tables_enabled
         self.db = sqlite3.connect(path)
         self.db.row_factory = sqlite3.Row
         self.db.execute("PRAGMA secure_delete = ON")
@@ -69,6 +70,21 @@ class Outbox:
             payload TEXT, created REAL NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
             next_try REAL NOT NULL DEFAULT 0, delivered REAL
         )""")
+        columns = {row[1] for row in self.db.execute("PRAGMA table_info(submissions)")}
+        with self.db:
+            self.db.execute("BEGIN IMMEDIATE")
+            for name, definition in {
+                "matrix_delivered": "REAL", "tables_delivered": "REAL",
+                "tables_required": "INTEGER NOT NULL DEFAULT 0",
+                "tables_attempts": "INTEGER NOT NULL DEFAULT 0",
+                "tables_next_try": "REAL NOT NULL DEFAULT 0",
+            }.items():
+                if name not in columns:
+                    self.db.execute(f"ALTER TABLE submissions ADD COLUMN {name} {definition}")
+            if "matrix_delivered" not in columns:
+                self.db.execute("UPDATE submissions SET matrix_delivered = delivered")
+            if tables_enabled:
+                self.db.execute("UPDATE submissions SET tables_required = 1 WHERE payload IS NOT NULL")
 
     def enqueue(self, data, now=None):
         now = time.time() if now is None else now
@@ -87,20 +103,30 @@ class Outbox:
                 raise IntakeError(429, "Poslano je previše prijava. Pokušaj za sat vremena.")
             if self.db.execute("SELECT COUNT(*) FROM submissions WHERE payload IS NOT NULL").fetchone()[0] >= 1000:
                 raise IntakeError(503, "Prijave trenutačno nisu dostupne. Pokušaj kasnije.")
-            self.db.execute("INSERT INTO submissions (id, client, digest, payload, created) VALUES (?, ?, ?, ?, ?)", (data["id"], data["client"], digest, payload, now))
+            self.db.execute("INSERT INTO submissions (id, client, digest, payload, created, tables_required) VALUES (?, ?, ?, ?, ?, ?)", (data["id"], data["client"], digest, payload, now, self.tables_enabled))
 
-    def pending(self, now=None):
+    def pending(self, now=None, destination="matrix"):
         now = time.time() if now is None else now
-        return self.db.execute("SELECT * FROM submissions WHERE payload IS NOT NULL AND next_try <= ? ORDER BY created LIMIT 1", (now,)).fetchone()
+        condition = {
+            "matrix": "matrix_delivered IS NULL AND next_try <= ?",
+            "tables": "tables_required = 1 AND tables_delivered IS NULL AND tables_next_try <= ?",
+        }[destination]
+        return self.db.execute(f"SELECT * FROM submissions WHERE payload IS NOT NULL AND {condition} ORDER BY created LIMIT 1", (now,)).fetchone()
 
-    def delivered(self, submission_id):
+    def delivered(self, submission_id, destination="matrix"):
+        column = {"matrix": "matrix_delivered", "tables": "tables_delivered"}[destination]
+        now = time.time()
         with self.db:
-            self.db.execute("UPDATE submissions SET payload = NULL, delivered = ? WHERE id = ?", (time.time(), submission_id))
+            self.db.execute(f"UPDATE submissions SET {column} = ? WHERE id = ?", (now, submission_id))
+            self.db.execute("""UPDATE submissions SET payload = NULL, delivered = ?
+                WHERE id = ? AND matrix_delivered IS NOT NULL
+                AND (tables_required = 0 OR tables_delivered IS NOT NULL)""", (now, submission_id))
 
-    def retry(self, row):
-        delay = min(3600, 10 * 2 ** min(row["attempts"], 9))
+    def retry(self, row, destination="matrix"):
+        attempts, next_try = {"matrix": ("attempts", "next_try"), "tables": ("tables_attempts", "tables_next_try")}[destination]
+        delay = min(3600, 10 * 2 ** min(row[attempts], 9))
         with self.db:
-            self.db.execute("UPDATE submissions SET attempts = attempts + 1, next_try = ? WHERE id = ?", (time.time() + delay, row["id"]))
+            self.db.execute(f"UPDATE submissions SET {attempts} = {attempts} + 1, {next_try} = ? WHERE id = ?", (time.time() + delay, row["id"]))
 
     def close(self):
         self.db.close()
