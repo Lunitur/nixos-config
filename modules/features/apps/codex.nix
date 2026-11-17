@@ -19,19 +19,29 @@
         - If you need extra tools use nix to run them.
       '';
 
-      home.file.".codex/lean.config.toml".text = ''
-        [features]
-        apps = false
-        plugins = false
-        remote_plugin = false
-        multi_agent = false
+      home.activation.codexLeanSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+        lib.hm.generators.mkImpureConfigMerger {
+          inherit pkgs;
+          format = "toml";
+          empty = "{}";
+          jqOperation = "$dynamic * $static";
+          path = "${config.home.homeDirectory}/.codex/lean.config.toml";
+          mode = "600";
+          staticSettings = pkgs.writeText "codex-lean.config.toml" ''
+            [features]
+            apps = false
+            plugins = false
+            remote_plugin = false
+            multi_agent = false
 
-        [skills]
-        include_instructions = false
+            [skills]
+            include_instructions = false
 
-        [skills.bundled]
-        enabled = false
-      '';
+            [skills.bundled]
+            enabled = false
+          '';
+        }
+      );
 
       programs.codex = {
         enable = false;
