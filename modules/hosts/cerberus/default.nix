@@ -15,6 +15,7 @@
 
       environment.systemPackages = with pkgs; [
         btrfs-progs
+        pcsx2
         moonlight-qt
         wireshark
         tshark
