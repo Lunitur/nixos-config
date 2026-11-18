@@ -186,7 +186,7 @@
         ports = [ "9980:9980/tcp" ];
         environment = {
           server_name = "office.anarhizam.org";
-          aliasgroup1 = "https://nextcloud.anarhizam.org:443,https://nextcloud\\.autonomija\\.net:443";
+          aliasgroup1 = "https://nextcloud.anarhizam.org:443,https://nextcloud.autonomija.net:443";
           dictionaries = "en_US hr_HR";
           username = "username";
           password = "password";
@@ -223,8 +223,9 @@
             }
 
             # main websocket
-            location ~ ^/cool/(.*)/ws$ {
+            location ~ ^/cool/(.*/)?ws$ {
               proxy_pass http://127.0.0.1:9980;
+              proxy_http_version 1.1;
               proxy_set_header Upgrade $http_upgrade;
               proxy_set_header Connection "Upgrade";
               proxy_set_header Host $host;
