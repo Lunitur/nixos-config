@@ -109,6 +109,7 @@
               "kontakt@sus.autonomija.net"
               "postmaster@sus.autonomija.net"
               "abuse@sus.autonomija.net"
+              "social@sus.autonomija.net"
             ];
           };
         };
