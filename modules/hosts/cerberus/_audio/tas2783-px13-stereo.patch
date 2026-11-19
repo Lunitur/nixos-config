@@ -9,9 +9,14 @@ Leave firmware-provided init tables alone when available.
 Posture/address mapping verified on the same HN7306EAC hardware:
 https://github.com/Salamandsome/ASUS-ProArt-PX13-Audio-Fix/blob/main/docs/analysis.md
 
+On this PX13 the silent right port reported PrepareStatus 0x03 during
+playback with PrepareCtrl 0x03, PDE23 in PS0 and posture 4. Wait for
+actual power-up before preparing that port. If its channels stay
+unprepared, complete a de-prepare and retry once.
+
 --- a/tas2783-sdw.c
 +++ b/tas2783-sdw.c
-@@ -15,6 +15,7 @@
+@@ -15,10 +15,12 @@
  #include <linux/cleanup.h>
  #include <linux/unaligned.h>
  #include <linux/crc32.h>
@@ -19,7 +24,12 @@ https://github.com/Salamandsome/ASUS-ProArt-PX13-Audio-Fix/blob/main/docs/analys
  #include <linux/efi.h>
  #include <linux/err.h>
  #include <linux/firmware.h>
-@@ -1017,8 +1018,10 @@
+ #include <linux/init.h>
++#include <linux/iopoll.h>
+ #include <linux/module.h>
+ #include <sound/pcm_params.h>
+ #include <linux/pm.h>
+@@ -1017,8 +1019,10 @@
  	 * from the amp's position in the codec order of the DAI link, which
  	 * on these boards matches the prefix numbering.
  	 */
@@ -31,7 +41,7 @@ https://github.com/Salamandsome/ASUS-ProArt-PX13-Audio-Fix/blob/main/docs/analys
  		const char *idx_str = strrchr(component->name_prefix, '-');
  		unsigned long idx;
  
-@@ -1270,9 +1273,16 @@
+@@ -1270,9 +1274,16 @@
  		if (tas_dev->sa_func_data)
  			ret = sdca_regmap_write_init(dev, tas_dev->regmap,
  						     tas_dev->sa_func_data);
@@ -49,3 +59,66 @@ https://github.com/Salamandsome/ASUS-ProArt-PX13-Audio-Fix/blob/main/docs/analys
  
  		if (ret)
  			dev_err(tas_dev->dev,
+@@ -1324,6 +1335,49 @@
+ 
+ 	/* perform I/O transfers required for Slave initialization */
+ 	return tas_io_init(&slave->dev, slave);
++}
++
++static int tas_px13_wait_clear(struct sdw_slave *slave, u32 reg, u8 mask)
++{
++	unsigned int timeout_us = max(slave->prop.ch_prep_timeout, 1U) * USEC_PER_MSEC;
++	int val, ret;
++
++	ret = read_poll_timeout(sdw_read_no_pm, val, val < 0 || !(val & mask),
++				1000, timeout_us, false, slave, reg);
++	return val < 0 ? val : ret;
++}
++
++static int tas_px13_set_prepare(struct sdw_slave *slave, struct sdw_prepare_ch *ch, bool prepare)
++{
++	int ret;
++
++	ret = sdw_write_no_pm(slave, SDW_DPN_PREPARECTRL(ch->num), prepare ? ch->ch_mask : 0);
++	if (ret)
++		return ret;
++
++	return tas_px13_wait_clear(slave, SDW_DPN_PREPARESTATUS(ch->num), ch->ch_mask);
++}
++
++static int tas_px13_prepare_right(struct sdw_slave *slave, struct sdw_prepare_ch *ch)
++{
++	u32 actual_ps = SDW_SDCA_CTL(1, TAS2783_SDCA_ENT_PDE23, SDCA_CTL_PDE_ACTUAL_PS, 0);
++	int ret;
++
++	/* Read the peripheral directly: PS0 may lag the power request. */
++	ret = tas_px13_wait_clear(slave, actual_ps, 0xff);
++	if (ret)
++		return ret;
++
++	ret = tas_px13_set_prepare(slave, ch, true);
++	if (ret != -ETIMEDOUT)
++		return ret;
++
++	/* Give the stuck port a fresh prepare edge. */
++	ret = tas_px13_set_prepare(slave, ch, false);
++	if (ret)
++		return ret;
++
++	return tas_px13_set_prepare(slave, ch, true);
+ }
+ 
+ /*
+@@ -1366,7 +1420,11 @@
+ 			return ret;
+ 		}
+ 
+-		ret = sdw_write_no_pm(slave, addr, prep_ch->ch_mask);
++		if (prep_ch->num == 1 && slave->id.unique_id == 0xb &&
++		    dmi_match(DMI_BOARD_NAME, "HN7306EAC"))
++			ret = tas_px13_prepare_right(slave, prep_ch);
++		else
++			ret = sdw_write_no_pm(slave, addr, prep_ch->ch_mask);
+ 		if (ret)
+ 			dev_err(dev, "prep failed for port %d, err=%d\n",
+ 					prep_ch->num, ret);
