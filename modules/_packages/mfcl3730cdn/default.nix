@@ -2,9 +2,10 @@
   pkgsi686Linux,
   stdenv,
   fetchurl,
-  dpkg,
+  libarchive,
   makeWrapper,
   coreutils,
+  file,
   ghostscript,
   gnugrep,
   gnused,
@@ -15,45 +16,57 @@
 
 let
   model = "mfcl3730cdn";
-  version = "1.0.2-0";
+  version = "1.0.2-1";
   src = fetchurl {
-    url = "https://download.brother.com/welcome/dlf103931/${model}pdrv-${version}.i386.deb";
-    sha256 = "Vba3N+MvX+5nzevq+tzhC4MGK4hfmxJvTUoRLqjzd6w=";
+    url = "https://download.brother.com/welcome/dlf103956/${model}pdrv-${version}.i386.rpm";
+    hash = "sha256-MI4Rtxz3OJkfExxSNzsMN800Lsc9kt/B0Nlx+6D7nJ8=";
   };
   reldir = "opt/brother/Printers/${model}/";
+  unpackPhase = ''
+    mkdir -p "$out"
+    bsdtar -xf "$src" -C "$out"
+  '';
 
 in
 rec {
   driver = pkgsi686Linux.stdenv.mkDerivation rec {
-    inherit src version;
+    inherit src unpackPhase version;
     name = "${model}drv-${version}";
 
     nativeBuildInputs = [
-      dpkg
+      libarchive
       makeWrapper
     ];
 
-    unpackPhase = "dpkg-deb -x $src $out";
-
     installPhase = ''
-        dir="$out/${reldir}"
-        substituteInPlace $dir/lpd/filter_${model} \
-          --replace /usr/bin/perl ${perl}/bin/perl \
-          --replace "BR_PRT_PATH =~" "BR_PRT_PATH = \"$dir\"; #" \
-          --replace "PRINTER =~" "PRINTER = \"${model}\"; #"
-        wrapProgram $dir/lpd/filter_${model} \
-          --prefix PATH : ${
-            lib.makeBinPath [
-              coreutils
-              ghostscript
-              gnugrep
-              gnused
-              which
-            ]
-          }
-      # need to use i686 glibc here, these are 32bit proprietary binaries
-      patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-        $dir/lpd/br${model}filter
+      dir="$out/${reldir}"
+      substituteInPlace "$dir/lpd/filter_${model}" \
+        --replace-fail /usr/bin/perl ${perl}/bin/perl \
+        --replace-fail /usr/bin/pdf2ps ${ghostscript}/bin/pdf2ps \
+        --replace-fail "BR_PRT_PATH =~" "BR_PRT_PATH = \"$dir\"; #" \
+        --replace-fail "PRINTER =~" "PRINTER = \"${model}\"; #"
+      wrapProgram "$dir/lpd/filter_${model}" \
+        --prefix PATH : ${
+          lib.makeBinPath [
+            coreutils
+            file
+            ghostscript
+            gnugrep
+            gnused
+            which
+          ]
+        }
+
+      mkdir -p "$out/bin"
+      mv "$out/usr/bin/brprintconf_${model}" "$out/bin/"
+      # The 32-bit binaries look up their resources under /opt/brother.
+      interpreter=$(cat "$NIX_CC/nix-support/dynamic-linker")
+      for binary in "$dir/lpd/br${model}filter" "$out/bin/brprintconf_${model}"; do
+        patchelf --set-interpreter "$interpreter" "$binary"
+        wrapProgram "$binary" \
+          --set LD_PRELOAD ${pkgsi686Linux.libredirect}/lib/libredirect.so \
+          --set NIX_REDIRECTS "/opt/brother=$out/opt/brother"
+      done
     '';
 
     meta = {
@@ -70,35 +83,36 @@ rec {
   };
 
   cupswrapper = stdenv.mkDerivation rec {
-    inherit version src;
+    inherit src unpackPhase version;
     name = "${model}cupswrapper-${version}";
 
     nativeBuildInputs = [
-      dpkg
+      libarchive
       makeWrapper
     ];
-
-    unpackPhase = "dpkg-deb -x $src $out";
 
     installPhase = ''
       basedir=${driver}/${reldir}
       dir=$out/${reldir}
-      substituteInPlace $dir/cupswrapper/brother_lpdwrapper_${model} \
-        --replace /usr/bin/perl ${perl}/bin/perl \
-        --replace "basedir =~" "basedir = \"$basedir\"; #" \
-        --replace "PRINTER =~" "PRINTER = \"${model}\"; #"
-      wrapProgram $dir/cupswrapper/brother_lpdwrapper_${model} \
+      substituteInPlace "$dir/cupswrapper/brother_lpdwrapper_${model}" \
+        --replace-fail /usr/bin/perl ${perl}/bin/perl \
+        --replace-fail "basedir =~" "basedir = \"$basedir\"; #" \
+        --replace-fail "PRINTER =~" "PRINTER = \"${model}\"; #" \
+        --replace-fail '$CUPSINPUT=$ARGV[7];' 'open(STDIN, "<", $ARGV[5]) or die "Cannot open print job: $!";' \
+        --replace-fail 'cp  $basedir/inf/br' 'install -m 600 $basedir/inf/br' \
+        --replace-fail '"-qm"       =>  "UseDeviceSettings"    ,' '# Quiet mode is unsupported on this model.'
+      wrapProgram "$dir/cupswrapper/brother_lpdwrapper_${model}" \
         --prefix PATH : ${
           lib.makeBinPath [
             coreutils
+            driver
             gnugrep
             gnused
           ]
         }
-      mkdir -p $out/lib/cups/filter
-      mkdir -p $out/share/cups/model
-      ln $dir/cupswrapper/brother_lpdwrapper_${model} $out/lib/cups/filter
-      ln $dir/cupswrapper/brother_${model}_printer_en.ppd $out/share/cups/model
+      mkdir -p "$out/lib/cups/filter" "$out/share/cups/model"
+      ln "$dir/cupswrapper/brother_lpdwrapper_${model}" "$out/lib/cups/filter"
+      ln "$dir/cupswrapper/brother_${model}_printer_en.ppd" "$out/share/cups/model"
     '';
 
     meta = {
