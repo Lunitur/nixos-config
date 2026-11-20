@@ -142,9 +142,8 @@
   (setq select-enable-clipboard t
         interprogram-cut-function
         (lambda (text)
-          (with-temp-buffer
-            (insert text)
-            (call-process-region (point-min) (point-max) "wl-copy" nil nil nil)))
+          (let ((coding-system-for-write 'utf-8-unix))
+            (call-process-region text nil "wl-copy" nil nil nil "--type" "text/plain")))
         interprogram-paste-function
         (lambda ()
           (shell-command-to-string "wl-paste -n"))))

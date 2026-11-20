@@ -19,6 +19,8 @@
         nix-index.enableNushellIntegration = true;
         nushell = {
           enable = true;
+          loadSessionVariables = true;
+
           settings = {
             edit_mode = "vi";
             show_banner = false;
