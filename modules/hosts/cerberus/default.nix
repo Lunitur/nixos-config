@@ -13,6 +13,32 @@
         inputs.self.nixosModules.jupyter
       ];
 
+      boot.tmp = {
+        useTmpfs = lib.mkForce true;
+        tmpfsSize = lib.mkForce "16G";
+      };
+
+      # Nix 2.30+ builds outside /tmp. These limits allocate RAM only as used.
+      fileSystems."/nix/var/nix/builds" = {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = [
+          "size=48G"
+          "mode=0755"
+          "nosuid"
+          "nodev"
+        ];
+      };
+      systemd.services.nix-daemon.unitConfig.RequiresMountsFor = [ "/nix/var/nix/builds" ];
+
+      boot.kernel.sysctl = {
+        # Bound writeback bursts independently of RAM size; byte/ratio knobs are exclusive.
+        "vm.dirty_background_ratio" = lib.mkForce null;
+        "vm.dirty_ratio" = lib.mkForce null;
+        "vm.dirty_background_bytes" = 536870912;
+        "vm.dirty_bytes" = 4294967296;
+      };
+
       environment.systemPackages = with pkgs; [
         btrfs-progs
         pcsx2
