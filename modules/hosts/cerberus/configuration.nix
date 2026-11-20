@@ -41,7 +41,13 @@
     services.flatpak = {
       enable = true;
       packages = [ "io.github.chidiwilliams.Buzz" ];
-      update.onActivation = true;
+      update = {
+        onActivation = false;
+        auto = {
+          enable = true;
+          onCalendar = "weekly";
+        };
+      };
     };
   };
 }

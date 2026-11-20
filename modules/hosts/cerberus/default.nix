@@ -23,6 +23,7 @@
         firefox
         kdePackages.ghostwriter
         jetbrains.pycharm
+        mfcl3730cdnlpr
       ];
 
       home-manager.users.carjin = {
@@ -62,6 +63,14 @@
           niri = inputs.self.packages.${prev.stdenv.hostPlatform.system}.niri-cerberus;
         })
       ];
+
+      services.printing = {
+        enable = true;
+        drivers = with pkgs; [
+          mfcl3730cdnlpr
+          mfcl3730cdncupswrapper
+        ];
+      };
 
       services.xserver.enable = true;
       services.displayManager.sddm = {
