@@ -211,22 +211,78 @@ explicit-shell-file-name "/run/current-system/sw/bin/nu"
 
 (require 'f)
 (after! gptel
-  (setq gptel-model 'deepseek-v4-flash
+  (setq gptel-model 'deepseek-flash
 
         gptel-backend (gptel-make-deepseek "DeepSeek"
                         :stream t
                         :key (f-read-text "~/Nextcloud/deepseek.key")
                         :stream t))
 
-  (gptel-make-gemini "Gemini"
-    :key (f-read-text "~/Nextcloud/gemini.key")
-    :stream t
-    :models '(gemma-4-31b-it gemini-3-flash-preview))
-
   (gptel-make-ollama "Ollama"
     :host "centaur:11434"
     :stream t
-    :models '(qwen3-coder-next)))
+    :models '(qwen3-coder-next))
+
+  (gptel-make-openai "Inkling 2 Mini"
+    :host "127.0.0.1:8081"
+    :protocol "http"
+    :key nil
+    :stream t
+    :models '((inkling-2-mini
+               :capabilities (tool-use media)
+               :mime-types ("image/jpeg" "image/png")
+               :context-window 262.144))))
+
+(use-package! gptel-agent
+  :after gptel
+  :demand t
+  :config
+  (require 'gptel-agent-tools-introspection)
+  (define-advice gptel-agent-update (:after (&rest _) add-all-tools)
+    (when-let* ((preset (gptel-get-preset 'gptel-agent)))
+      (apply #'gptel-make-preset 'gptel-agent
+             (plist-put (copy-sequence preset) :tools
+                        '(:append ("gptel-agent" "introspection"))))))
+  (gptel-agent-update)
+  (gptel--apply-preset (gptel-get-preset 'gptel-agent) #'set-default)
+  (setq-default gptel-use-tools t))
+
+(defun +gptel/chat-with-region ()
+  "Ask about the selected code in a new gptel chat."
+  (interactive)
+  (unless (use-region-p)
+    (user-error "Select code to chat about first"))
+  (let* ((code (buffer-substring-no-properties (region-beginning) (region-end)))
+         (source-mode major-mode)
+         (directory default-directory)
+         (name (format "*gptel: %s*" (buffer-name)))
+         (prompt (read-string "Ask about selected code: ")))
+    (when (string-blank-p prompt)
+      (user-error "Enter a prompt for the chat"))
+    (require 'gptel)
+    (let ((chat (gptel (generate-new-buffer-name name)))
+          (language (gptel--strip-mode-suffix source-mode))
+          ;; Doom uses this variable to decide whether to apply its popup rule.
+          (gptel-display-buffer-action '(display-buffer-in-side-window
+                                         (side . right)
+                                         (window-width . 0.45))))
+      (pop-to-buffer chat gptel-display-buffer-action)
+      (setq-local default-directory directory)
+      (goto-char (point-max))
+      (insert prompt "\n\n")
+      (if (derived-mode-p 'org-mode)
+          (insert "#+begin_src " (if (string-empty-p language) "text" language) "\n"
+                  (org-escape-code-in-string code) "\n#+end_src")
+        (insert "```" language "\n" code "\n```"))
+      (gptel-send))))
+
+(when-let* ((llm-map (keymap-lookup doom-leader-map "o l"))
+            ((keymapp llm-map)))
+  (keymap-set doom-leader-map "l" (cons "llm" llm-map))
+  (keymap-unset doom-leader-map "o l" t))
+
+(map! :leader
+      :desc "Chat about selected code" "l c" #'+gptel/chat-with-region)
 
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq gc-cons-threshold (* 100 1024 1024))

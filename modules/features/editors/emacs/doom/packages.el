@@ -61,6 +61,8 @@
   :recipe (:host github
            :repo "lizqwerscott/mcp.el"))
 
+(package! gptel-agent)
+
 (package! nushell-mode)
 
 (package! dired-preview)
