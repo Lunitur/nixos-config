@@ -19,6 +19,7 @@
     nixpkgs.follows = "nixpkgs-unstable";
 
     gufo.url = "github:gufo-org/gufo/v0.34.0";
+    gufo-inkling.url = "github:headbouyJB/inkling2-gufo/8bb6cd5eaa76c3aa27c74ca005622735aa294a98";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/v0.8.0";
 
