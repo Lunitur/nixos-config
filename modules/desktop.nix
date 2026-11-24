@@ -38,6 +38,7 @@
       environment.systemPackages = with pkgs; [
         gvfs
         madbfs
+        android-tools
         # config.multiverse.instance.fast.tip.codex
         codex
       ];
